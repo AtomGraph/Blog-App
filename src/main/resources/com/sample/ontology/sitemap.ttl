@@ -55,7 +55,7 @@ ldp:pageOf a owl:ObjectProperty ;
     foaf:maker <http://graphityhq.com/#company> ;
     rdfs:isDefinedBy : ;
     void:inDataset :Dataset ;
-    rdfs:seeAlso : , <sparql>, <http://graphityhq.com>, <http://semantic-web.dk> .
+    rdfs:seeAlso : , <sparql>, <http://graphity.org>, <http://graphityhq.com> .
 
 <ontology> a foaf:Document ;
     dct:title "Ontology document" ;
@@ -72,6 +72,7 @@ ldp:pageOf a owl:ObjectProperty ;
 <resources> a ldp:Container, sioc:Container, foaf:Document ;
     sioc:has_space <.> ;
     dct:title "Resources" ;
+    dct:description "A container with all RDF resources in the datasource" ;
     rdfs:isDefinedBy : ;
     void:inDataset :Dataset .
 
@@ -90,7 +91,7 @@ ldp:pageOf a owl:ObjectProperty ;
 	] ;
     spin:constraint [ a gp:DescribeTemplate ] ;
     rdfs:label "Resource" ;
-    foaf:isPrimaryTopicOf <classes/resource> ;
+    rdfs:comment "Catch-all resource class (template), with layout modes enabled (optional mode query param)" ;
     rdfs:isDefinedBy : .
 
 :SPARQLResultResource a owl:Class, gp:Template ;
@@ -125,22 +126,19 @@ ldp:pageOf a owl:ObjectProperty ;
     rdfs:label "Resources page resource" ;
     rdfs:isDefinedBy : .
 
-:ContainersPageResource a owl:Class ;
+:IndexContainersPageResource a owl:Class ;
     rdfs:subClassOf foaf:Document, ldp:Page, lda:ListEndpoint ,
-	[ a owl:Restriction ;
-		owl:onProperty void:inDataset ;
-		owl:hasValue :Dataset
-	] ,
 	[ a owl:Restriction ;
 		owl:onProperty ldp:pageOf ;
 		owl:hasValue <.>
 	] ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/?limit={limit: [0-9]+}&offset={offset: [0-9]+}"
-	] ;
-    spin:constraint [ a :DescribeContainersTemplate
-	] .
+		owl:hasValue "/?limit={limit: [0-9]+}&offset={offset: [0-9]+}{mode: (&mode=[^&]+)?}"
+	];
+    spin:constraint [ a :DescribeContainersTemplate ] ;
+    rdfs:label "Containers page resource" ;
+    rdfs:isDefinedBy : .
 
 # SPIN TEMPLATES
 
