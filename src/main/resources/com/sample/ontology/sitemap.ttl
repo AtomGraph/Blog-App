@@ -10,6 +10,7 @@
 @prefix lda: <http://purl.org/linked-data/api/vocab#> .
 @prefix spin: <http://spinrdf.org/spin#> .
 @prefix sp: <http://spinrdf.org/sp#> .
+@prefix spl: <http://spinrdf.org/spl#> .
 @prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix sioc: <http://rdfs.org/sioc/ns#> .
 @prefix dct: <http://purl.org/dc/terms/> .
@@ -79,7 +80,7 @@ ldp:pageOf a owl:ObjectProperty ;
     rdfs:isDefinedBy : ;
     void:inDataset :Dataset .
 
-# RESOURCE CLASSES
+# RESOURCE CLASSES (GRAPHITY TEMPLATES)
 
 :Resource a owl:Class, gp:Template ;
     rdfs:subClassOf foaf:Document, lda:ItemEndpoint ,
@@ -98,7 +99,6 @@ ldp:pageOf a owl:ObjectProperty ;
 		owl:hasValue "/sparql?query={query}"
 	] ;
     rdfs:label "SPARQL result resource" ;
-    foaf:isPrimaryTopicOf <classes/sparql-result-resource> ;
     rdfs:isDefinedBy : .
 
 :OntologyDocResource a owl:Class, gp:Template ;
@@ -109,7 +109,6 @@ ldp:pageOf a owl:ObjectProperty ;
 	] ;
     spin:constraint [ a gp:ConstructResourcesTemplate ] ;
     rdfs:label "Ontology document resource" ;
-    foaf:isPrimaryTopicOf <classes/ontology-doc-resource> ;
     rdfs:isDefinedBy : .
 
 :ResourcesPageResource a owl:Class, gp:Template ;
@@ -124,5 +123,56 @@ ldp:pageOf a owl:ObjectProperty ;
 	] ;
     spin:constraint [ a gp:DescribeResourcesTemplate ] ;
     rdfs:label "Resources page resource" ;
-    foaf:isPrimaryTopicOf <classes/page-resources/resource-resource> ;
     rdfs:isDefinedBy : .
+
+:ContainersPageResource a owl:Class ;
+    rdfs:subClassOf foaf:Document, ldp:Page, lda:ListEndpoint ,
+	[ a owl:Restriction ;
+		owl:onProperty void:inDataset ;
+		owl:hasValue :Dataset
+	] ,
+	[ a owl:Restriction ;
+		owl:onProperty ldp:pageOf ;
+		owl:hasValue <.>
+	] ,
+	[ a owl:Restriction ;
+		owl:onProperty lda:uriTemplate ;
+		owl:hasValue "/?limit={limit: [0-9]+}&offset={offset: [0-9]+}"
+	] ;
+    spin:constraint [ a :DescribeContainersTemplate
+	] .
+
+# SPIN TEMPLATES
+
+:DescribeContainersTemplate a spin:Template ;
+    spin:body :DescribeContainers .
+
+:DescribeContainers    a       sp:Describe ;
+      sp:resultNodes (_:containerVar) ;
+      sp:text """PREFIX sioc: <http://rdfs.org/sioc/ns#>
+DESCRIBE ?container WHERE {
+    {
+        SELECT ?container
+        WHERE {
+            ?container a sioc:Container .
+            ?container sioc:has_space ?has_space .
+        }
+    } .
+}"""^^xsd:string ;
+      sp:where ([ a       sp:SubQuery ;
+                  sp:query
+                          [ a       sp:Select ;
+                            sp:resultVariables (_:containerVar) ;
+                            sp:where ([ sp:object sioc:Container ;
+                                        sp:predicate rdf:type ;
+                                        sp:subject _:containerVar
+                                      ] [ sp:object
+                                                [ sp:varName "has_space"^^xsd:string
+                                                ] ;
+                                        sp:predicate sioc:has_space ;
+                                        sp:subject _:containerVar
+                                      ])
+                          ]
+                ]) .
+
+_:containerVar  sp:varName "container"^^xsd:string .

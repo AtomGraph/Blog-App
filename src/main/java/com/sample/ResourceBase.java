@@ -5,12 +5,15 @@
 package com.sample;
 
 import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.rdf.model.Model;
 import com.sun.jersey.api.core.ResourceConfig;
 import javax.ws.rs.DefaultValue;
+import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Request;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import org.graphity.server.model.SPARQLEndpoint;
 
@@ -18,6 +21,7 @@ import org.graphity.server.model.SPARQLEndpoint;
  *
  * @author Martynas Jusevičius <martynas@graphity.org>
  */
+@Path("{path: .*}")
 public class ResourceBase extends org.graphity.client.model.ResourceBase
 {
 
@@ -28,7 +32,21 @@ public class ResourceBase extends org.graphity.client.model.ResourceBase
 	    @QueryParam("order-by") String orderBy,
 	    @QueryParam("desc") @DefaultValue("false") Boolean desc)
     {
-	super(uriInfo, request, httpHeaders, resourceConfig, sitemap, endpoint, limit, offset, orderBy, desc);
+	super(uriInfo, request, httpHeaders,
+		resourceConfig, sitemap, endpoint,
+		limit, offset, orderBy, desc);
     }
     
+    @Override
+    public Response get()
+    {
+	return super.get();
+    }
+    
+    @Override
+    public Response post(Model model)
+    {
+	return Response.status(405).build();
+    }
+
 }

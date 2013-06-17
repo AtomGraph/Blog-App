@@ -28,7 +28,7 @@
         <init-param>
             <param-name>http://client.graphity.org/ontology#stylesheet</param-name>
             <!-- <param-value>org/graphity/client/writer/global-xhtml.xsl</param-value> -->
-	    <param-value>com/sample/writer/layout.xsl</param-value>
+	    <param-value>com/sample/writer/layout-xhtml.xsl</param-value>
         </init-param>
         <init-param>
             <param-name>http://rdfs.org/ns/void#sparqlEndpoint</param-name>
