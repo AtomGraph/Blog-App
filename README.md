@@ -1,7 +1,7 @@
 Sample Graphity web application
 ===============================
 
-Sample Linked Data application extending [Graphity Client]().
+Sample Linked Data application extending [Graphity Client](https://github.com/Graphity/graphity-browser).
 
 Components
 ----------
