@@ -1,19 +1,19 @@
-@prefix : <#> .
-@prefix gp: <http://processor.graphity.org/ontology#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix owl: <http://www.w3.org/2002/07/owl#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix ldp: <http://www.w3.org/ns/ldp#> .
-@prefix void: <http://rdfs.org/ns/void#> .
-@prefix sd: <http://www.w3.org/ns/sparql-service-description#> .
-@prefix lda: <http://purl.org/linked-data/api/vocab#> .
-@prefix spin: <http://spinrdf.org/spin#> .
-@prefix sp: <http://spinrdf.org/sp#> .
-@prefix spl: <http://spinrdf.org/spl#> .
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
-@prefix sioc: <http://rdfs.org/sioc/ns#> .
-@prefix dct: <http://purl.org/dc/terms/> .
+@prefix :       <#> .
+@prefix gp:     <http://processor.graphity.org/ontology#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix ldp:    <http://www.w3.org/ns/ldp#> .
+@prefix sd:     <http://www.w3.org/ns/sparql-service-description#> .
+@prefix spin:   <http://spinrdf.org/spin#> .
+@prefix sp:     <http://spinrdf.org/sp#> .
+@prefix spl:    <http://spinrdf.org/spl#> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix lda:    <http://purl.org/linked-data/api/vocab#> .
+@prefix void:   <http://rdfs.org/ns/void#> .
+@prefix sioc:   <http://rdfs.org/sioc/ns#> .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/> .
 
 : a owl:Ontology ;
     owl:imports gp:, lda: , void:, foaf: ;
@@ -87,57 +87,49 @@ ldp:pageOf a owl:ObjectProperty ;
     rdfs:subClassOf foaf:Document, lda:ItemEndpoint ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/{path: .*}{mode: (\\?mode=[^&]+)?}"
+		owl:hasValue "/{path: .+}"
 	] ;
     spin:constraint [ a gp:DescribeTemplate ] ;
     rdfs:label "Resource" ;
     rdfs:comment "Catch-all resource class (template), with layout modes enabled (optional mode query param)" ;
     rdfs:isDefinedBy : .
 
-:SPARQLResultResource a owl:Class, gp:Template ;
-    rdfs:subClassOf [ a owl:Restriction ;
-		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/sparql?query={query}"
-	] ;
-    rdfs:label "SPARQL result resource" ;
-    rdfs:isDefinedBy : .
-
 :OntologyDocResource a owl:Class, gp:Template ;
     rdfs:subClassOf foaf:Document ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/ontology{mode: (\\?mode=[^&]+)?}"
+		owl:hasValue "/ontology"
 	] ;
     spin:constraint [ a gp:ConstructResourcesTemplate ] ;
     rdfs:label "Ontology document resource" ;
     rdfs:isDefinedBy : .
 
-:ResourcesPageResource a owl:Class, gp:Template ;
-    rdfs:subClassOf foaf:Document, ldp:Page, lda:ListEndpoint ,
+:ResourceContainer a owl:Class, gp:Template ;
+    rdfs:subClassOf foaf:Document, ldp:Container, lda:ListEndpoint ,
 	[ a owl:Restriction ;
 		owl:onProperty ldp:pageOf ;
 		owl:hasValue <resources>
 	] ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/resources?limit={limit: [0-9]+}&offset={offset: [0-9]+}{order-by: (&order-by=[^&]+)?}{desc: (&desc=true)?}{mode: (&mode=[^&]+)?}"
+		owl:hasValue "/resources"
 	] ;
     spin:constraint [ a gp:DescribeResourcesTemplate ] ;
-    rdfs:label "Resources page resource" ;
+    rdfs:label "Resource container" ;
     rdfs:isDefinedBy : .
 
-:IndexContainersPageResource a owl:Class ;
-    rdfs:subClassOf foaf:Document, ldp:Page, lda:ListEndpoint ,
+:ContainersContainer a owl:Class ;
+    rdfs:subClassOf foaf:Document, ldp:Container, lda:ListEndpoint ,
 	[ a owl:Restriction ;
 		owl:onProperty ldp:pageOf ;
 		owl:hasValue <.>
 	] ,
 	[ a owl:Restriction ;
 		owl:onProperty lda:uriTemplate ;
-		owl:hasValue "/?limit={limit: [0-9]+}&offset={offset: [0-9]+}{mode: (&mode=[^&]+)?}"
-	];
+		owl:hasValue "/"
+	] ;
     spin:constraint [ a :DescribeContainersTemplate ] ;
-    rdfs:label "Containers page resource" ;
+    rdfs:label "Containers container" ;
     rdfs:isDefinedBy : .
 
 # SPIN TEMPLATES

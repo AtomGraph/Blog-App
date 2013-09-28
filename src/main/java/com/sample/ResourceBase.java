@@ -20,6 +20,7 @@ package com.sample;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.sun.jersey.api.core.ResourceConfig;
+import java.net.URI;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.Path;
 import javax.ws.rs.QueryParam;
@@ -43,11 +44,14 @@ public class ResourceBase extends org.graphity.client.model.ResourceBase
 	    @QueryParam("limit") @DefaultValue("20") Long limit,
 	    @QueryParam("offset") @DefaultValue("0") Long offset,
 	    @QueryParam("order-by") String orderBy,
-	    @QueryParam("desc") @DefaultValue("false") Boolean desc)
+	    @QueryParam("desc") @DefaultValue("false") Boolean desc,
+            @QueryParam("graph") URI graphURI,
+            @QueryParam("mode") URI mode)
     {
 	super(uriInfo, request, httpHeaders,
 		resourceConfig, sitemap, endpoint,
-		limit, offset, orderBy, desc);
+		limit, offset, orderBy, desc,
+                graphURI, mode);
     }
     
     @Override
