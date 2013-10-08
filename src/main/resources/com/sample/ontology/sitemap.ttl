@@ -89,7 +89,7 @@ ldp:pageOf a owl:ObjectProperty ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/{path: .+}"
 	] ;
-    spin:constraint [ a gp:DescribeTemplate ] ;
+    spin:query [ a gp:DescribeTemplate ] ;
     rdfs:label "Resource" ;
     rdfs:comment "Catch-all resource class (template), with layout modes enabled (optional mode query param)" ;
     rdfs:isDefinedBy : .
@@ -100,7 +100,7 @@ ldp:pageOf a owl:ObjectProperty ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/ontology"
 	] ;
-    spin:constraint [ a gp:ConstructResourcesTemplate ] ;
+    spin:query [ a gp:ConstructResourcesTemplate ] ;
     rdfs:label "Ontology document resource" ;
     rdfs:isDefinedBy : .
 
@@ -114,7 +114,7 @@ ldp:pageOf a owl:ObjectProperty ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/resources"
 	] ;
-    spin:constraint [ a gp:DescribeResourcesTemplate ] ;
+    spin:query [ a gp:DescribeResourcesTemplate ] ;
     rdfs:label "Resource container" ;
     rdfs:isDefinedBy : .
 
@@ -128,7 +128,7 @@ ldp:pageOf a owl:ObjectProperty ;
 		owl:onProperty lda:uriTemplate ;
 		owl:hasValue "/"
 	] ;
-    spin:constraint [ a :DescribeContainersTemplate ] ;
+    spin:query [ a :DescribeContainersTemplate ] ;
     rdfs:label "Containers container" ;
     rdfs:isDefinedBy : .
 

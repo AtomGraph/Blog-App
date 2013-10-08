@@ -68,12 +68,12 @@
         <dependency>
             <groupId>org.graphity</groupId>
             <artifactId>client</artifactId>
-            <version>1.0.8-SNAPSHOT</version>
+            <version>1.0.9-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.graphity</groupId>
             <artifactId>client</artifactId>
-            <version>1.0.8-SNAPSHOT</version>
+            <version>1.0.9-SNAPSHOT</version>
             <type>war</type>
         </dependency>
     </dependencies>
