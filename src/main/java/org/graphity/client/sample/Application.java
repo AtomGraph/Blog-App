@@ -15,7 +15,7 @@
  *
  */
 
-package com.sample;
+package org.graphity.client.sample;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -37,8 +37,8 @@ import org.graphity.server.auth.AuthenticationExceptionMapper;
  */
 public class Application extends ApplicationBase
 {
-    private Set<Class<?>> classes = new HashSet<Class<?>>();
-    private Set<Object> singletons = new HashSet<Object>();
+    private final Set<Class<?>> classes = new HashSet<Class<?>>();
+    private final Set<Object> singletons = new HashSet<Object>();
 
     public Application()
     {

@@ -15,7 +15,7 @@
  *
  */
 
-package com.sample;
+package org.graphity.client.sample;
 
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.Model;

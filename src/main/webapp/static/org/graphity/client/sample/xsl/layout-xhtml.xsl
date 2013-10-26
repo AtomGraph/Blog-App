@@ -49,9 +49,9 @@ xmlns:void="&void;"
 xmlns:list="&list;"
 exclude-result-prefixes="#all">
 
-    <xsl:import href="../../../org/graphity/client/writer/functions.xsl"/>
-    <xsl:import href="../../../org/graphity/client/writer/group-sort-triples.xsl"/>
-    <xsl:import href="../../../org/graphity/client/writer/local-xhtml.xsl"/>
+    <xsl:import href="../../xsl/functions.xsl"/>
+    <xsl:import href="../../xsl/group-sort-triples.xsl"/>
+    <xsl:import href="../../xsl/local-xhtml.xsl"/>
 
     <rdf:Description rdf:about="">
 	<dct:created rdf:datatype="&xsd;dateTime">2013-06-17T15:25:00+02:00</dct:created>
@@ -65,7 +65,7 @@ exclude-result-prefixes="#all">
 	</button>
 
 	<a class="brand" href="{$base-uri}">
-	    <xsl:apply-templates select="key('resources', $base-uri, $ont-model)/@rdf:about"/>
+	    <xsl:apply-templates select="key('resources', $base-uri, $ont-model)/@rdf:about" mode="gc:LabelMode"/>
 	</a>
 
 	<div id="collapsing-navbar" class="nav-collapse collapse">
