@@ -3,7 +3,7 @@
     xmlns="http://java.sun.com/xml/ns/javaee"
     xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
-    id="nxp-products" version="3.0">
+    id="graphity-sample" version="3.0">
     <display-name>Sample webapp</display-name>
     <description>Sample web application built on Graphity Client</description>
     <filter>
