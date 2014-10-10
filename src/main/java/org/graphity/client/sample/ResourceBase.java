@@ -19,11 +19,9 @@ package org.graphity.client.sample;
 
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.rdf.model.Model;
-import com.sun.jersey.api.core.ResourceConfig;
-import java.net.URI;
-import javax.ws.rs.DefaultValue;
+import com.sun.jersey.api.core.ResourceContext;
+import javax.servlet.ServletContext;
 import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Request;
@@ -35,23 +33,15 @@ import org.graphity.server.model.SPARQLEndpoint;
  *
  * @author Martynas Jusevičius <martynas@graphity.org>
  */
-@Path("{path: .*}")
-public class ResourceBase extends org.graphity.client.model.ResourceBase
+@Path("/")
+public class ResourceBase extends org.graphity.client.model.impl.ResourceBase
 {
 
-    public ResourceBase(@Context UriInfo uriInfo, @Context Request request, @Context HttpHeaders httpHeaders, @Context ResourceConfig resourceConfig,
-	    @Context OntModel sitemap, @Context SPARQLEndpoint endpoint,
-	    @QueryParam("limit") @DefaultValue("20") Long limit,
-	    @QueryParam("offset") @DefaultValue("0") Long offset,
-	    @QueryParam("order-by") String orderBy,
-	    @QueryParam("desc") @DefaultValue("false") Boolean desc,
-            @QueryParam("graph") URI graphURI,
-            @QueryParam("mode") URI mode)
+    public ResourceBase(@Context UriInfo uriInfo, @Context SPARQLEndpoint endpoint, @Context OntModel ontModel,
+            @Context Request request, @Context ServletContext servletContext, @Context HttpHeaders httpHeaders, @Context ResourceContext resourceContext)
     {
-	super(uriInfo, request, httpHeaders,
-		resourceConfig, sitemap, endpoint,
-		limit, offset, orderBy, desc,
-                graphURI, mode);
+	super(uriInfo, endpoint, ontModel,
+                request, servletContext, httpHeaders, resourceContext);
     }
     
     @Override

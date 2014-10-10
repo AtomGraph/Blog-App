@@ -1,0 +1,33 @@
+@base           <http://graphity.org/client-sample>
+
+#@prefix :       <#> .
+@prefix gcs:    <http://graphity.org/gcs#> .
+@prefix gp:     <http://graphity.org/gp#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix ldp:    <http://www.w3.org/ns/ldp#> .
+@prefix sd:     <http://www.w3.org/ns/sparql-service-description#> .
+@prefix sp:     <http://spinrdf.org/sp#> .
+@prefix spin:   <http://spinrdf.org/spin#> .
+@prefix spl:    <http://spinrdf.org/spl#> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix lda:    <http://purl.org/linked-data/api/vocab#> .
+@prefix void:   <http://rdfs.org/ns/void#> .
+@prefix sioc:   <http://rdfs.org/sioc/ns#> .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+
+<#> a owl:Ontology ;
+    owl:imports gcs:, gp:, lda: , void:, foaf: ;
+    rdfs:label "Sample sitemap" ;
+    dct:created "2013-03-09T13:53:00+03:00"^^xsd:dateTime .
+
+# RESOURCE CLASSES (GRAPHITY TEMPLATES)
+
+<#ResourceContainer> a owl:Class, gp:Template ;
+    rdfs:subClassOf foaf:Document, sioc:Container, ldp:Container, lda:ListEndpoint ;
+    gp:uriTemplate "/resources" ;
+    spin:query gcs:DescribeFromGraphWithChildren ;
+    rdfs:label "Resource container" ;
+    rdfs:isDefinedBy <#> .

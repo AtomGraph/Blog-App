@@ -3,9 +3,45 @@
     xmlns="http://java.sun.com/xml/ns/javaee"
     xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
-    id="graphity-sample" version="3.0">
+    id="client-sample" version="3.0">
     <display-name>Sample webapp</display-name>
     <description>Sample web application built on Graphity Client</description>
+    <!--
+    <context-param>
+        <param-name>http://www.w3.org/ns/sparql-service-description#endpoint</param-name>
+        <param-value>http://graphity.dydra.com/graphity/client/sparql</param-value>
+    </context-param>
+    <context-param>
+        <param-name>http://graphity.org/gs#graphStore</param-name>
+        <param-value>http://graphity.dydra.com/graphity/client/service</param-value>
+    </context-param>
+    -->
+    <!--
+    <context-param>
+        <param-name>http://jena.hpl.hp.com/Service#queryAuthUser</param-name>
+        <param-value>username</param-value>
+    </context-param>
+    <context-param>
+        <param-name>http://jena.hpl.hp.com/Service#queryAuthPwd</param-name>
+        <param-value>password</param-value>
+    </context-param>
+    -->
+    <context-param>
+        <param-name>http://graphity.org/gp#datasetLocation</param-name>
+        <param-value>org/graphity/client/sample/dataset/dataset.trig</param-value>
+    </context-param>
+    <context-param>
+        <param-name>http://graphity.org/gp#ontology</param-name>
+        <param-value>http://graphity.org/gc-sample#</param-value>
+    </context-param>
+    <context-param>
+        <param-name>http://graphity.org/gc#stylesheet</param-name>
+        <param-value>static/org/graphity/client/xsl/global-xhtml.xsl</param-value>
+    </context-param>
+    <context-param>
+        <param-name>http://graphity.org/gs#resultLimit</param-name>
+        <param-value>100</param-value>
+    </context-param>
     <filter>
         <filter-name>index</filter-name>
         <filter-class>com.sun.jersey.spi.container.servlet.ServletContainer</filter-class>
@@ -16,37 +52,6 @@
         <init-param>
             <param-name>com.sun.jersey.config.property.WebPageContentRegex</param-name>
             <param-value>/static/.*</param-value>
-        </init-param>
-        <init-param>
-            <param-name>http://processor.graphity.org/ontology#ontologyPath</param-name>
-            <param-value>ontology</param-value>
-        </init-param>
-        <init-param>
-            <param-name>http://processor.graphity.org/ontology#ontologyLocation</param-name>
-            <param-value>org/graphity/client/sample/ontology/sitemap.ttl</param-value>
-        </init-param>
-        <init-param>
-            <param-name>http://client.graphity.org/ontology#stylesheet</param-name>
-            <!-- <param-value>/static/org/graphity/client/xsl/global-xhtml.xsl</param-value> -->
-	    <param-value>/static/org/graphity/client/sample/xsl/layout-xhtml.xsl</param-value>
-        </init-param>
-	<!--
-        <init-param>
-            <param-name>http://rdfs.org/ns/void#sparqlEndpoint</param-name>
-            <param-value>http://dydra.com/graphity/client/sparql</param-value>
-        </init-param>
-        <init-param>
-            <param-name>http://jena.hpl.hp.com/Service#queryAuthUser</param-name>
-            <param-value>username</param-value>
-        </init-param>
-        <init-param>
-            <param-name>http://jena.hpl.hp.com/Service#queryAuthPwd</param-name>
-            <param-value>password</param-value>
-        </init-param>
-	-->
-        <init-param>
-            <param-name>http://server.graphity.org/ontology#resultLimit</param-name>
-            <param-value>100</param-value>
         </init-param>
     </filter>
     <filter-mapping>

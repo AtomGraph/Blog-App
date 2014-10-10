@@ -16,7 +16,7 @@ limitations under the License.
 -->
 <!DOCTYPE xsl:stylesheet [
     <!ENTITY java "http://xml.apache.org/xalan/java/">
-    <!ENTITY gc "http://client.graphity.org/ontology#">
+    <!ENTITY gc "http://graphity.org/gc#">
     <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
     <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#">
     <!ENTITY owl "http://www.w3.org/2002/07/owl#">
@@ -54,48 +54,7 @@ exclude-result-prefixes="#all">
     <xsl:import href="../../xsl/local-xhtml.xsl"/>
 
     <rdf:Description rdf:about="">
-	<dct:created rdf:datatype="&xsd;dateTime">2013-06-17T15:25:00+02:00</dct:created>
+	<dct:created rdf:datatype="&xsd;dateTime">2014-10-09T23:35:00+01:00</dct:created>
     </rdf:Description>
-
-    <xsl:template match="/" mode="gc:HeaderMode">
-	<button class="btn btn-navbar" onclick="if ($('#collapsing-navbar').hasClass('in')) $('#collapsing-navbar').removeClass('collapse in').height(0); else $('#collapsing-navbar').addClass('collapse in').height('auto');">
-	    <span class="icon-bar"></span>
-	    <span class="icon-bar"></span>
-	    <span class="icon-bar"></span>
-	</button>
-
-	<a class="brand" href="{$base-uri}">
-	    <xsl:apply-templates select="key('resources', $base-uri, $ont-model)/@rdf:about" mode="gc:LabelMode"/>
-	</a>
-
-	<div id="collapsing-navbar" class="nav-collapse collapse">
-	    <ul class="nav">
-		<!-- make menu links for all resources in the ontology, except base URI -->
-		<xsl:for-each select="key('resources-by-space', $base-uri, $ont-model)/@rdf:about[not(. = $base-uri)]">
-		    <xsl:sort select="gc:label(.)" data-type="text" order="ascending" lang="{$lang}"/>
-		    <li>
-			<xsl:if test=". = $absolute-path">
-			    <xsl:attribute name="class">active</xsl:attribute>
-			</xsl:if>
-			<xsl:apply-templates select="."/>
-		    </li>
-		</xsl:for-each>
-	    </ul>
-
-	    <xsl:if test="key('resources', $base-uri, $ont-model)/rdfs:isDefinedBy/@rdf:resource | key('resources', key('resources', $base-uri, $ont-model)/void:inDataset/@rdf:resource, $ont-model)/void:sparqlEndpoint/@rdf:resource">
-		<ul class="nav pull-right">
-		    <xsl:for-each select="key('resources', $base-uri, $ont-model)/rdfs:isDefinedBy/@rdf:resource | key('resources', key('resources', $base-uri, $ont-model)/void:inDataset/@rdf:resource, $ont-model)/void:sparqlEndpoint/@rdf:resource">
-			<xsl:sort select="gc:label(.)" data-type="text" order="ascending" lang="{$lang}"/>
-			<li>
-			    <xsl:if test=". = $absolute-path">
-				<xsl:attribute name="class">active</xsl:attribute>
-			    </xsl:if>
-			    <xsl:apply-templates select="."/>
-			</li>
-		    </xsl:for-each>
-		</ul>
-	    </xsl:if>
-	</div>
-    </xsl:template>
 
 </xsl:stylesheet>
