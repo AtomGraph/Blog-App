@@ -28,13 +28,13 @@ import org.graphity.client.ApplicationBase;
 public class Application extends ApplicationBase
 {
     private final Set<Class<?>> classes = new HashSet<Class<?>>();
-    private final Set<Object> singletons = new HashSet<Object>();
+    //private final Set<Object> singletons = new HashSet<Object>();
 
-    /*
     public Application()
     {
 	classes.add(ResourceBase.class);
 
+        /*
 	singletons.addAll(super.getSingletons());
 	singletons.add(new DataManagerProvider());
 	singletons.add(new OntologyProvider());
@@ -47,6 +47,7 @@ public class Application extends ApplicationBase
 	singletons.add(new ModelXSLTWriter()); // writes XHTML responses
 	singletons.add(new XSLTBuilderProvider()); // loads XSLT stylesheet	
 	//singletons.add(new AuthenticationExceptionMapper());
+        */
     }
     
     @Override
@@ -55,6 +56,7 @@ public class Application extends ApplicationBase
 	return classes;
     }
 
+    /*
     @Override
     public Set<Object> getSingletons()
     {

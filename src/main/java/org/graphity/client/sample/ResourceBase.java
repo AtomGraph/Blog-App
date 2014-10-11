@@ -25,7 +25,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Request;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.UriInfo;
 import org.graphity.server.model.SPARQLEndpoint;
 
@@ -45,15 +45,9 @@ public class ResourceBase extends org.graphity.client.model.impl.ResourceBase
     }
     
     @Override
-    public Response get()
+    public ResponseBuilder getResponseBuilder(Model model)
     {
-	return super.get();
-    }
-    
-    @Override
-    public Response post(Model model)
-    {
-	return Response.status(405).build();
+	return super.getResponseBuilder(model).header("X-Powered-By", "http://graphityhq.com");
     }
 
 }

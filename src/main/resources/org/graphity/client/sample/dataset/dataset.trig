@@ -8,16 +8,31 @@
 @prefix sioc:	<http://rdfs.org/sioc/ns#> .
 @prefix foaf:	<http://xmlns.com/foaf/0.1/> .
 
-<> a sioc:Site, ldp:Container, foaf:Document ;
-    dct:title "Sample webapp" ;
-    dct:description "Sample web application built on Graphity Client" ;
-    foaf:maker <http://graphityhq.com/#company> ;
-    rdfs:seeAlso <sparql>, <http://graphity.org>, <http://graphityhq.com> .
+<graphs/>
+{
 
-<resources> a ldp:Container, sioc:Container, foaf:Document ;
-    sioc:has_space <> ;
-    dct:title "Resources" ;
-    dct:description "A container with all RDF resources in the datasource" .
+    <> a sioc:Site, ldp:Container, foaf:Document ;
+        dct:title "Blog" ;
+        dct:description "Sample web application built on Graphity Client" ;
+        foaf:maker <http://graphityhq.com/#company> ;
+        rdfs:seeAlso <sparql>, <http://graphity.org>, <http://graphityhq.com> .
 
-<sparql> a foaf:Document ;
-    dct:title "SPARQL endpoint" .
+}
+
+<graphs/posts>
+{
+
+    <posts> a ldp:Container, sioc:Container, sioc:Forum, foaf:Document ;
+        sioc:has_space <> ;
+        dct:title "Posts" ;
+        dct:description "A container with all RDF resources in the datasource" .
+
+}
+
+<graphs/sparql>
+{
+
+    <sparql> a foaf:Document ;
+        dct:title "SPARQL endpoint" .
+
+}

@@ -2,6 +2,7 @@
 
 #@prefix :       <#> .
 @prefix gcs:    <http://graphity.org/gcs#> .
+@prefix gc:     <http://graphity.org/gc#> .
 @prefix gp:     <http://graphity.org/gp#> .
 @prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
@@ -19,15 +20,43 @@
 @prefix foaf:   <http://xmlns.com/foaf/0.1/> .
 
 <#> a owl:Ontology ;
-    owl:imports gcs:, gp:, lda: , void:, foaf: ;
+    owl:imports gcs:, lda: , void:, foaf: ;
     rdfs:label "Sample sitemap" ;
     dct:created "2013-03-09T13:53:00+03:00"^^xsd:dateTime .
 
 # RESOURCE CLASSES (GRAPHITY TEMPLATES)
 
-<#ResourceContainer> a owl:Class, gp:Template ;
+<#ContainerContainer> a owl:Class, gp:Template ;
+     rdfs:subClassOf gp:Resource, foaf:Document, sioc:Space, ldp:Container, lda:ListEndpoint ;
+     gp:uriTemplate "/" ;
+     spin:query gcs:DescribeFromGraphWithChildren ;
+     gp:limit 20 ;
+     gc:defaultMode gc:ListMode ;
+     # gc:mode gc:ListReadMode, gc:ListMode, gc:TableMode, gc:ThumbnailMode ;
+     rdfs:label "Homepage" ;
+     rdfs:isDefinedBy <#> .
+
+<#PostContainer> a owl:Class, gp:Template ;
     rdfs:subClassOf foaf:Document, sioc:Container, ldp:Container, lda:ListEndpoint ;
-    gp:uriTemplate "/resources" ;
+    gp:uriTemplate "/posts" ;
+    gp:limit 20 ;
+    gp:orderBy "title"^^xsd:string ;
+    gc:defaultMode gc:ListReadMode ;
+    gc:mode gc:ListReadMode, gc:ListMode, gc:TableMode, gc:ThumbnailMode, gc:CreateMode ;
     spin:query gcs:DescribeFromGraphWithChildren ;
-    rdfs:label "Resource container" ;
+    rdfs:label "Post container" ;
+    rdfs:isDefinedBy <#> .
+
+<#PostDocument> a rdfs:Class, owl:Class, gp:Template ;
+    rdfs:subClassOf foaf:Document, lda:ItemEndpoint , # <#Document>
+        [ a owl:Restriction ;
+            owl:onProperty sioc:has_container ;
+            owl:allValuesFrom <#PostContainer>
+        ] ;
+    gp:uriTemplate "/posts/{slug}" ;
+    gc:mode gc:ReadMode ;
+    gc:defaultMode gc:ReadMode ;
+    gp:cacheControl "public, max-age=3600" ;
+    spin:query gp:Describe ;
+    rdfs:label "Post document" ;
     rdfs:isDefinedBy <#> .
