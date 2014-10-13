@@ -2,7 +2,7 @@
 
 [] lm:mapping
 
-   [ lm:name "http://graphity.org/gc-sample#" ;                     lm:altName "org/graphity/client/sample/vocabulary/gc-sample.ttl" ] ,   
+   [ lm:name "http://graphity.org/blog#" ;                          lm:altName "org/graphity/blog/vocabulary/blog.ttl" ] ,   
    [ lm:name "http://graphity.org/gc#" ;                            lm:altName "org/graphity/client/vocabulary/gc.ttl" ] ,   
    [ lm:name "http://graphity.org/gc#" ;                            lm:altName "org/graphity/client/vocabulary/gc.ttl" ] ,   
    [ lm:name "http://graphity.org/gcs#" ;                           lm:altName "org/graphity/client/vocabulary/gcs.ttl" ] ,
@@ -28,7 +28,7 @@
    [ lm:name "http://spinrdf.org/spl#" ;                            lm:altName "etc/spl.spin.rdf" ] ,
    [ lm:name "http://usefulinc.com/ns/doap#" ;			    lm:altName "org/graphity/client/vocabulary/doap.owl" ] ,
 
-   [ lm:prefix "http://graphity.org/gc-sample" ;                    lm:altName "org/graphity/client/sample/vocabulary/gc-sample.ttl" ] ,
+   [ lm:prefix "http://graphity.org/blog" ;                         lm:altName "org/graphity/blog/vocabulary/blog.ttl" ] ,
    [ lm:prefix "http://graphity.org/gc" ;                           lm:altName "org/graphity/client/vocabulary/gc.ttl" ] ,
    [ lm:prefix "http://graphity.org/gcs" ;                          lm:altName "org/graphity/client/vocabulary/gcs.ttl" ] ,
    [ lm:prefix "http://graphity.org/gp" ;                           lm:altName "org/graphity/processor/vocabulary/gp.ttl" ] ,

@@ -3,40 +3,20 @@
     xmlns="http://java.sun.com/xml/ns/javaee"
     xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" 
-    id="client-sample" version="3.0">
-    <display-name>Blog engine</display-name>
+    id="graphity-blog" version="3.0">
+    <display-name>Blog app</display-name>
     <description>Sample web application built on Graphity Client</description>
-    <!--
-    <context-param>
-        <param-name>http://www.w3.org/ns/sparql-service-description#endpoint</param-name>
-        <param-value>http://graphity.dydra.com/graphity/client/sparql</param-value>
-    </context-param>
-    <context-param>
-        <param-name>http://graphity.org/gs#graphStore</param-name>
-        <param-value>http://graphity.dydra.com/graphity/client/service</param-value>
-    </context-param>
-    -->
-    <!--
-    <context-param>
-        <param-name>http://jena.hpl.hp.com/Service#queryAuthUser</param-name>
-        <param-value>username</param-value>
-    </context-param>
-    <context-param>
-        <param-name>http://jena.hpl.hp.com/Service#queryAuthPwd</param-name>
-        <param-value>password</param-value>
-    </context-param>
-    -->
     <context-param>
         <param-name>http://graphity.org/gp#datasetLocation</param-name>
-        <param-value>org/graphity/client/sample/dataset/dataset.trig</param-value>
+        <param-value>org/graphity/blog/dataset/dataset.trig</param-value>
     </context-param>
     <context-param>
         <param-name>http://graphity.org/gp#ontology</param-name>
-        <param-value>http://graphity.org/gc-sample#</param-value>
+        <param-value>http://graphity.org/blog#</param-value>
     </context-param>
     <context-param>
         <param-name>http://graphity.org/gc#stylesheet</param-name>
-        <param-value>static/org/graphity/client/sample/xsl/layout-xhtml.xsl</param-value>
+        <param-value>static/org/graphity/blog/xsl/layout-xhtml.xsl</param-value>
     </context-param>
     <context-param>
         <param-name>http://graphity.org/gs#resultLimit</param-name>
@@ -47,7 +27,7 @@
         <filter-class>com.sun.jersey.spi.container.servlet.ServletContainer</filter-class>
         <init-param>
             <param-name>javax.ws.rs.Application</param-name>
-            <param-value>org.graphity.client.sample.Application</param-value>
+            <param-value>org.graphity.blog.Application</param-value>
         </init-param>
         <init-param>
             <param-name>com.sun.jersey.config.property.WebPageContentRegex</param-name>

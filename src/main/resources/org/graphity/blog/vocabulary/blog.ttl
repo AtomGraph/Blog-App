@@ -1,4 +1,4 @@
-@base           <http://graphity.org/client-sample>
+@base           <http://graphity.org/blog>
 
 #@prefix :       <#> .
 @prefix gcs:    <http://graphity.org/gcs#> .
@@ -21,7 +21,7 @@
 
 <#> a owl:Ontology ;
     owl:imports gcs:, lda: , void:, foaf: ;
-    rdfs:label "Sample sitemap" ;
+    rdfs:label "Blog sitemap" ;
     dct:created "2013-03-09T13:53:00+03:00"^^xsd:dateTime .
 
 # RESOURCE CLASSES (GRAPHITY TEMPLATES)
@@ -29,7 +29,7 @@
 <#ContainerContainer> a owl:Class, gp:Template ;
      rdfs:subClassOf gp:Resource, foaf:Document, sioc:Space, ldp:Container, lda:ListEndpoint ;
      gp:uriTemplate "/" ;
-     spin:query gcs:DescribeFromGraphWithChildren ;
+     spin:query gcs:DescribeWithChildren ;
      gp:limit 20 ;
      gc:defaultMode gc:ListMode ;
      # gc:mode gc:ListReadMode, gc:ListMode, gc:TableMode, gc:ThumbnailMode ;
@@ -43,7 +43,7 @@
     gp:orderBy "title"^^xsd:string ;
     gc:defaultMode gc:ListReadMode ;
     gc:mode gc:ListReadMode, gc:ListMode, gc:TableMode, gc:ThumbnailMode, gc:CreateMode ;
-    spin:query gcs:DescribeFromGraphWithChildren ;
+    spin:query gcs:DescribeWithChildren ;
     rdfs:label "Post container" ;
     rdfs:isDefinedBy <#> .
 

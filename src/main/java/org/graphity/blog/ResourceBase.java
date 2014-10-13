@@ -15,9 +15,9 @@
  *
  */
 
-package org.graphity.client.sample;
+package org.graphity.blog;
 
-import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.sun.jersey.api.core.ResourceContext;
 import javax.servlet.ServletContext;
@@ -37,10 +37,10 @@ import org.graphity.server.model.SPARQLEndpoint;
 public class ResourceBase extends org.graphity.client.model.impl.ResourceBase
 {
 
-    public ResourceBase(@Context UriInfo uriInfo, @Context SPARQLEndpoint endpoint, @Context OntModel ontModel,
+    public ResourceBase(@Context UriInfo uriInfo, @Context SPARQLEndpoint endpoint, @Context OntClass matchedOntClass,
             @Context Request request, @Context ServletContext servletContext, @Context HttpHeaders httpHeaders, @Context ResourceContext resourceContext)
     {
-	super(uriInfo, endpoint, ontModel,
+	super(uriInfo, endpoint, matchedOntClass,
                 request, servletContext, httpHeaders, resourceContext);
     }
     

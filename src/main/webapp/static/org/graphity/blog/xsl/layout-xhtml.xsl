@@ -51,9 +51,9 @@ xmlns:void="&void;"
 xmlns:list="&list;"
 exclude-result-prefixes="#all">
 
-    <xsl:import href="../../xsl/functions.xsl"/>
-    <xsl:import href="../../xsl/group-sort-triples.xsl"/>
-    <xsl:import href="../../xsl/local-xhtml.xsl"/>
+    <xsl:import href="../../client/xsl/functions.xsl"/>
+    <xsl:import href="../../client/xsl/group-sort-triples.xsl"/>
+    <xsl:import href="../../client/xsl/local-xhtml.xsl"/>
 
     <rdf:Description rdf:about="">
 	<dct:created rdf:datatype="&xsd;dateTime">2014-10-09T23:35:00+01:00</dct:created>

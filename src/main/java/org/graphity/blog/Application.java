@@ -15,7 +15,7 @@
  *
  */
 
-package org.graphity.client.sample;
+package org.graphity.blog;
 
 import java.util.HashSet;
 import java.util.Set;
