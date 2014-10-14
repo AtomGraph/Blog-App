@@ -26,7 +26,7 @@
 
 # RESOURCE CLASSES (GRAPHITY TEMPLATES)
 
-<#ContainerContainer> a owl:Class, gp:Template ;
+<#Space> a owl:Class, gp:Template ;
      rdfs:subClassOf gp:Resource, foaf:Document, sioc:Space, ldp:Container, lda:ListEndpoint ;
      gp:uriTemplate "/" ;
      spin:query gcs:DescribeWithChildren ;
@@ -54,6 +54,7 @@
             owl:allValuesFrom <#PostContainer>
         ] ;
     gp:uriTemplate "/posts/{slug}" ;
+    gp:skolemTemplate "/{slug}" ;
     gc:mode gc:ReadMode ;
     gc:defaultMode gc:ReadMode ;
     gp:cacheControl "public, max-age=3600" ;

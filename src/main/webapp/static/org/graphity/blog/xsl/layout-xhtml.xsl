@@ -55,6 +55,8 @@ exclude-result-prefixes="#all">
     <xsl:import href="../../client/xsl/group-sort-triples.xsl"/>
     <xsl:import href="../../client/xsl/local-xhtml.xsl"/>
 
+    <xsl:preserve-space elements="sioc:content"/>
+
     <rdf:Description rdf:about="">
 	<dct:created rdf:datatype="&xsd;dateTime">2014-10-09T23:35:00+01:00</dct:created>
     </rdf:Description>
@@ -87,8 +89,6 @@ exclude-result-prefixes="#all">
 	</form>
     </xsl:template>
 
-    <xsl:preserve-space elements="dct:title sioc:content gp:slug"/>
-
     <xsl:template match="*[rdf:type/@rdf:resource = '&sioc;Container']" mode="gc:CreateMode" priority="1">
         <xsl:apply-templates select="key('resources', 'this', document('posts/template.rdf'))" mode="gc:EditMode"/>
     </xsl:template>
@@ -106,41 +106,6 @@ exclude-result-prefixes="#all">
                 <span class="help-inline">Literal</span>
             </xsl:otherwise>
         </xsl:choose>
-    </xsl:template>
-    
-    <xsl:template match="rdf:type" mode="gc:EditMode">
-        <xsl:apply-templates select="." mode="gc:InputMode">
-            <xsl:with-param name="type" select="'hidden'"/>
-        </xsl:apply-templates>
-        <xsl:apply-templates select="node() | @rdf:resource | @rdf:nodeID" mode="#current">
-            <xsl:with-param name="type" select="'hidden'"/>
-        </xsl:apply-templates>
-        <xsl:apply-templates select="@xml:lang | @rdf:datatype" mode="#current">
-            <xsl:with-param name="type" select="'hidden'"/>
-        </xsl:apply-templates>        
-    </xsl:template>
-
-    <xsl:template match="gp:slug/@rdf:datatype" mode="gc:EditMode">
-        <xsl:next-match>
-            <xsl:with-param name="type" select="'hidden'"/>
-        </xsl:next-match>
-    </xsl:template>
-
-    <!-- remove spaces -->
-    <xsl:template match="text()" mode="gc:InputMode">
-	<xsl:param name="type" select="'text'" as="xs:string"/>
-	<xsl:param name="id" as="xs:string?"/>
-	<xsl:param name="class" as="xs:string?"/>
-	<xsl:param name="disabled" select="false()" as="xs:boolean"/>
-
-	<xsl:call-template name="gc:InputTemplate">
-	    <xsl:with-param name="name" select="'ol'"/>
-	    <xsl:with-param name="type" select="$type"/>
-	    <xsl:with-param name="id" select="$id"/>
-	    <xsl:with-param name="class" select="$class"/>
-	    <xsl:with-param name="disabled" select="$disabled"/>
-	    <xsl:with-param name="value" select="normalize-space(.)"/>
-	</xsl:call-template>
     </xsl:template>
 
 </xsl:stylesheet>
