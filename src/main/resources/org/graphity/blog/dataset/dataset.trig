@@ -17,7 +17,7 @@
 <posts> a ldp:Container, sioc:Container, sioc:Forum, foaf:Document ;
     sioc:has_space <> ;
     dct:title "Posts" ;
-    dct:description "A container with all RDF resources in the datasource" .
+    dct:description "A container with all blog posts" .
 
 <sparql> a foaf:Document ;
     dct:title "SPARQL endpoint" .
