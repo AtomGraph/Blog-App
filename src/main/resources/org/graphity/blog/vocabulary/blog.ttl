@@ -62,7 +62,7 @@
     spin:query gp:Describe ;
     spin:constraint [ a dqc:MissingProperties ;
 	    sp:arg1 <#PostDocument> ;
-	    sp:arg2 <#slug>
+	    sp:arg2 gp:slug
 	] ,
         [ a dqc:MissingProperties ;
 	    sp:arg1 <#PostDocument> ;
