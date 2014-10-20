@@ -89,10 +89,15 @@ exclude-result-prefixes="#all">
 	</form>
     </xsl:template>
 
-    <xsl:template match="*[rdf:type/@rdf:resource = '&sioc;Container']" mode="gc:CreateMode" priority="1">
-        <xsl:apply-templates select="key('resources', 'this', document('posts/template.rdf'))" mode="gc:EditMode"/>
-    </xsl:template>
+    <xsl:template match="*[rdf:type/@rdf:resource = ('&sioc;Space', '&sioc;Container')]" mode="gc:CreateMode" priority="1">
+        <xsl:param name="path" select="substring-after($absolute-path, $base-uri)" as="xs:string"/>
+        <xsl:param name="template-uri" select="if (rdf:type/@rdf:resource = '&sioc;Container') then concat($path, '/', 'template.rdf') else 'template.rdf'" as="xs:string"/>
 
+        <xsl:apply-imports>
+            <xsl:with-param name="template" select="document($template-uri)" as="document-node()"/>
+        </xsl:apply-imports>
+    </xsl:template>
+    
     <xsl:template match="sioc:content/text()" mode="gc:EditMode">
         <textarea name="ol" id="{generate-id(..)}" rows="10" style="font-family: monospace;">
             <xsl:value-of select="."/>

@@ -49,7 +49,7 @@
     rdfs:isDefinedBy <#> .
 
 <#PostDocument> a rdfs:Class, owl:Class, gp:Template ;
-    rdfs:subClassOf foaf:Document, lda:ItemEndpoint , # <#Document>
+    rdfs:subClassOf foaf:Document, lda:ItemEndpoint ,
         [ a owl:Restriction ;
             owl:onProperty sioc:has_container ;
             owl:allValuesFrom <#PostContainer>
