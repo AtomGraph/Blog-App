@@ -20,4 +20,5 @@
     dct:description "A container with all blog posts" .
 
 <sparql> a foaf:Document ;
+    sioc:has_space <> ;
     dct:title "SPARQL endpoint" .
