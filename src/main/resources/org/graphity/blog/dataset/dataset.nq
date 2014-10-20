@@ -1,18 +1,19 @@
-<http://localhost:8080/blog-app/> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://rdfs.org/sioc/ns#Site> .
-<http://localhost:8080/blog-app/> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/ldp#Container> .
-<http://localhost:8080/blog-app/> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Document> .
-<http://localhost:8080/blog-app/> <http://purl.org/dc/terms/title> "Blog" .
-<http://localhost:8080/blog-app/> <http://purl.org/dc/terms/description> "Sample web application built on Graphity Client" .
-<http://localhost:8080/blog-app/> <http://xmlns.com/foaf/0.1/maker> <http://graphityhq.com/#company> .
-<http://localhost:8080/blog-app/> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <http://localhost:8080/blog-app/sparql> .
-<http://localhost:8080/blog-app/> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <http://graphity.org> .
-<http://localhost:8080/blog-app/> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <http://graphityhq.com> .
-<http://localhost:8080/blog-app/posts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/ldp#Container> .
-<http://localhost:8080/blog-app/posts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://rdfs.org/sioc/ns#Container> .
-<http://localhost:8080/blog-app/posts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://rdfs.org/sioc/ns#Forum> .
-<http://localhost:8080/blog-app/posts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Document> .
-<http://localhost:8080/blog-app/posts> <http://rdfs.org/sioc/ns#has_space> <http://localhost:8080/blog-app/> .
-<http://localhost:8080/blog-app/posts> <http://purl.org/dc/terms/title> "Posts" .
-<http://localhost:8080/blog-app/posts> <http://purl.org/dc/terms/description> "A container with all RDF resources in the datasource" .
-<http://localhost:8080/blog-app/sparql> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Document> .
-<http://localhost:8080/blog-app/sparql> <http://purl.org/dc/terms/title> "SPARQL endpoint" .
+<http://linkeddatahub.com/blog-app/> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://rdfs.org/sioc/ns#Site> .
+<http://linkeddatahub.com/blog-app/> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/ldp#Container> .
+<http://linkeddatahub.com/blog-app/> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Document> .
+<http://linkeddatahub.com/blog-app/> <http://purl.org/dc/terms/title> "Blog" .
+<http://linkeddatahub.com/blog-app/> <http://purl.org/dc/terms/description> "Sample web application built on Graphity Client" .
+<http://linkeddatahub.com/blog-app/> <http://xmlns.com/foaf/0.1/maker> <http://graphityhq.com/#company> .
+<http://linkeddatahub.com/blog-app/> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <http://linkeddatahub.com/blog-app/sparql> .
+<http://linkeddatahub.com/blog-app/> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <http://graphity.org> .
+<http://linkeddatahub.com/blog-app/> <http://www.w3.org/2000/01/rdf-schema#seeAlso> <http://graphityhq.com> .
+<http://linkeddatahub.com/blog-app/posts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/ns/ldp#Container> .
+<http://linkeddatahub.com/blog-app/posts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://rdfs.org/sioc/ns#Container> .
+<http://linkeddatahub.com/blog-app/posts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://rdfs.org/sioc/ns#Forum> .
+<http://linkeddatahub.com/blog-app/posts> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Document> .
+<http://linkeddatahub.com/blog-app/posts> <http://rdfs.org/sioc/ns#has_space> <http://linkeddatahub.com/blog-app/> .
+<http://linkeddatahub.com/blog-app/posts> <http://purl.org/dc/terms/title> "Posts" .
+<http://linkeddatahub.com/blog-app/posts> <http://purl.org/dc/terms/description> "A container with all blog posts" .
+<http://linkeddatahub.com/blog-app/sparql> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Document> .
+<http://linkeddatahub.com/blog-app/sparql> <http://rdfs.org/sioc/ns#has_space> <http://linkeddatahub.com/blog-app/> .
+<http://linkeddatahub.com/blog-app/sparql> <http://purl.org/dc/terms/title> "SPARQL endpoint" .
