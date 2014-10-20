@@ -100,7 +100,7 @@ exclude-result-prefixes="#all">
     
     <xsl:template match="sioc:content/text()" mode="gc:EditMode">
         <textarea name="ol" id="{generate-id(..)}" rows="10" style="font-family: monospace;">
-            <xsl:value-of select="."/>
+            <xsl:value-of select="normalize-space(.)"/>
         </textarea>
         
         <xsl:choose>
