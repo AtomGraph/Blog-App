@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Context antiJARLocking="true" path="/blog-app"/>
+<Context antiJARLocking="true" path="/blog-app">
+    <!--
+    <Parameter name="http://www.w3.org/ns/sparql-service-description#endpoint" value="http://graphity.dydra.com/graphity/blog-app/sparql" override="false"/>
+    <Parameter name="http://jena.hpl.hp.com/Service#queryAuthUser" value="username" override="false"/>
+    <Parameter name="http://jena.hpl.hp.com/Service#queryAuthPwd" value="password" override="false"/>
+    -->
+</Context>

@@ -13,6 +13,7 @@
 @prefix sp:     <http://spinrdf.org/sp#> .
 @prefix spin:   <http://spinrdf.org/spin#> .
 @prefix spl:    <http://spinrdf.org/spl#> .
+@prefix dqc:	<http://semwebquality.org/ontologies/dq-constraints#> .
 @prefix dct:    <http://purl.org/dc/terms/> .
 @prefix lda:    <http://purl.org/linked-data/api/vocab#> .
 @prefix void:   <http://rdfs.org/ns/void#> .
@@ -20,7 +21,7 @@
 @prefix foaf:   <http://xmlns.com/foaf/0.1/> .
 
 <#> a owl:Ontology ;
-    owl:imports gcs:, lda: , void:, foaf: ;
+    owl:imports gcs:, lda: , void:, foaf:, dqc: ;
     rdfs:label "Blog sitemap" ;
     dct:created "2013-03-09T13:53:00+03:00"^^xsd:dateTime .
 
@@ -29,7 +30,7 @@
 <#Space> a owl:Class, gp:Template ;
      rdfs:subClassOf gp:Resource, foaf:Document, sioc:Space, ldp:Container, lda:ListEndpoint ;
      gp:uriTemplate "/" ;
-     spin:query gcs:DescribeWithChildren ;
+     spin:query gp:DescribeWithChildren ;
      gp:limit 20 ;
      gc:defaultMode gc:ListMode ;
      # gc:mode gc:ListReadMode, gc:ListMode, gc:TableMode, gc:ThumbnailMode ;
@@ -43,7 +44,7 @@
     gp:orderBy "title"^^xsd:string ;
     gc:defaultMode gc:ListReadMode ;
     gc:mode gc:ListReadMode, gc:ListMode, gc:TableMode, gc:ThumbnailMode, gc:CreateMode ;
-    spin:query gcs:DescribeWithChildren ;
+    spin:query gp:DescribeWithChildren ;
     rdfs:label "Post container" ;
     rdfs:isDefinedBy <#> .
 
@@ -59,5 +60,17 @@
     gc:defaultMode gc:ReadMode ;
     gp:cacheControl "public, max-age=3600" ;
     spin:query gp:Describe ;
+    spin:constraint [ a dqc:MissingProperties ;
+	    sp:arg1 <#PostDocument> ;
+	    sp:arg2 <#slug>
+	] ,
+        [ a dqc:MissingProperties ;
+	    sp:arg1 <#PostDocument> ;
+	    sp:arg2 dct:title
+	] ,
+        [ a dqc:MissingProperties ;
+	    sp:arg1 <#PostDocument> ;
+	    sp:arg2 sioc:content
+	] ;
     rdfs:label "Post document" ;
     rdfs:isDefinedBy <#> .
