@@ -8,6 +8,7 @@
 @prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
 @prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
 @prefix ldp:    <http://www.w3.org/ns/ldp#> .
 @prefix sd:     <http://www.w3.org/ns/sparql-service-description#> .
 @prefix sp:     <http://spinrdf.org/sp#> .
@@ -23,12 +24,12 @@
 <#> a owl:Ontology ;
     owl:imports gcs:, lda: , void:, foaf:, dqc: ;
     rdfs:label "Blog sitemap" ;
-    dct:created "2013-03-09T13:53:00+03:00"^^xsd:dateTime .
+    dct:created "2014-10-21T01:53:00+01:00"^^xsd:dateTime .
 
 # RESOURCE CLASSES (GRAPHITY TEMPLATES)
 
-<#Space> a owl:Class, gp:Template ;
-     rdfs:subClassOf gp:Resource, foaf:Document, sioc:Space, ldp:Container, lda:ListEndpoint ;
+<#Site> a owl:Class, gp:Template ;
+     rdfs:subClassOf gp:Space, foaf:Document, sioc:Space, ldp:Container, lda:ListEndpoint ;
      gp:uriTemplate "/" ;
      spin:query gp:DescribeWithChildren ;
      gp:limit 20 ;
@@ -37,8 +38,10 @@
      rdfs:label "Homepage" ;
      rdfs:isDefinedBy <#> .
 
-<#PostContainer> a owl:Class, gp:Template ;
-    rdfs:subClassOf foaf:Document, sioc:Container, ldp:Container, lda:ListEndpoint ;
+# posts
+
+<#Forum> a owl:Class, gp:Template ;
+    rdfs:subClassOf foaf:Document, gp:Container, sioc:Forum, ldp:Container, lda:ListEndpoint ;
     gp:uriTemplate "/posts" ;
     gp:limit 20 ;
     gp:orderBy "title"^^xsd:string ;
@@ -48,11 +51,11 @@
     rdfs:label "Post container" ;
     rdfs:isDefinedBy <#> .
 
-<#PostDocument> a rdfs:Class, owl:Class, gp:Template ;
-    rdfs:subClassOf foaf:Document, lda:ItemEndpoint ,
+<#Post> a rdfs:Class, owl:Class, gp:Template ;
+    rdfs:subClassOf foaf:Document, gp:Item, sioc:Post, lda:ItemEndpoint ,
         [ a owl:Restriction ;
             owl:onProperty sioc:has_container ;
-            owl:allValuesFrom <#PostContainer>
+            owl:allValuesFrom <#Forum>
         ] ;
     gp:uriTemplate "/posts/{slug}" ;
     gp:skolemTemplate "/{slug}" ;
@@ -61,16 +64,62 @@
     gp:cacheControl "public, max-age=3600" ;
     spin:query gp:Describe ;
     spin:constraint [ a dqc:MissingProperties ;
-	    sp:arg1 <#PostDocument> ;
+	    sp:arg1 <#Post> ;
 	    sp:arg2 gp:slug
 	] ,
         [ a dqc:MissingProperties ;
-	    sp:arg1 <#PostDocument> ;
+	    sp:arg1 <#Post> ;
 	    sp:arg2 dct:title
 	] ,
         [ a dqc:MissingProperties ;
-	    sp:arg1 <#PostDocument> ;
+	    sp:arg1 <#Post> ;
 	    sp:arg2 sioc:content
 	] ;
     rdfs:label "Post document" ;
+    rdfs:isDefinedBy <#> .
+
+# categories
+
+<#CategoryContainer> a owl:Class, gp:Template ;
+    rdfs:subClassOf foaf:Document, gp:Container, sioc:Container, ldp:Container, lda:ListEndpoint ;
+    gp:uriTemplate "/categories" ;
+    gp:limit 20 ;
+    gp:orderBy "prefLabel"^^xsd:string ;
+    gc:defaultMode gc:ListReadMode ;
+    gc:mode gc:ListReadMode, gc:ListMode, gc:TableMode, gc:ThumbnailMode, gc:CreateMode ;
+    spin:query gp:DescribeWithChildren ;
+    rdfs:label "Category container" ;
+    rdfs:isDefinedBy <#> .
+
+<#CategoryDocument> a rdfs:Class, owl:Class, gp:Template ;
+    rdfs:subClassOf foaf:Document, gp:Item, sioc:Item, lda:ItemEndpoint ,
+        [ a owl:Restriction ;
+            owl:onProperty sioc:has_container ;
+            owl:allValuesFrom <#CategoryContainer>
+        ] ;
+    gp:uriTemplate "/categories/{slug}" ;
+    gp:skolemTemplate "/{slug}" ;
+    gc:mode gc:ReadMode ;
+    gc:defaultMode gc:ReadMode ;
+    gp:cacheControl "public, max-age=3600" ;
+    spin:query gp:DescribeWithTopic ;
+    spin:constraint [ a dqc:MissingProperties ;
+	    sp:arg1 <#CategoryDocument> ;
+	    sp:arg2 gp:slug
+	] ;
+    rdfs:label "Category document" ;
+    rdfs:isDefinedBy <#> .
+
+<#Category> a rdfs:Class, owl:Class ;
+    rdfs:subClassOf skos:Concept,
+        [ a owl:Restriction ;
+            owl:onProperty foaf:isPrimaryTopicOf ;
+            owl:allValuesFrom <#CategoryDocument>
+	] ;
+    gp:skolemTemplate "/{isPrimaryTopicOf.slug}" ;
+    spin:constraint [ a dqc:MissingProperties ;
+	    sp:arg1 <#Category> ;
+	    sp:arg2 skos:prefLabel
+	] ;
+    rdfs:label "Category" ;
     rdfs:isDefinedBy <#> .

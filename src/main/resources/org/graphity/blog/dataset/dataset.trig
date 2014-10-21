@@ -7,17 +7,23 @@
 @prefix void:	<http://rdfs.org/ns/void#> .
 @prefix sioc:	<http://rdfs.org/sioc/ns#> .
 @prefix foaf:	<http://xmlns.com/foaf/0.1/> .
+@prefix blog:   <http://graphity.org/blog#> .
 
-<> a sioc:Site, ldp:Container, foaf:Document ;
+<> a blog:Site, sioc:Site, ldp:Container, foaf:Document ;
     dct:title "Blog" ;
     dct:description "Sample web application built on Graphity Client" ;
     foaf:maker <http://graphityhq.com/#company> ;
     rdfs:seeAlso <sparql>, <http://graphity.org>, <http://graphityhq.com> .
 
-<posts> a ldp:Container, sioc:Container, sioc:Forum, foaf:Document ;
+<posts> a blog:Forum, ldp:Container, sioc:Forum, sioc:Container, foaf:Document ;
     sioc:has_space <> ;
     dct:title "Posts" ;
     dct:description "A container with all blog posts" .
+
+<categories> a blog:CategoryContainer, ldp:Container, sioc:Container, foaf:Document ;
+    sioc:has_space <> ;
+    dct:title "Categories" ;
+    dct:description "A container with all categories" .
 
 <sparql> a foaf:Document ;
     sioc:has_space <> ;

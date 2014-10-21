@@ -20,15 +20,15 @@ limitations under the License.
     <!ENTITY gp     "http://graphity.org/gp#">
     <!ENTITY rdf    "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
     <!ENTITY rdfs   "http://www.w3.org/2000/01/rdf-schema#">
-    <!ENTITY owl    "http://www.w3.org/2002/07/owl#">
-    <!ENTITY sparql "http://www.w3.org/2005/sparql-results#">
     <!ENTITY xsd    "http://www.w3.org/2001/XMLSchema#">
+    <!ENTITY owl    "http://www.w3.org/2002/07/owl#">
+    <!ENTITY skos   "http://www.w3.org/2004/02/skos/core#">
+    <!ENTITY sparql "http://www.w3.org/2005/sparql-results#">
+    <!ENTITY ldp    "http://www.w3.org/ns/ldp#">
     <!ENTITY dct    "http://purl.org/dc/terms/">
     <!ENTITY foaf   "http://xmlns.com/foaf/0.1/">
     <!ENTITY sioc   "http://rdfs.org/sioc/ns#">
     <!ENTITY sp     "http://spinrdf.org/sp#">
-    <!ENTITY ldp    "http://www.w3.org/ns/ldp#">
-    <!ENTITY void   "http://rdfs.org/ns/void#">
     <!ENTITY list   "http://jena.hpl.hp.com/ARQ/list#">
 ]>
 <xsl:stylesheet version="2.0"
@@ -42,12 +42,12 @@ xmlns:rdf="&rdf;"
 xmlns:rdfs="&rdfs;"
 xmlns:owl="&owl;"
 xmlns:sparql="&sparql;"
+xmlns:skos="&skos;"
 xmlns:dct="&dct;"
 xmlns:foaf="&foaf;"
 xmlns:sioc="&sioc;"
 xmlns:sp="&sp;"
 xmlns:ldp="&ldp;"
-xmlns:void="&void;"
 xmlns:list="&list;"
 exclude-result-prefixes="#all">
 
@@ -55,7 +55,7 @@ exclude-result-prefixes="#all">
     <xsl:import href="../../client/xsl/group-sort-triples.xsl"/>
     <xsl:import href="../../client/xsl/local-xhtml.xsl"/>
 
-    <xsl:preserve-space elements="sioc:content"/>
+    <xsl:preserve-space elements="sioc:content skos:prefLabel"/>
 
     <rdf:Description rdf:about="">
 	<dct:created rdf:datatype="&xsd;dateTime">2014-10-09T23:35:00+01:00</dct:created>
