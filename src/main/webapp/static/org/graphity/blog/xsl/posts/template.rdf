@@ -15,5 +15,6 @@
         <gp:slug rdf:datatype="&xsd;string"> </gp:slug>
         <dct:title> </dct:title>
         <sioc:content> </sioc:content>
+        <dct:subject rdf:nodeID="typeahead"/>
     </rdf:Description>
 </rdf:RDF>
