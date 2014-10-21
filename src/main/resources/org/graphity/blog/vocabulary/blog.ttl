@@ -59,7 +59,7 @@
         ] ;
     gp:uriTemplate "/posts/{slug}" ;
     gp:skolemTemplate "/{slug}" ;
-    gc:mode gc:ReadMode ;
+    gc:mode gc:ReadMode, gc:EditMode ;
     gc:defaultMode gc:ReadMode ;
     gp:cacheControl "public, max-age=3600" ;
     spin:query gp:Describe ;
@@ -99,7 +99,7 @@
         ] ;
     gp:uriTemplate "/categories/{slug}" ;
     gp:skolemTemplate "/{slug}" ;
-    gc:mode gc:ReadMode ;
+    gc:mode gc:ReadMode, gc:EditMode ;
     gc:defaultMode gc:ReadMode ;
     gp:cacheControl "public, max-age=3600" ;
     spin:query gp:DescribeWithTopic ;

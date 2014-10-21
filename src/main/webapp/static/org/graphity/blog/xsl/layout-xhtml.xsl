@@ -62,7 +62,13 @@ exclude-result-prefixes="#all">
     </rdf:Description>
 
     <xsl:template match="*[starts-with(@rdf:about, $base-uri)]" mode="gc:ModeToggleMode" priority="1">
-        <!-- <xsl:apply-imports/> -->
+        <xsl:if test="not($mode = '&gc;EditMode') and not(rdf:type/@rdf:resource = '&sioc;Container')">
+            <div class="pull-right">
+                <a class="btn btn-primary" href="{gc:document-uri(@rdf:about)}{gc:query-string((), xs:anyURI('&gc;EditMode'))}">
+                    <xsl:apply-templates select="key('resources', '&gc;EditMode', document('&gc;'))" mode="gc:LabelMode"/>
+                </a>                        
+            </div>
+        </xsl:if>
         
         <xsl:if test="not($mode = '&gc;CreateMode') and rdf:type/@rdf:resource = '&sioc;Container'">
             <div class="pull-right">
