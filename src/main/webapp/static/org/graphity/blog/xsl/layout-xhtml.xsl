@@ -29,6 +29,7 @@ limitations under the License.
     <!ENTITY foaf   "http://xmlns.com/foaf/0.1/">
     <!ENTITY sioc   "http://rdfs.org/sioc/ns#">
     <!ENTITY sp     "http://spinrdf.org/sp#">
+    <!ENTITY spin   "http://spinrdf.org/spin#">
     <!ENTITY list   "http://jena.hpl.hp.com/ARQ/list#">
 ]>
 <xsl:stylesheet version="2.0"
@@ -79,6 +80,7 @@ exclude-result-prefixes="#all">
         </xsl:if>
     </xsl:template>
 
+    <!--
     <xsl:template match="rdf:RDF[$absolute-path = resolve-uri('posts', $base-uri)]" mode="gc:CreateMode" priority="1">
         <form class="form-horizontal" method="post" action="{$absolute-path}?mode={encode-for-uri($mode)}" accept-charset="UTF-8">
 	    <xsl:comment>This form uses RDF/POST encoding: http://www.lsrn.org/semweb/rdfpost.html</xsl:comment>
@@ -94,16 +96,32 @@ exclude-result-prefixes="#all">
 	    </div>
 	</form>
     </xsl:template>
-
+    -->
+    
     <xsl:template match="*[rdf:type/@rdf:resource = ('&sioc;Space', '&sioc;Container')]" mode="gc:CreateMode" priority="1">
         <xsl:param name="path" select="substring-after($absolute-path, $base-uri)" as="xs:string"/>
         <xsl:param name="template-uri" select="if (rdf:type/@rdf:resource = '&sioc;Container') then concat($path, '/', 'template.rdf') else 'template.rdf'" as="xs:string"/>
+?<xsl:value-of select="$template-uri"/>?
 
         <xsl:apply-imports>
             <xsl:with-param name="template" select="document($template-uri)" as="document-node()"/>
         </xsl:apply-imports>
     </xsl:template>
-    
+
+    <xsl:template match="*[rdf:type/@rdf:resource = '&spin;ConstraintViolation']" mode="gc:EditMode" priority="1"/>
+
+    <xsl:template match="*[*][@rdf:about] | *[*][@rdf:nodeID]" mode="gc:EditMode">
+        <xsl:param name="path" select="substring-after(sioc:has_container/@rdf:resource, $base-uri)" as="xs:string"/>
+        <xsl:param name="template-uri" select="concat('/', $path, '/', 'template.rdf')" as="xs:string"/>
+        <xsl:param name="template" select="document($template-uri, document(''))" as="document-node()"/>
+?<xsl:value-of select="$template-uri"/>?
+        
+        <xsl:variable name="result-doc" select="/"/>
+        <xsl:apply-templates select="key('resources', ('this', 'thing'), $template)" mode="#current">
+            <xsl:with-param name="instance" select="."/>
+        </xsl:apply-templates>
+    </xsl:template>
+
     <xsl:template match="sioc:content/text()" mode="gc:EditMode">
         <textarea name="ol" id="{generate-id(..)}" rows="10" style="font-family: monospace;">
             <xsl:value-of select="normalize-space(.)"/>
@@ -129,5 +147,19 @@ exclude-result-prefixes="#all">
 
         <span class="help-inline">Resource</span>
     </xsl:template>
+
+    <!--
+    <xsl:template match="sioc:has_container" mode="gc:EditMode">
+        <xsl:apply-templates select="." mode="gc:InputMode">
+            <xsl:with-param name="type" select="'hidden'"/>
+        </xsl:apply-templates>
+        <xsl:apply-templates select="node() | @rdf:resource | @rdf:nodeID" mode="#current">
+            <xsl:with-param name="type" select="'hidden'"/>
+        </xsl:apply-templates>
+        <xsl:apply-templates select="@xml:lang | @rdf:datatype" mode="#current">
+            <xsl:with-param name="type" select="'hidden'"/>
+        </xsl:apply-templates>        
+    </xsl:template>
+    -->
     
 </xsl:stylesheet>

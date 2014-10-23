@@ -31,8 +31,12 @@
         </init-param>
         <init-param>
             <param-name>com.sun.jersey.config.property.WebPageContentRegex</param-name>
-            <param-value>/static/.*</param-value>
+            <param-value>(/static/.*)|(/robots\.txt)</param-value>
         </init-param>
+        <init-param>
+	    <param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>
+	    <param-value>org.graphity.client.filter.PostReplaceFilter</param-value>
+	</init-param>	
     </filter>
     <filter-mapping>
         <filter-name>index</filter-name>
