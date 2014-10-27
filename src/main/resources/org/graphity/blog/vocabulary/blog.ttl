@@ -63,6 +63,7 @@
     gc:defaultMode gc:ReadMode ;
     gp:cacheControl "public, max-age=3600" ;
     spin:query gp:Describe ;
+    spin:update gp:Delete ;
     spin:constraint [ a dqc:MissingProperties ;
 	    sp:arg1 <#Post> ;
 	    sp:arg2 gp:slug
@@ -103,6 +104,7 @@
     gc:defaultMode gc:ReadMode ;
     gp:cacheControl "public, max-age=3600" ;
     spin:query gp:DescribeWithTopic ;
+    spin:update gp:DeleteWithTopic ;
     spin:constraint [ a dqc:MissingProperties ;
 	    sp:arg1 <#CategoryDocument> ;
 	    sp:arg2 gp:slug

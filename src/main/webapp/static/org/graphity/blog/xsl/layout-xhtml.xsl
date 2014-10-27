@@ -62,6 +62,7 @@ exclude-result-prefixes="#all">
 	<dct:created rdf:datatype="&xsd;dateTime">2014-10-09T23:35:00+01:00</dct:created>
     </rdf:Description>
 
+    <!--
     <xsl:template match="*[starts-with(@rdf:about, $base-uri)]" mode="gc:ModeToggleMode" priority="1">
         <xsl:if test="not($mode = '&gc;EditMode') and not(rdf:type/@rdf:resource = '&sioc;Container')">
             <div class="pull-right">
@@ -79,7 +80,8 @@ exclude-result-prefixes="#all">
             </div>
         </xsl:if>
     </xsl:template>
-
+    -->
+    
     <!--
     <xsl:template match="rdf:RDF[$absolute-path = resolve-uri('posts', $base-uri)]" mode="gc:CreateMode" priority="1">
         <form class="form-horizontal" method="post" action="{$absolute-path}?mode={encode-for-uri($mode)}" accept-charset="UTF-8">
@@ -101,26 +103,28 @@ exclude-result-prefixes="#all">
     <xsl:template match="*[rdf:type/@rdf:resource = ('&sioc;Space', '&sioc;Container')]" mode="gc:CreateMode" priority="1">
         <xsl:param name="path" select="substring-after($absolute-path, $base-uri)" as="xs:string"/>
         <xsl:param name="template-uri" select="if (rdf:type/@rdf:resource = '&sioc;Container') then concat($path, '/', 'template.rdf') else 'template.rdf'" as="xs:string"/>
-?<xsl:value-of select="$template-uri"/>?
+        <xsl:param name="template-doc" select="document($template-uri)" as="document-node()"/>
 
         <xsl:apply-imports>
-            <xsl:with-param name="template" select="document($template-uri)" as="document-node()"/>
+            <xsl:with-param name="template-doc" select="$template-doc"/>
         </xsl:apply-imports>
     </xsl:template>
 
     <xsl:template match="*[rdf:type/@rdf:resource = '&spin;ConstraintViolation']" mode="gc:EditMode" priority="1"/>
 
+<!--
     <xsl:template match="*[*][@rdf:about] | *[*][@rdf:nodeID]" mode="gc:EditMode">
         <xsl:param name="path" select="substring-after(sioc:has_container/@rdf:resource, $base-uri)" as="xs:string"/>
-        <xsl:param name="template-uri" select="concat('/', $path, '/', 'template.rdf')" as="xs:string"/>
-        <xsl:param name="template" select="document($template-uri, document(''))" as="document-node()"/>
-?<xsl:value-of select="$template-uri"/>?
+        <xsl:param name="template-uri" select="concat($path, '/', 'template.rdf')" as="xs:string"/>
+        <xsl:param name="template" select="document($template-uri)" as="document-node()"/>
+XX<xsl:apply-templates select="key('resources', ('this', 'thing'), $template)" mode="#current"/>XX
         
-        <xsl:variable name="result-doc" select="/"/>
         <xsl:apply-templates select="key('resources', ('this', 'thing'), $template)" mode="#current">
             <xsl:with-param name="instance" select="."/>
+            <xsl:with-param name="template" select="$template"/>
         </xsl:apply-templates>
     </xsl:template>
+-->
 
     <xsl:template match="sioc:content/text()" mode="gc:EditMode">
         <textarea name="ol" id="{generate-id(..)}" rows="10" style="font-family: monospace;">
