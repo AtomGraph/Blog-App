@@ -34,7 +34,7 @@
      spin:query gp:DescribeWithChildren ;
      gp:limit 20 ;
      gc:defaultMode gc:ListMode ;
-     # gc:mode gc:ListReadMode, gc:ListMode, gc:TableMode, gc:ThumbnailMode ;
+     # gc:mode gc:ReadMode, gc:ListMode, gc:TableMode, gc:ThumbnailMode ;
      rdfs:label "Homepage" ;
      rdfs:isDefinedBy <#> .
 
@@ -45,8 +45,8 @@
     gp:uriTemplate "/posts" ;
     gp:limit 20 ;
     gp:orderBy "title"^^xsd:string ;
-    gc:defaultMode gc:ListReadMode ;
-    gc:mode gc:ListReadMode, gc:ListMode, gc:TableMode, gc:ThumbnailMode, gc:CreateMode ;
+    gc:defaultMode gc:ReadMode ;
+    gc:mode gc:ReadMode, gc:ListMode, gc:TableMode, gc:ThumbnailMode, gc:CreateMode ;
     spin:query gp:DescribeWithChildren ;
     rdfs:label "Post container" ;
     rdfs:isDefinedBy <#> .
@@ -64,6 +64,27 @@
     gp:cacheControl "public, max-age=3600" ;
     spin:query gp:Describe ;
     spin:update gp:Delete ;
+    spin:constructor
+              [ a       sp:Construct ;
+                sp:text """
+                    PREFIX blog:    <http://graphity.org/blog#>
+                    PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+                    PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+                    PREFIX foaf:    <http://xmlns.com/foaf/0.1/>
+                    PREFIX sioc:    <http://rdfs.org/sioc/ns#>
+                    PREFIX gp:      <http://graphity.org/gp#>
+                    PREFIX gc:      <http://graphity.org/gc#>
+                    PREFIX dct:     <http://purl.org/dc/terms/>
+
+                    CONSTRUCT {
+                        ?this a foaf:Document, sioc:Post, gp:Item, sioc:Item ;
+                            dct:title " " ;
+                            sioc:content " " ;
+                            dct:subject _:category ;
+                            gp:slug " "^^xsd:string .
+                    }
+                    WHERE {}"""
+              ] ;
     spin:constraint [ a dqc:MissingProperties ;
 	    sp:arg1 <#Post> ;
 	    sp:arg2 gp:slug
@@ -86,13 +107,13 @@
     gp:uriTemplate "/categories" ;
     gp:limit 20 ;
     gp:orderBy "prefLabel"^^xsd:string ;
-    gc:defaultMode gc:ListReadMode ;
-    gc:mode gc:ListReadMode, gc:ListMode, gc:TableMode, gc:ThumbnailMode, gc:CreateMode ;
+    gc:defaultMode gc:ReadMode ;
+    gc:mode gc:ReadMode, gc:ListMode, gc:TableMode, gc:ThumbnailMode, gc:CreateMode ;
     spin:query gp:DescribeWithChildren ;
     rdfs:label "Category container" ;
     rdfs:isDefinedBy <#> .
 
-<#CategoryDocument> a rdfs:Class, owl:Class, gp:Template ;
+<#CategoryItem> a rdfs:Class, owl:Class, gp:Template ;
     rdfs:subClassOf foaf:Document, gp:Item, sioc:Item, lda:ItemEndpoint ,
         [ a owl:Restriction ;
             owl:onProperty sioc:has_container ;
@@ -105,8 +126,29 @@
     gp:cacheControl "public, max-age=3600" ;
     spin:query gp:DescribeWithTopic ;
     spin:update gp:DeleteWithTopic ;
+    spin:constructor
+              [ a       sp:Construct ;
+                sp:text """
+                    PREFIX blog:    <http://graphity.org/blog#>
+                    PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
+                    PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+                    PREFIX foaf:    <http://xmlns.com/foaf/0.1/>
+                    PREFIX sioc:    <http://rdfs.org/sioc/ns#>
+                    PREFIX gp:      <http://graphity.org/gp#>
+                    PREFIX skos:    <http://www.w3.org/2004/02/skos/core#>
+
+                    CONSTRUCT {
+                        ?this a foaf:Document, blog:CategoryItem, gp:Item, sioc:Item ;
+                            foaf:primaryTopic _:category ;
+                            gp:slug " "^^xsd:string .
+                        _:category a blog:Category, skos:Concept ;
+                            foaf:isPrimaryTopicOf ?this ;
+                            skos:prefLabel " " .
+                    }
+                    WHERE {}"""
+              ] ;
     spin:constraint [ a dqc:MissingProperties ;
-	    sp:arg1 <#CategoryDocument> ;
+	    sp:arg1 <#CategoryItem> ;
 	    sp:arg2 gp:slug
 	] ;
     rdfs:label "Category document" ;
@@ -116,7 +158,7 @@
     rdfs:subClassOf skos:Concept,
         [ a owl:Restriction ;
             owl:onProperty foaf:isPrimaryTopicOf ;
-            owl:allValuesFrom <#CategoryDocument>
+            owl:allValuesFrom <#CategoryItem>
 	] ;
     gp:skolemTemplate "/{isPrimaryTopicOf.slug}" ;
     spin:constraint [ a dqc:MissingProperties ;

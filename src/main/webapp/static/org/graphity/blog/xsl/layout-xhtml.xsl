@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Copyright 2012 Martynas Jusevičius <martynas@graphity.org>
+Copyright 2014 Martynas Jusevičius <martynas@graphity.org>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -61,71 +61,7 @@ exclude-result-prefixes="#all">
     <rdf:Description rdf:about="">
 	<dct:created rdf:datatype="&xsd;dateTime">2014-10-09T23:35:00+01:00</dct:created>
     </rdf:Description>
-
-    <!--
-    <xsl:template match="*[starts-with(@rdf:about, $base-uri)]" mode="gc:ModeToggleMode" priority="1">
-        <xsl:if test="not($mode = '&gc;EditMode') and not(rdf:type/@rdf:resource = '&sioc;Container')">
-            <div class="pull-right">
-                <a class="btn btn-primary" href="{gc:document-uri(@rdf:about)}{gc:query-string((), xs:anyURI('&gc;EditMode'))}">
-                    <xsl:apply-templates select="key('resources', '&gc;EditMode', document('&gc;'))" mode="gc:LabelMode"/>
-                </a>                        
-            </div>
-        </xsl:if>
-        
-        <xsl:if test="not($mode = '&gc;CreateMode') and rdf:type/@rdf:resource = '&sioc;Container'">
-            <div class="pull-right">
-                <a class="btn btn-primary" href="{gc:document-uri(@rdf:about)}{gc:query-string((), xs:anyURI('&gc;CreateMode'))}">
-                    <xsl:apply-templates select="key('resources', '&gc;CreateMode', document('&gc;'))" mode="gc:LabelMode"/>
-                </a>
-            </div>
-        </xsl:if>
-    </xsl:template>
-    -->
     
-    <!--
-    <xsl:template match="rdf:RDF[$absolute-path = resolve-uri('posts', $base-uri)]" mode="gc:CreateMode" priority="1">
-        <form class="form-horizontal" method="post" action="{$absolute-path}?mode={encode-for-uri($mode)}" accept-charset="UTF-8">
-	    <xsl:comment>This form uses RDF/POST encoding: http://www.lsrn.org/semweb/rdfpost.html</xsl:comment>
-	    <xsl:call-template name="gc:InputTemplate">
-		<xsl:with-param name="name" select="'rdf'"/>
-		<xsl:with-param name="type" select="'hidden'"/>
-	    </xsl:call-template>
-            
-            <xsl:apply-templates mode="#current"/>
-            
-	    <div class="form-actions">
-		<button type="submit" class="btn btn-primary">Save</button>
-	    </div>
-	</form>
-    </xsl:template>
-    -->
-    
-    <xsl:template match="*[rdf:type/@rdf:resource = ('&sioc;Space', '&sioc;Container')]" mode="gc:CreateMode" priority="1">
-        <xsl:param name="path" select="substring-after($absolute-path, $base-uri)" as="xs:string"/>
-        <xsl:param name="template-uri" select="if (rdf:type/@rdf:resource = '&sioc;Container') then concat($path, '/', 'template.rdf') else 'template.rdf'" as="xs:string"/>
-        <xsl:param name="template-doc" select="document($template-uri)" as="document-node()"/>
-
-        <xsl:apply-imports>
-            <xsl:with-param name="template-doc" select="$template-doc"/>
-        </xsl:apply-imports>
-    </xsl:template>
-
-    <xsl:template match="*[rdf:type/@rdf:resource = '&spin;ConstraintViolation']" mode="gc:EditMode" priority="1"/>
-
-<!--
-    <xsl:template match="*[*][@rdf:about] | *[*][@rdf:nodeID]" mode="gc:EditMode">
-        <xsl:param name="path" select="substring-after(sioc:has_container/@rdf:resource, $base-uri)" as="xs:string"/>
-        <xsl:param name="template-uri" select="concat($path, '/', 'template.rdf')" as="xs:string"/>
-        <xsl:param name="template" select="document($template-uri)" as="document-node()"/>
-XX<xsl:apply-templates select="key('resources', ('this', 'thing'), $template)" mode="#current"/>XX
-        
-        <xsl:apply-templates select="key('resources', ('this', 'thing'), $template)" mode="#current">
-            <xsl:with-param name="instance" select="."/>
-            <xsl:with-param name="template" select="$template"/>
-        </xsl:apply-templates>
-    </xsl:template>
--->
-
     <xsl:template match="sioc:content/text()" mode="gc:EditMode">
         <textarea name="ol" id="{generate-id(..)}" rows="10" style="font-family: monospace;">
             <xsl:value-of select="normalize-space(.)"/>
@@ -151,19 +87,5 @@ XX<xsl:apply-templates select="key('resources', ('this', 'thing'), $template)" m
 
         <span class="help-inline">Resource</span>
     </xsl:template>
-
-    <!--
-    <xsl:template match="sioc:has_container" mode="gc:EditMode">
-        <xsl:apply-templates select="." mode="gc:InputMode">
-            <xsl:with-param name="type" select="'hidden'"/>
-        </xsl:apply-templates>
-        <xsl:apply-templates select="node() | @rdf:resource | @rdf:nodeID" mode="#current">
-            <xsl:with-param name="type" select="'hidden'"/>
-        </xsl:apply-templates>
-        <xsl:apply-templates select="@xml:lang | @rdf:datatype" mode="#current">
-            <xsl:with-param name="type" select="'hidden'"/>
-        </xsl:apply-templates>        
-    </xsl:template>
-    -->
     
 </xsl:stylesheet>
