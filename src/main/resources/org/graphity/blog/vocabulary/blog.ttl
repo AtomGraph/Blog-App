@@ -77,7 +77,7 @@
                     PREFIX dct:     <http://purl.org/dc/terms/>
 
                     CONSTRUCT {
-                        ?this a foaf:Document, sioc:Post, gp:Item, sioc:Item ;
+                        ?this a foaf:Document, blog:Post, sioc:Post, gp:Item, sioc:Item ;
                             dct:title " " ;
                             sioc:content " " ;
                             dct:subject _:category ;
