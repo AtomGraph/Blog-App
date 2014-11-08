@@ -1,5 +1,5 @@
 /**
- *  Copyright 2012 Martynas Jusevičius <martynas@graphity.org>
+ *  Copyright 2014 Martynas Jusevičius <martynas@graphity.org>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -30,7 +30,8 @@ import javax.ws.rs.core.UriInfo;
 import org.graphity.server.model.SPARQLEndpoint;
 
 /**
- *
+ * Base class of all Blog app resources.
+ * 
  * @author Martynas Jusevičius <martynas@graphity.org>
  */
 @Path("/")

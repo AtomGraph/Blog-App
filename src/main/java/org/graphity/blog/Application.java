@@ -1,5 +1,5 @@
 /**
- *  Copyright 2012 Martynas Jusevičius <martynas@graphity.org>
+ *  Copyright 2014 Martynas Jusevičius <martynas@graphity.org>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -22,32 +22,17 @@ import java.util.Set;
 import org.graphity.client.ApplicationBase;
 
 /**
- *
+ * JAX-RS application class of the Blog app.
+ * 
  * @author Martynas Jusevičius <martynas@graphity.org>
  */
 public class Application extends ApplicationBase
 {
-    private final Set<Class<?>> classes = new HashSet<Class<?>>();
-    //private final Set<Object> singletons = new HashSet<Object>();
+    private final Set<Class<?>> classes = new HashSet<>();
 
     public Application()
     {
 	classes.add(ResourceBase.class);
-
-        /*
-	singletons.addAll(super.getSingletons());
-	singletons.add(new DataManagerProvider());
-	singletons.add(new OntologyProvider());
-	singletons.add(new SPARQLEndpointProvider());
-	singletons.add(new GraphStoreProvider());
-	singletons.add(new RDFPostReader());
-        singletons.add(new DoesNotExistExceptionMapper());
-	singletons.add(new NotFoundExceptionMapper());
-	singletons.add(new QueryExceptionHTTPMapper());
-	singletons.add(new ModelXSLTWriter()); // writes XHTML responses
-	singletons.add(new XSLTBuilderProvider()); // loads XSLT stylesheet	
-	//singletons.add(new AuthenticationExceptionMapper());
-        */
     }
     
     @Override
@@ -55,13 +40,5 @@ public class Application extends ApplicationBase
     {
 	return classes;
     }
-
-    /*
-    @Override
-    public Set<Object> getSingletons()
-    {
-	return singletons;
-    }
-    */
 
 }
