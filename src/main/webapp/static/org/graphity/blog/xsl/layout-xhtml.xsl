@@ -79,7 +79,7 @@ exclude-result-prefixes="#all">
 
     <xsl:template match="dct:subject/@rdf:resource | dct:subject/@rdf:nodeID" mode="gc:EditMode">
         <select name="ou" id="{generate-id(..)}" multiple="multiple" size="8">
-            <xsl:apply-templates select="key('resources-by-type', '&skos;Concept', document(resolve-uri('categories?limit=100', $base-uri)))" mode="gc:OptionMode">
+            <xsl:apply-templates select="key('resources-by-type', '&skos;Concept', document(resolve-uri('categories?limit=100', $gp:baseUri)))" mode="gc:OptionMode">
                 <xsl:sort select="gc:label(.)" order="ascending"/>
                 <xsl:with-param name="selected" select="../@rdf:resource"/>
             </xsl:apply-templates>
