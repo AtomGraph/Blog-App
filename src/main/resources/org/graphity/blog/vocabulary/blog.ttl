@@ -16,20 +16,19 @@
 @prefix spl:    <http://spinrdf.org/spl#> .
 @prefix dqc:	<http://semwebquality.org/ontologies/dq-constraints#> .
 @prefix dct:    <http://purl.org/dc/terms/> .
-@prefix lda:    <http://purl.org/linked-data/api/vocab#> .
 @prefix void:   <http://rdfs.org/ns/void#> .
 @prefix sioc:   <http://rdfs.org/sioc/ns#> .
 @prefix foaf:   <http://xmlns.com/foaf/0.1/> .
 
 <#> a owl:Ontology ;
-    owl:imports gcs:, lda: , void:, foaf:, dqc: ;
+    owl:imports gcs:, void:, foaf:, dqc: ;
     rdfs:label "Blog sitemap" ;
     dct:created "2014-10-21T01:53:00+01:00"^^xsd:dateTime .
 
 # RESOURCE CLASSES (GRAPHITY TEMPLATES)
 
 <#Site> a owl:Class, gp:Template ;
-     rdfs:subClassOf gp:Space, foaf:Document, sioc:Space, ldp:Container, lda:ListEndpoint ;
+     rdfs:subClassOf gp:Space, foaf:Document, sioc:Space, ldp:Container ;
      gp:uriTemplate "/" ;
      spin:query gp:DescribeWithChildren ;
      gp:limit 20 ;
@@ -41,7 +40,7 @@
 # posts
 
 <#Forum> a owl:Class, gp:Template ;
-    rdfs:subClassOf foaf:Document, gp:Container, sioc:Forum, ldp:Container, lda:ListEndpoint ;
+    rdfs:subClassOf foaf:Document, gp:Container, sioc:Forum, ldp:Container ;
     gp:uriTemplate "/posts" ;
     gp:limit 20 ;
     gp:orderBy "title"^^xsd:string ;
@@ -52,7 +51,7 @@
     rdfs:isDefinedBy <#> .
 
 <#Post> a rdfs:Class, owl:Class, gp:Template ;
-    rdfs:subClassOf foaf:Document, gp:Item, sioc:Post, lda:ItemEndpoint ,
+    rdfs:subClassOf foaf:Document, gp:Item, sioc:Post ,
         [ a owl:Restriction ;
             owl:onProperty sioc:has_container ;
             owl:allValuesFrom <#Forum>
@@ -103,7 +102,7 @@
 # categories
 
 <#CategoryContainer> a owl:Class, gp:Template ;
-    rdfs:subClassOf foaf:Document, gp:Container, sioc:Container, ldp:Container, lda:ListEndpoint ;
+    rdfs:subClassOf foaf:Document, gp:Container, sioc:Container, ldp:Container ;
     gp:uriTemplate "/categories" ;
     gp:limit 20 ;
     gp:orderBy "prefLabel"^^xsd:string ;
@@ -114,7 +113,7 @@
     rdfs:isDefinedBy <#> .
 
 <#CategoryItem> a rdfs:Class, owl:Class, gp:Template ;
-    rdfs:subClassOf foaf:Document, gp:Item, sioc:Item, lda:ItemEndpoint ,
+    rdfs:subClassOf foaf:Document, gp:Item, sioc:Item ,
         [ a owl:Restriction ;
             owl:onProperty sioc:has_container ;
             owl:allValuesFrom <#CategoryContainer>
@@ -124,7 +123,19 @@
     gc:mode gc:ReadMode, gc:EditMode ;
     gc:defaultMode gc:ReadMode ;
     gp:cacheControl "public, max-age=3600" ;
-    spin:query gp:DescribeWithTopic ;
+    spin:query [ a       sp:Describe ;
+                sp:text """
+                    PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+                    PREFIX foaf:    <http://xmlns.com/foaf/0.1/>
+                    PREFIX dct:     <http://purl.org/dc/terms/>
+
+                    DESCRIBE ?this ?category ?post {
+                        ?category foaf:isPrimaryTopicOf ?this
+                        OPTIONAL {
+                            ?post dct:subject ?category
+                        }
+                    }"""
+              ] ;
     spin:update gp:DeleteWithTopic ;
     spin:constructor
               [ a       sp:Construct ;
