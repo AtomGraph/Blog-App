@@ -132,7 +132,10 @@
                     DESCRIBE ?this ?category ?post {
                         ?category foaf:isPrimaryTopicOf ?this
                         OPTIONAL {
-                            ?post dct:subject ?category
+                            SELECT ?post ?category
+                            {
+                                ?post dct:subject ?category
+                            }
                         }
                     }"""
               ] ;
