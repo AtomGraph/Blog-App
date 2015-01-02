@@ -28,7 +28,7 @@
 # RESOURCE CLASSES (GRAPHITY TEMPLATES)
 
 <#Site> a owl:Class, gp:Template ;
-     rdfs:subClassOf gp:Space, foaf:Document, sioc:Space, ldp:Container ;
+     rdfs:subClassOf gp:Space, foaf:Document, sioc:Space ;
      gp:uriTemplate "/" ;
      spin:query gp:DescribeWithChildren ;
      gp:limit 20 ;
@@ -40,7 +40,7 @@
 # posts
 
 <#Forum> a owl:Class, gp:Template ;
-    rdfs:subClassOf foaf:Document, gp:Container, sioc:Forum, ldp:Container ;
+    rdfs:subClassOf foaf:Document, gp:Container, sioc:Forum ;
     gp:uriTemplate "/posts" ;
     gp:limit 20 ;
     gp:orderBy "title"^^xsd:string ;
@@ -102,7 +102,7 @@
 # categories
 
 <#CategoryContainer> a owl:Class, gp:Template ;
-    rdfs:subClassOf foaf:Document, gp:Container, sioc:Container, ldp:Container ;
+    rdfs:subClassOf foaf:Document, gp:Container, sioc:Container ;
     gp:uriTemplate "/categories" ;
     gp:limit 20 ;
     gp:orderBy "prefLabel"^^xsd:string ;
