@@ -27,6 +27,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.UriInfo;
+import org.graphity.server.model.GraphStore;
 import org.graphity.server.model.SPARQLEndpoint;
 
 /**
@@ -38,11 +39,13 @@ import org.graphity.server.model.SPARQLEndpoint;
 public class ResourceBase extends org.graphity.client.model.impl.ResourceBase
 {
 
-    public ResourceBase(@Context UriInfo uriInfo, @Context SPARQLEndpoint endpoint, @Context OntClass matchedOntClass,
-            @Context Request request, @Context ServletContext servletContext, @Context HttpHeaders httpHeaders, @Context ResourceContext resourceContext)
+    public ResourceBase(@Context UriInfo uriInfo, @Context Request request, @Context ServletContext servletContext,
+            @Context SPARQLEndpoint endpoint, @Context GraphStore graphStore,
+            @Context OntClass matchedOntClass, @Context HttpHeaders httpHeaders, @Context ResourceContext resourceContext)
     {
-	super(uriInfo, endpoint, matchedOntClass,
-                request, servletContext, httpHeaders, resourceContext);
+	super(uriInfo, request, servletContext,
+                endpoint, graphStore,
+                matchedOntClass, httpHeaders, resourceContext);
     }
     
     @Override

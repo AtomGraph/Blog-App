@@ -8,7 +8,7 @@
     <description>Sample web application built on Graphity Client</description>
     <context-param>
         <param-name>http://graphity.org/gp#datasetLocation</param-name>
-        <param-value>org/graphity/blog/dataset/dataset.trig</param-value>
+        <param-value>/org/graphity/blog/dataset/dataset.trig</param-value>
     </context-param>
     <context-param>
         <param-name>http://graphity.org/gp#ontology</param-name>
@@ -16,7 +16,7 @@
     </context-param>
     <context-param>
         <param-name>http://graphity.org/gc#stylesheet</param-name>
-        <param-value>static/org/graphity/blog/xsl/layout-xhtml.xsl</param-value>
+        <param-value>/static/org/graphity/blog/xsl/layout-xhtml.xsl</param-value>
     </context-param>
     <context-param>
         <param-name>http://graphity.org/gs#resultLimit</param-name>
