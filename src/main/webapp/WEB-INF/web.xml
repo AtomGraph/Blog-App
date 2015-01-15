@@ -6,25 +6,9 @@
     id="graphity-blog" version="3.0">
     <display-name>Blog app</display-name>
     <description>Sample web application built on Graphity Client</description>
-    <context-param>
-        <param-name>http://graphity.org/gp#datasetLocation</param-name>
-        <param-value>/org/graphity/blog/dataset/dataset.trig</param-value>
-    </context-param>
-    <context-param>
-        <param-name>http://graphity.org/gp#ontology</param-name>
-        <param-value>http://graphity.org/blog#</param-value>
-    </context-param>
-    <context-param>
-        <param-name>http://graphity.org/gc#stylesheet</param-name>
-        <param-value>/static/org/graphity/blog/xsl/layout-xhtml.xsl</param-value>
-    </context-param>
-    <context-param>
-        <param-name>http://graphity.org/gs#resultLimit</param-name>
-        <param-value>100</param-value>
-    </context-param>
-    <filter>
-        <filter-name>index</filter-name>
-        <filter-class>com.sun.jersey.spi.container.servlet.ServletContainer</filter-class>
+    <servlet>
+        <servlet-name>index</servlet-name>
+        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
         <init-param>
             <param-name>javax.ws.rs.Application</param-name>
             <param-value>org.graphity.blog.Application</param-value>
@@ -36,10 +20,30 @@
         <init-param>
 	    <param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>
 	    <param-value>org.graphity.client.filter.PostReplaceFilter</param-value>
-	</init-param>	
-    </filter>
-    <filter-mapping>
-        <filter-name>index</filter-name>
+	</init-param>
+        <init-param>
+            <param-name>http://graphity.org/gp#datasetLocation</param-name>
+            <param-value>/org/graphity/blog/dataset/dataset.trig</param-value>
+        </init-param>
+        <init-param>
+            <param-name>http://graphity.org/gp#sitemap</param-name>
+            <param-value>http://graphity.org/blog#</param-value>
+        </init-param>
+        <init-param>
+            <param-name>http://graphity.org/gc#stylesheet</param-name>
+            <param-value>/static/org/graphity/blog/xsl/layout-xhtml.xsl</param-value>
+        </init-param>
+        <init-param>
+            <param-name>http://graphity.org/gs#resultLimit</param-name>
+            <param-value>100</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/static/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>index</servlet-name>
         <url-pattern>/*</url-pattern>
-    </filter-mapping>
+    </servlet-mapping>
 </web-app>

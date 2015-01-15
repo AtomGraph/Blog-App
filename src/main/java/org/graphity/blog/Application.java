@@ -19,6 +19,8 @@ package org.graphity.blog;
 
 import java.util.HashSet;
 import java.util.Set;
+import javax.servlet.ServletConfig;
+import javax.ws.rs.core.Context;
 import org.graphity.client.ApplicationBase;
 
 /**
@@ -30,8 +32,10 @@ public class Application extends ApplicationBase
 {
     private final Set<Class<?>> classes = new HashSet<>();
 
-    public Application()
+    public Application(@Context ServletConfig servletConfig)
     {
+        super(servletConfig);
+        
 	classes.add(ResourceBase.class);
     }
     
