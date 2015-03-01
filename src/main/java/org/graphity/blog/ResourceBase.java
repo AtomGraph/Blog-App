@@ -27,8 +27,8 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.UriInfo;
-import org.graphity.server.model.GraphStore;
-import org.graphity.server.model.SPARQLEndpoint;
+import org.graphity.core.model.GraphStore;
+import org.graphity.core.model.SPARQLEndpoint;
 
 /**
  * Base class of all Blog app resources.

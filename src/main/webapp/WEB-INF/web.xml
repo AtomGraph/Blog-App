@@ -14,10 +14,6 @@
             <param-value>org.graphity.blog.Application</param-value>
         </init-param>
         <init-param>
-            <param-name>com.sun.jersey.config.property.WebPageContentRegex</param-name>
-            <param-value>(/static/.*)|(/robots\.txt)</param-value>
-        </init-param>
-        <init-param>
 	    <param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>
 	    <param-value>org.graphity.client.filter.PostReplaceFilter</param-value>
 	</init-param>
@@ -34,7 +30,7 @@
             <param-value>/static/org/graphity/blog/xsl/layout-xhtml.xsl</param-value>
         </init-param>
         <init-param>
-            <param-name>http://graphity.org/gs#resultLimit</param-name>
+            <param-name>http://graphity.org/g#resultLimit</param-name>
             <param-value>100</param-value>
         </init-param>
     </servlet>
