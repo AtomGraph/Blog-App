@@ -9,7 +9,6 @@
 @prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
 @prefix owl:    <http://www.w3.org/2002/07/owl#> .
 @prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
-@prefix ldp:    <http://www.w3.org/ns/ldp#> .
 @prefix sd:     <http://www.w3.org/ns/sparql-service-description#> .
 @prefix sp:     <http://spinrdf.org/sp#> .
 @prefix spin:   <http://spinrdf.org/spin#> .
@@ -21,11 +20,13 @@
 @prefix foaf:   <http://xmlns.com/foaf/0.1/> .
 
 <#> a owl:Ontology ;
-    owl:imports gcs:, void:, foaf:, dqc: ;
+    owl:imports gcs:, void:, foaf:, sp:, spin:, dqc: ;
     rdfs:label "Blog sitemap" ;
     dct:created "2014-10-21T01:53:00+01:00"^^xsd:dateTime .
 
 # RESOURCE CLASSES (GRAPHITY TEMPLATES)
+
+gp:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:MapMode .
 
 <#Site> a owl:Class, gp:Template ;
      rdfs:subClassOf gp:Space, foaf:Document, sioc:Space ;
@@ -45,7 +46,7 @@
     gp:defaultLimit 20 ;
     # gp:defaultOrderBy "title"^^xsd:string ; # needs ?title in the query
     gc:defaultMode gc:ReadMode ;
-    gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:ThumbnailMode, gc:CreateMode ;
+    gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:ThumbnailMode ;
     gp:query gp:DescribeWithChildren ;
     rdfs:label "Post container" ;
     rdfs:isDefinedBy <#> .
@@ -107,7 +108,7 @@
     gp:defaultLimit 20 ;
     # gp:defaultOrderBy "prefLabel"^^xsd:string ; # needs ?prefLabel in the query
     gc:defaultMode gc:ReadMode ;
-    gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:ThumbnailMode, gc:CreateMode ;
+    gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:ThumbnailMode ;
     gp:query gp:DescribeWithChildren ;
     rdfs:label "Category container" ;
     rdfs:isDefinedBy <#> .
