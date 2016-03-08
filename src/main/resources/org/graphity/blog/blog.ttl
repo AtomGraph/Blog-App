@@ -19,8 +19,8 @@
 @prefix sioc:   <http://rdfs.org/sioc/ns#> .
 @prefix foaf:   <http://xmlns.com/foaf/0.1/> .
 
-<#> a owl:Ontology ;
-    owl:imports gcs:, void:, foaf:, sp:, spin:, dqc: ;
+<#> a owl:Ontology, gp:Ontology ;
+    owl:imports gp:, void:, foaf:, sp:, spin:, dqc: ;
     rdfs:label "Blog sitemap" ;
     dct:created "2014-10-21T01:53:00+01:00"^^xsd:dateTime .
 
@@ -28,26 +28,15 @@
 
 gp:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:MapMode .
 
-<#Site> a owl:Class, gp:Template ;
-     rdfs:subClassOf gp:Space, foaf:Document, sioc:Space ;
-     gp:uriTemplate "/" ;
-     gp:query gp:DescribeWithChildren ;
-     gp:defaultLimit 20 ;
-     gc:defaultMode gc:ListMode ;
-     # gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:ThumbnailMode ;
-     rdfs:label "Homepage" ;
-     rdfs:isDefinedBy <#> .
-
 # posts
 
 <#Forum> a owl:Class, gp:Template ;
     rdfs:subClassOf foaf:Document, gp:Container, sioc:Forum ;
-    gp:uriTemplate "/posts" ;
+    gp:uriTemplate "/posts/" ;
     gp:defaultLimit 20 ;
     # gp:defaultOrderBy "title"^^xsd:string ; # needs ?title in the query
     gc:defaultMode gc:ReadMode ;
     gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:ThumbnailMode ;
-    gp:query gp:DescribeWithChildren ;
     rdfs:label "Post container" ;
     rdfs:isDefinedBy <#> .
 
@@ -58,13 +47,11 @@ gp:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:Ma
             owl:allValuesFrom <#Forum>
         ] ;
     gp:uriTemplate "/posts/{slug}" ;
-    gp:skolemTemplate "/{slug}" ;
     gc:supportedMode gc:ReadMode, gc:EditMode ;
     gc:defaultMode gc:ReadMode ;
     gp:cacheControl "public, max-age=3600" ;
-    gp:query gp:Describe ;
     gp:update gp:Delete ;
-    gp:template
+    spin:constructor
               [ a       sp:Construct ;
                 sp:text """
                     PREFIX blog:    <http://graphity.org/blog#>
@@ -77,7 +64,7 @@ gp:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:Ma
                     PREFIX dct:     <http://purl.org/dc/terms/>
 
                     CONSTRUCT {
-                        _:this a foaf:Document, blog:Post, sioc:Post, gp:Item, sioc:Item ;
+                        ?this a foaf:Document, blog:Post, sioc:Post, gp:Item, sioc:Item ;
                             dct:title " " ;
                             sioc:content " " ;
                             dct:subject _:category ;
@@ -85,10 +72,7 @@ gp:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:Ma
                     }
                     WHERE {}"""
               ] ;
-    spin:constraint [ a dqc:MissingProperties ;
-	    sp:arg1 <#Post> ;
-	    sp:arg2 gp:slug
-	] ,
+    spin:constraint gp:MissingSlug ,
         [ a dqc:MissingProperties ;
 	    sp:arg1 <#Post> ;
 	    sp:arg2 dct:title
@@ -104,12 +88,11 @@ gp:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:Ma
 
 <#CategoryContainer> a owl:Class, gp:Template ;
     rdfs:subClassOf foaf:Document, gp:Container, sioc:Container ;
-    gp:uriTemplate "/categories" ;
+    gp:uriTemplate "/categories/" ;
     gp:defaultLimit 20 ;
     # gp:defaultOrderBy "prefLabel"^^xsd:string ; # needs ?prefLabel in the query
     gc:defaultMode gc:ReadMode ;
     gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:ThumbnailMode ;
-    gp:query gp:DescribeWithChildren ;
     rdfs:label "Category container" ;
     rdfs:isDefinedBy <#> .
 
@@ -118,9 +101,12 @@ gp:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:Ma
         [ a owl:Restriction ;
             owl:onProperty sioc:has_container ;
             owl:allValuesFrom <#CategoryContainer>
-        ] ;
+        ] ,
+        [ a owl:Restriction ;
+            owl:onProperty foaf:primaryTopic ;
+            owl:allValuesFrom <#Category>
+	] ;
     gp:uriTemplate "/categories/{slug}" ;
-    gp:skolemTemplate "/{slug}" ;
     gc:supportedMode gc:ReadMode, gc:EditMode ;
     gc:defaultMode gc:ReadMode ;
     gp:cacheControl "public, max-age=3600" ;
@@ -141,7 +127,7 @@ gp:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:Ma
                     }"""
               ] ;
     gp:update gp:DeleteWithTopic ;
-    gp:template
+    spin:constructor
               [ a       sp:Construct ;
                 sp:text """
                     PREFIX blog:    <http://graphity.org/blog#>
@@ -153,7 +139,7 @@ gp:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:Ma
                     PREFIX skos:    <http://www.w3.org/2004/02/skos/core#>
 
                     CONSTRUCT {
-                        _:this a foaf:Document, blog:CategoryItem, gp:Item, sioc:Item ;
+                        ?this a foaf:Document, blog:CategoryItem, gp:Item, sioc:Item ;
                             foaf:primaryTopic _:category ;
                             gp:slug " "^^xsd:string .
                         _:category a blog:Category, skos:Concept ;
@@ -162,20 +148,13 @@ gp:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:Ma
                     }
                     WHERE {}"""
               ] ;
-    spin:constraint [ a dqc:MissingProperties ;
-	    sp:arg1 <#CategoryItem> ;
-	    sp:arg2 gp:slug
-	] ;
+    spin:constraint gp:MissingSlug ;
     rdfs:label "Category document" ;
     rdfs:isDefinedBy <#> .
 
 <#Category> a rdfs:Class, owl:Class ;
-    rdfs:subClassOf skos:Concept,
-        [ a owl:Restriction ;
-            owl:onProperty foaf:isPrimaryTopicOf ;
-            owl:allValuesFrom <#CategoryItem>
-	] ;
-    gp:skolemTemplate "/{isPrimaryTopicOf.slug}" ;
+    rdfs:subClassOf skos:Concept ;
+    gp:skolemTemplate "{isPrimaryTopicOf.slug}" ;
     spin:constraint [ a dqc:MissingProperties ;
 	    sp:arg1 <#Category> ;
 	    sp:arg2 skos:prefLabel

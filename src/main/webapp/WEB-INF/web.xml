@@ -6,6 +6,35 @@
     id="graphity-blog" version="3.0">
     <display-name>Blog app</display-name>
     <description>Sample web application built on Graphity Client</description>
+    <context-param>
+        <param-name>http://graphity.org/gp#restrictionsQuery</param-name>
+        <param-value><![CDATA[
+PREFIX gp:	<http://graphity.org/gp#>
+PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX owl:	<http://www.w3.org/2002/07/owl#>
+PREFIX rdfs:	<http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sioc:	<http://rdfs.org/sioc/ns#>
+
+SELECT *
+{
+    ?Template a owl:Class ; # not necessarily a gp:Template
+        rdfs:subClassOf ?Restriction .
+    ?Restriction a owl:Restriction ;
+        owl:onProperty ?onProperty .
+    {
+        ?Restriction owl:allValuesFrom ?allValuesFrom
+    }
+    UNION
+    {
+        ?Restriction owl:allValuesFrom [ a owl:Class ;
+            owl:unionOf [
+                rdf:rest*/rdf:first ?allValuesFrom
+            ]
+        ]
+    }
+}
+]]></param-value>
+    </context-param>    
     <servlet>
         <servlet-name>index</servlet-name>
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
@@ -15,15 +44,25 @@
         </init-param>
         <init-param>
 	    <param-name>com.sun.jersey.spi.container.ContainerRequestFilters</param-name>
-	    <param-value>org.graphity.client.filter.PostReplaceFilter</param-value>
+	    <param-value>org.graphity.client.filter.request.PostReplaceFilter</param-value>
 	</init-param>
         <init-param>
-            <param-name>http://graphity.org/gp#datasetLocation</param-name>
-            <param-value>/org/graphity/blog/dataset/dataset.trig</param-value>
+	    <param-name>com.sun.jersey.spi.container.ContainerResponseFilters</param-name>
+            <param-value>org.graphity.processor.filter.response.HypermediaFilter</param-value>
+	</init-param>        
+        <init-param>
+            <param-name>http://graphity.org/gp#dataset</param-name>
+            <param-value>/org/graphity/blog/dataset.trig</param-value>
         </init-param>
         <init-param>
-            <param-name>http://graphity.org/gp#sitemap</param-name>
+            <param-name>http://graphity.org/gp#ontology</param-name>
             <param-value>http://graphity.org/blog#</param-value>
+        </init-param>
+        <init-param>
+            <param-name>http://graphity.org/gp#sitemapRules</param-name>
+            <param-value><![CDATA[
+[inheritance: (?template rdf:type <http://graphity.org/gp#Template>), (?template ?p ?o), (?p rdf:type owl:AnnotationProperty), (?p rdfs:isDefinedBy <http://graphity.org/gp#>), (?subClass rdfs:subClassOf ?template), noValue(?subClass ?p) -> (?subClass ?p ?o) ]
+]]></param-value>
         </init-param>
         <init-param>
             <param-name>http://graphity.org/gc#stylesheet</param-name>

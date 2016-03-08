@@ -17,18 +17,25 @@
 
 package org.graphity.blog;
 
+import com.hp.hpl.jena.util.FileManager;
+import com.hp.hpl.jena.util.LocationMapper;
 import java.util.HashSet;
 import java.util.Set;
 import javax.servlet.ServletConfig;
 import javax.ws.rs.core.Context;
-import org.graphity.client.ApplicationBase;
+import org.graphity.client.provider.DataManagerProvider;
+import org.graphity.client.provider.MediaTypesProvider;
+import org.graphity.client.provider.TemplatesProvider;
+import org.graphity.client.writer.ModelXSLTWriter;
+import org.graphity.core.util.jena.DataManager;
+import org.graphity.core.vocabulary.G;
 
 /**
  * JAX-RS application class of the Blog app.
  * 
  * @author Martynas Jusevičius <martynas@graphity.org>
  */
-public class Application extends ApplicationBase
+public class Application extends org.graphity.processor.Application
 {
     private final Set<Class<?>> classes = new HashSet<>();
 
@@ -37,6 +44,11 @@ public class Application extends ApplicationBase
         super(servletConfig);
         
 	classes.add(ResourceBase.class);
+        
+        getSingletons().add(new MediaTypesProvider());
+        getSingletons().add(new DataManagerProvider());
+	getSingletons().add(new ModelXSLTWriter()); // writes XHTML responses
+	getSingletons().add(new TemplatesProvider(servletConfig)); // loads XSLT stylesheet
     }
     
     @Override
@@ -45,4 +57,14 @@ public class Application extends ApplicationBase
 	return classes;
     }
 
+    @Override
+    public FileManager getFileManager()
+    {
+        DataManager manager = new DataManager(LocationMapper.get(), new MediaTypesProvider().getMediaTypes(),
+                getBooleanParam(getServletConfig(), G.cacheModelLoads),
+                getBooleanParam(getServletConfig(), G.preemptiveAuth));
+        FileManager.setStdLocators(manager);
+        return manager;
+    }
+    
 }

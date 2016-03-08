@@ -8,19 +8,19 @@
 @prefix foaf:	<http://xmlns.com/foaf/0.1/> .
 @prefix blog:   <http://graphity.org/blog#> .
 
-<> a blog:Site, sioc:Site, gp:Container, foaf:Document ;
+<> a sioc:Site, gp:Container, foaf:Document ;
     dct:title "Blog" ;
     dct:description "Sample web application built on Graphity Client" ;
     foaf:maker <http://graphityhq.com/#company> ;
     rdfs:seeAlso <sparql>, <http://graphity.org>, <http://graphityhq.com> .
 
-<posts> a blog:Forum, gp:Container, sioc:Forum, sioc:Container, foaf:Document ;
-    sioc:has_container <> ;
+<posts/> a blog:Forum, gp:Container, sioc:Forum, sioc:Container, foaf:Document ;
+    sioc:has_parent <> ;
     dct:title "Posts" ;
     dct:description "A container with all blog posts" .
 
-<categories> a blog:CategoryContainer, gp:Container, sioc:Container, foaf:Document ;
-    sioc:has_container <> ;
+<categories/> a blog:CategoryContainer, gp:Container, sioc:Container, foaf:Document ;
+    sioc:has_parent <> ;
     dct:title "Categories" ;
     dct:description "A container with all categories" .
 

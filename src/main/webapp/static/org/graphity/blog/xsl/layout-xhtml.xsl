@@ -17,7 +17,7 @@ limitations under the License.
 <!DOCTYPE xsl:stylesheet [
     <!ENTITY java   "http://xml.apache.org/xalan/java/">
     <!ENTITY gc     "http://graphity.org/gc#">
-    <!ENTITY gp     "http://graphity.org/gp#">
+    <!ENTITY g      "http://graphity.org/g#">
     <!ENTITY rdf    "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
     <!ENTITY rdfs   "http://www.w3.org/2000/01/rdf-schema#">
     <!ENTITY xsd    "http://www.w3.org/2001/XMLSchema#">
@@ -38,7 +38,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 xmlns:xhtml="http://www.w3.org/1999/xhtml"
 xmlns:xs="http://www.w3.org/2001/XMLSchema"
 xmlns:gc="&gc;"
-xmlns:gp="&gp;"
+xmlns:g="&g;"
 xmlns:rdf="&rdf;"
 xmlns:rdfs="&rdfs;"
 xmlns:owl="&owl;"
@@ -79,7 +79,7 @@ exclude-result-prefixes="#all">
 
     <xsl:template match="dct:subject/@rdf:resource | dct:subject/@rdf:nodeID" mode="gc:EditMode">
         <select name="ou" id="{generate-id(..)}" multiple="multiple" size="8">
-            <xsl:apply-templates select="key('resources-by-type', '&skos;Concept', document(resolve-uri('categories?limit=100', $gp:baseUri)))" mode="gc:OptionMode">
+            <xsl:apply-templates select="key('resources-by-type', '&skos;Concept', document(resolve-uri('categories?limit=100', $g:baseUri)))" mode="gc:OptionMode">
                 <xsl:sort select="gc:label(.)" order="ascending"/>
                 <xsl:with-param name="selected" select="../@rdf:resource"/>
             </xsl:apply-templates>

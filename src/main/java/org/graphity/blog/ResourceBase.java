@@ -18,6 +18,7 @@
 package org.graphity.blog;
 
 import com.hp.hpl.jena.ontology.OntClass;
+import com.hp.hpl.jena.ontology.Ontology;
 import com.hp.hpl.jena.rdf.model.Model;
 import com.sun.jersey.api.core.ResourceContext;
 import javax.servlet.ServletConfig;
@@ -27,6 +28,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.UriInfo;
+import org.graphity.core.MediaTypes;
 import org.graphity.core.model.GraphStore;
 import org.graphity.core.model.SPARQLEndpoint;
 
@@ -36,16 +38,18 @@ import org.graphity.core.model.SPARQLEndpoint;
  * @author Martynas Jusevičius <martynas@graphity.org>
  */
 @Path("/")
-public class ResourceBase extends org.graphity.client.model.impl.ResourceBase
+public class ResourceBase extends org.graphity.processor.model.impl.ResourceBase
 {
 
     public ResourceBase(@Context UriInfo uriInfo, @Context Request request, @Context ServletConfig servletConfig,
-            @Context SPARQLEndpoint endpoint, @Context GraphStore graphStore,
-            @Context OntClass matchedOntClass, @Context HttpHeaders httpHeaders, @Context ResourceContext resourceContext)
+            @Context MediaTypes mediaTypes, @Context SPARQLEndpoint endpoint, @Context GraphStore graphStore,
+            @Context Ontology ontology, @Context OntClass ontClass,
+            @Context HttpHeaders httpHeaders, @Context ResourceContext resourceContext)
     {
 	super(uriInfo, request, servletConfig,
-                endpoint, graphStore,
-                matchedOntClass, httpHeaders, resourceContext);
+                mediaTypes, endpoint, graphStore,
+                ontology, ontClass,
+                httpHeaders, resourceContext);
     }
     
     @Override

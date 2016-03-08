@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Context antiJARLocking="true" path="/blog-app">
-    <!--
-    <Parameter name="http://www.w3.org/ns/sparql-service-description#endpoint" value="http://graphity.dydra.com/graphity/blog-app/sparql" override="false"/>
-    <Parameter name="http://jena.hpl.hp.com/Service#queryAuthUser" value="username" override="false"/>
-    <Parameter name="http://jena.hpl.hp.com/Service#queryAuthPwd" value="password" override="false"/>
-    <Parameter name="http://graphity.org/gs#preemptiveAuth" value="true" override="false"/>
-    -->
+    <Parameter name="http://www.w3.org/ns/sparql-service-description#endpoint" value="http://graphity.dydra.com/graphity/blog-app-test/sparql" override="false"/>
+    <Parameter name="http://jena.hpl.hp.com/Service#queryAuthUser" value="graphity" override="false"/>
+    <Parameter name="http://jena.hpl.hp.com/Service#queryAuthPwd" value="46bWLRPh6Lutmd7f" override="false"/>
+    <Parameter name="http://graphity.org/g#preemptiveAuth" value="true" override="false"/>    
 </Context>
