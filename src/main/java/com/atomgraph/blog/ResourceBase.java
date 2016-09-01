@@ -15,7 +15,7 @@
  *
  */
 
-package org.graphity.blog;
+package com.atomgraph.blog;
 
 import org.apache.jena.ontology.Ontology;
 import org.apache.jena.rdf.model.Model;

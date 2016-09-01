@@ -40,7 +40,7 @@ SELECT *
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
         <init-param>
             <param-name>javax.ws.rs.Application</param-name>
-            <param-value>org.graphity.server.Application</param-value>
+            <param-value>com.atomgraph.blog.Application</param-value>
         </init-param>
         <init-param>
 	    <param-name>com.sun.jersey.spi.container.ContainerResponseFilters</param-name>
@@ -94,7 +94,7 @@ SELECT *
         -->
         <init-param>
             <param-name>http://graphity.org/gc#stylesheet</param-name>
-            <param-value>/static/com/atomgraph/blog/xsl/layout-xhtml.xsl</param-value>
+            <param-value>static/com/atomgraph/blog/xsl/layout-xhtml.xsl</param-value>
         </init-param>        
         <init-param>
             <param-name>http://graphity.org/g#resultLimit</param-name>

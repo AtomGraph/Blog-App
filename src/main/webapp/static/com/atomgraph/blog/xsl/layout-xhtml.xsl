@@ -48,13 +48,11 @@ xmlns:dct="&dct;"
 xmlns:foaf="&foaf;"
 xmlns:sioc="&sioc;"
 xmlns:sp="&sp;"
-xmlns:ldp="&ldp;"
 xmlns:list="&list;"
+xmlns:bs2="http://graphity.org/xsl/bootstrap/2.3.2"
 exclude-result-prefixes="#all">
 
-    <xsl:import href="../../client/xsl/functions.xsl"/>
-    <xsl:import href="../../client/xsl/group-sort-triples.xsl"/>
-    <xsl:import href="../../client/xsl/local-xhtml.xsl"/>
+    <xsl:import href="../../../../org/graphity/client/xsl/bootstrap/2.3.2/layout.xsl"/>
 
     <xsl:preserve-space elements="sioc:content skos:prefLabel"/>
 
