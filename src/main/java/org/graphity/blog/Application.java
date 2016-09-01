@@ -17,8 +17,8 @@
 
 package org.graphity.blog;
 
-import com.hp.hpl.jena.util.FileManager;
-import com.hp.hpl.jena.util.LocationMapper;
+import org.apache.jena.util.FileManager;
+import org.apache.jena.util.LocationMapper;
 import java.util.HashSet;
 import java.util.Set;
 import javax.servlet.ServletConfig;
@@ -35,26 +35,34 @@ import org.graphity.core.vocabulary.G;
  * 
  * @author Martynas Jusevičius <martynas@graphity.org>
  */
-public class Application extends org.graphity.processor.Application
+public class Application extends org.graphity.server.Application
 {
     private final Set<Class<?>> classes = new HashSet<>();
-
+    private final Set<Object> singletons = new HashSet<>();
+    
     public Application(@Context ServletConfig servletConfig)
     {
         super(servletConfig);
         
 	classes.add(ResourceBase.class);
-        
-        getSingletons().add(new MediaTypesProvider());
-        getSingletons().add(new DataManagerProvider());
-	getSingletons().add(new ModelXSLTWriter()); // writes XHTML responses
-	getSingletons().add(new TemplatesProvider(servletConfig)); // loads XSLT stylesheet
+
+        singletons.addAll(super.getSingletons());
+        singletons.add(new MediaTypesProvider());
+        singletons.add(new DataManagerProvider());
+	singletons.add(new ModelXSLTWriter()); // writes XHTML responses
+	singletons.add(new TemplatesProvider(servletConfig)); // loads XSLT stylesheet
     }
     
     @Override
     public Set<Class<?>> getClasses()
     {
 	return classes;
+    }
+
+    @Override
+    public Set<Object> getSingletons()
+    {
+	return singletons;
     }
 
     @Override

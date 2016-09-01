@@ -1,56 +1,52 @@
-@base           <http://graphity.org/blog>
+@base           <http://atomgraph.com/blog/ns#>
 
 #@prefix :       <#> .
-@prefix gcs:    <http://graphity.org/gcs#> .
 @prefix gc:     <http://graphity.org/gc#> .
-@prefix gp:     <http://graphity.org/gp#> .
 @prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
 @prefix owl:    <http://www.w3.org/2002/07/owl#> .
 @prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix ldt:    <http://www.w3.org/ns/ldt#> .
+@prefix ldtc:   <http://www.w3.org/ns/ldt/core#> .
+@prefix dh:     <http://www.w3.org/ns/ldt/document-hierarchy#> .
 @prefix sd:     <http://www.w3.org/ns/sparql-service-description#> .
 @prefix sp:     <http://spinrdf.org/sp#> .
 @prefix spin:   <http://spinrdf.org/spin#> .
 @prefix spl:    <http://spinrdf.org/spl#> .
-@prefix dqc:	<http://semwebquality.org/ontologies/dq-constraints#> .
 @prefix dct:    <http://purl.org/dc/terms/> .
 @prefix void:   <http://rdfs.org/ns/void#> .
 @prefix sioc:   <http://rdfs.org/sioc/ns#> .
 @prefix foaf:   <http://xmlns.com/foaf/0.1/> .
 
-<#> a owl:Ontology, gp:Ontology ;
-    owl:imports gp:, void:, foaf:, sp:, spin:, dqc: ;
-    rdfs:label "Blog sitemap" ;
+<#> a owl:Ontology, ldt:Ontology ;
+    owl:imports dh:, sioc: ;
+    rdfs:label "Blog ontology" ;
     dct:created "2014-10-21T01:53:00+01:00"^^xsd:dateTime .
 
 # RESOURCE CLASSES (GRAPHITY TEMPLATES)
 
-gp:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:MapMode .
+ldtc:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:MapMode .
 
 # posts
 
-<#Forum> a owl:Class, gp:Template ;
-    rdfs:subClassOf foaf:Document, gp:Container, sioc:Forum ;
-    gp:uriTemplate "/posts/" ;
-    gp:defaultLimit 20 ;
-    # gp:defaultOrderBy "title"^^xsd:string ; # needs ?title in the query
+<#Forum> a owl:Class, ldt:Template ;
+    rdfs:subClassOf dh:Container, sioc:Forum ;
+    ldt:path "/posts/" ;
+    ldt:param [ a ldt:Argument ;
+        spl:predicate dh:limit ;
+        spl:defaultValue 20 ;
+        ldt:tunnel true
+    ] ;
     gc:defaultMode gc:ReadMode ;
     gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:ThumbnailMode ;
     rdfs:label "Post container" ;
     rdfs:isDefinedBy <#> .
 
-<#Post> a rdfs:Class, owl:Class, gp:Template ;
-    rdfs:subClassOf foaf:Document, gp:Item, sioc:Post ,
-        [ a owl:Restriction ;
-            owl:onProperty sioc:has_container ;
-            owl:allValuesFrom <#Forum>
-        ] ;
-    gp:uriTemplate "/posts/{slug}" ;
-    gc:supportedMode gc:ReadMode, gc:EditMode ;
-    gc:defaultMode gc:ReadMode ;
-    gp:cacheControl "public, max-age=3600" ;
-    gp:update gp:Delete ;
+<#Post> a rdfs:Class, owl:Class, ldt:Template ;
+    rdfs:subClassOf dh:Document, sioc:Post ;
+    ldt:path "/posts/{slug}" ;
+    ldt:update ldt:Delete ;
     spin:constructor
               [ a       sp:Construct ;
                 sp:text """
@@ -59,58 +55,55 @@ gp:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:Ma
                     PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
                     PREFIX foaf:    <http://xmlns.com/foaf/0.1/>
                     PREFIX sioc:    <http://rdfs.org/sioc/ns#>
-                    PREFIX gp:      <http://graphity.org/gp#>
+                    PREFIX ldt:     <http://www.w3.org/ns/ldt#>
                     PREFIX gc:      <http://graphity.org/gc#>
                     PREFIX dct:     <http://purl.org/dc/terms/>
 
                     CONSTRUCT {
-                        ?this a foaf:Document, blog:Post, sioc:Post, gp:Item, sioc:Item ;
+                        ?this a foaf:Document, blog:Post, sioc:Post, ldt:Item, sioc:Item ;
                             dct:title " " ;
                             sioc:content " " ;
                             dct:subject _:category ;
-                            gp:slug " "^^xsd:string .
+                            ldt:slug " "^^xsd:string .
                     }
                     WHERE {}"""
               ] ;
-    spin:constraint gp:MissingSlug ,
-        [ a dqc:MissingProperties ;
-	    sp:arg1 <#Post> ;
+    spin:constraint dh:MissingSlug ,
+        [ a ldt:MissingPropertyValue ;
 	    sp:arg2 dct:title
 	] ,
-        [ a dqc:MissingProperties ;
-	    sp:arg1 <#Post> ;
+        [ a ldt:MissingPropertyValue ;
 	    sp:arg2 sioc:content
 	] ;
+    ldt:cacheControl "public, max-age=3600" ;
+    gc:supportedMode gc:ReadMode, gc:EditMode ;
+    gc:defaultMode gc:ReadMode ;
     rdfs:label "Post document" ;
     rdfs:isDefinedBy <#> .
 
 # categories
 
-<#CategoryContainer> a owl:Class, gp:Template ;
-    rdfs:subClassOf foaf:Document, gp:Container, sioc:Container ;
-    gp:uriTemplate "/categories/" ;
-    gp:defaultLimit 20 ;
-    # gp:defaultOrderBy "prefLabel"^^xsd:string ; # needs ?prefLabel in the query
+<#CategoryContainer> a owl:Class, ldt:Template ;
+    rdfs:subClassOf dh:Container ;
+    ldt:path "/categories/" ;
+    ldt:param [ a ldt:Argument ;
+        spl:predicate dh:limit ;
+        spl:defaultValue 20 ;
+        ldt:tunnel true
+    ] ;
     gc:defaultMode gc:ReadMode ;
     gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:ThumbnailMode ;
     rdfs:label "Category container" ;
     rdfs:isDefinedBy <#> .
 
-<#CategoryItem> a rdfs:Class, owl:Class, gp:Template ;
-    rdfs:subClassOf foaf:Document, gp:Item, sioc:Item ,
-        [ a owl:Restriction ;
-            owl:onProperty sioc:has_container ;
-            owl:allValuesFrom <#CategoryContainer>
-        ] ,
+<#CategoryDocument> a rdfs:Class, owl:Class, ldt:Template ;
+    rdfs:subClassOf dh:Document ,
         [ a owl:Restriction ;
             owl:onProperty foaf:primaryTopic ;
             owl:allValuesFrom <#Category>
 	] ;
-    gp:uriTemplate "/categories/{slug}" ;
-    gc:supportedMode gc:ReadMode, gc:EditMode ;
-    gc:defaultMode gc:ReadMode ;
-    gp:cacheControl "public, max-age=3600" ;
-    gp:query [ a       sp:Describe ;
+    ldt:path "/categories/{slug}" ;
+    ldt:query [ a       sp:Describe ;
                 sp:text """
                     PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
                     PREFIX foaf:    <http://xmlns.com/foaf/0.1/>
@@ -126,7 +119,7 @@ gp:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:Ma
                         }
                     }"""
               ] ;
-    gp:update gp:DeleteWithTopic ;
+    ldt:update ldtc:Delete ; # dht:DeleteWithTopic ;
     spin:constructor
               [ a       sp:Construct ;
                 sp:text """
@@ -135,27 +128,34 @@ gp:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:Ma
                     PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
                     PREFIX foaf:    <http://xmlns.com/foaf/0.1/>
                     PREFIX sioc:    <http://rdfs.org/sioc/ns#>
-                    PREFIX gp:      <http://graphity.org/gp#>
+                    PREFIX ldt:      <http://www.w3.org/ns/ldt#>
                     PREFIX skos:    <http://www.w3.org/2004/02/skos/core#>
 
                     CONSTRUCT {
-                        ?this a foaf:Document, blog:CategoryItem, gp:Item, sioc:Item ;
+                        ?this a foaf:Document, blog:CategoryItem, ldt:Item, sioc:Item ;
                             foaf:primaryTopic _:category ;
-                            gp:slug " "^^xsd:string .
+                            ldt:slug " "^^xsd:string .
                         _:category a blog:Category, skos:Concept ;
                             foaf:isPrimaryTopicOf _:this ;
                             skos:prefLabel " " .
                     }
                     WHERE {}"""
               ] ;
-    spin:constraint gp:MissingSlug ;
+    spin:constraint dh:MissingSlug ;
+    ldt:cacheControl "public, max-age=3600" ;
+    gc:supportedMode gc:ReadMode, gc:EditMode ;
+    gc:defaultMode gc:ReadMode ;
     rdfs:label "Category document" ;
     rdfs:isDefinedBy <#> .
 
 <#Category> a rdfs:Class, owl:Class ;
-    rdfs:subClassOf skos:Concept ;
-    gp:skolemTemplate "{isPrimaryTopicOf.slug}" ;
-    spin:constraint [ a dqc:MissingProperties ;
+    rdfs:subClassOf skos:Concept,
+        [ a owl:Restriction ;
+            owl:onProperty foaf:isPrimaryTopicOf ;
+            owl:allValuesFrom <#CategoryDocument>
+        ] ;
+    ldt:skolemTemplate "{isPrimaryTopicOf.slug}" ;
+    spin:constraint [ a ldt:MissingPropertyValue ;
 	    sp:arg1 <#Category> ;
 	    sp:arg2 skos:prefLabel
 	] ;

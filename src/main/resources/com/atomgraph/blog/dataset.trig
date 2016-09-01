@@ -1,4 +1,5 @@
-@prefix gp:     <http://graphity.org/gp#> .
+@prefix dh:     <http://www.w3.org/ns/ldt/document-hierarchy#> .
+@prefix ldtc:   <http://www.w3.org/ns/ldt/core#> .
 @prefix rdf:	<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:	<http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd:	<http://www.w3.org/2001/XMLSchema#> .
@@ -6,24 +7,23 @@
 @prefix void:	<http://rdfs.org/ns/void#> .
 @prefix sioc:	<http://rdfs.org/sioc/ns#> .
 @prefix foaf:	<http://xmlns.com/foaf/0.1/> .
-@prefix blog:   <http://graphity.org/blog#> .
 
-<> a sioc:Site, gp:Container, foaf:Document ;
+<> a dh:Container ;
     dct:title "Blog" ;
-    dct:description "Sample web application built on Graphity Client" ;
-    foaf:maker <http://graphityhq.com/#company> ;
-    rdfs:seeAlso <sparql>, <http://graphity.org>, <http://graphityhq.com> .
+    dct:description "Sample web application built on AtomGraph Web-Node" ;
+    foaf:maker <http://atomgraph.com/#company> ;
+    rdfs:seeAlso <sparql>, <http://atomgraph.com> .
 
-<posts/> a blog:Forum, gp:Container, sioc:Forum, sioc:Container, foaf:Document ;
+<posts/> a dh:Container ;
     sioc:has_parent <> ;
     dct:title "Posts" ;
     dct:description "A container with all blog posts" .
 
-<categories/> a blog:CategoryContainer, gp:Container, sioc:Container, foaf:Document ;
+<categories/> a dh:Container ;
     sioc:has_parent <> ;
     dct:title "Categories" ;
     dct:description "A container with all categories" .
 
-<sparql> a foaf:Document, gp:SPARQLEndpoint ;
+<sparql> a foaf:Document, ldtc:SPARQLEndpoint ;
     sioc:has_space <> ;
     dct:title "SPARQL endpoint" .

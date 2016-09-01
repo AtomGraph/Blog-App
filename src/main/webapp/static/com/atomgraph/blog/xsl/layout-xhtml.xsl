@@ -62,7 +62,7 @@ exclude-result-prefixes="#all">
 	<dct:created rdf:datatype="&xsd;dateTime">2014-10-09T23:35:00+01:00</dct:created>
     </rdf:Description>
     
-    <xsl:template match="sioc:content/text()" mode="gc:EditMode">
+    <xsl:template match="sioc:content/text()" mode="bs2:EditMode">
         <textarea name="ol" id="{generate-id(..)}" rows="10" style="font-family: monospace;">
             <xsl:value-of select="normalize-space(.)"/>
         </textarea>
@@ -77,7 +77,7 @@ exclude-result-prefixes="#all">
         </xsl:choose>
     </xsl:template>
 
-    <xsl:template match="dct:subject/@rdf:resource | dct:subject/@rdf:nodeID" mode="gc:EditMode">
+    <xsl:template match="dct:subject/@rdf:resource | dct:subject/@rdf:nodeID" mode="bs2:EditMode">
         <select name="ou" id="{generate-id(..)}" multiple="multiple" size="8">
             <xsl:apply-templates select="key('resources-by-type', '&skos;Concept', document(resolve-uri('categories?limit=100', $g:baseUri)))" mode="gc:OptionMode">
                 <xsl:sort select="gc:label(.)" order="ascending"/>

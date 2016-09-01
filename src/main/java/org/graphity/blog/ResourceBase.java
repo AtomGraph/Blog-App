@@ -17,9 +17,8 @@
 
 package org.graphity.blog;
 
-import com.hp.hpl.jena.ontology.OntClass;
-import com.hp.hpl.jena.ontology.Ontology;
-import com.hp.hpl.jena.rdf.model.Model;
+import org.apache.jena.ontology.Ontology;
+import org.apache.jena.rdf.model.Model;
 import com.sun.jersey.api.core.ResourceContext;
 import javax.servlet.ServletConfig;
 import javax.ws.rs.Path;
@@ -31,6 +30,7 @@ import javax.ws.rs.core.UriInfo;
 import org.graphity.core.MediaTypes;
 import org.graphity.core.model.GraphStore;
 import org.graphity.core.model.SPARQLEndpoint;
+import org.graphity.processor.model.TemplateCall;
 
 /**
  * Base class of all Blog app resources.
@@ -38,24 +38,24 @@ import org.graphity.core.model.SPARQLEndpoint;
  * @author Martynas Jusevičius <martynas@graphity.org>
  */
 @Path("/")
-public class ResourceBase extends org.graphity.processor.model.impl.ResourceBase
+public class ResourceBase extends org.graphity.server.model.impl.ResourceBase
 {
 
     public ResourceBase(@Context UriInfo uriInfo, @Context Request request, @Context ServletConfig servletConfig,
             @Context MediaTypes mediaTypes, @Context SPARQLEndpoint endpoint, @Context GraphStore graphStore,
-            @Context Ontology ontology, @Context OntClass ontClass,
+            @Context Ontology ontology, @Context TemplateCall templateCall,
             @Context HttpHeaders httpHeaders, @Context ResourceContext resourceContext)
     {
 	super(uriInfo, request, servletConfig,
                 mediaTypes, endpoint, graphStore,
-                ontology, ontClass,
+                ontology, templateCall,
                 httpHeaders, resourceContext);
     }
     
     @Override
     public ResponseBuilder getResponseBuilder(Model model)
     {
-	return super.getResponseBuilder(model).header("X-Powered-By", "http://graphityhq.com");
+	return super.getResponseBuilder(model).header("X-Powered-By", "http://atomgraph.com");
     }
 
 }
