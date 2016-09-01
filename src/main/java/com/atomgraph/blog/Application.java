@@ -23,9 +23,10 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.servlet.ServletConfig;
 import javax.ws.rs.core.Context;
-import org.graphity.client.provider.DataManagerProvider;
+import org.apache.jena.ontology.OntDocumentManager;
 import org.graphity.client.provider.MediaTypesProvider;
 import org.graphity.client.provider.TemplatesProvider;
+import org.graphity.client.vocabulary.GC;
 import org.graphity.client.writer.ModelXSLTWriter;
 import org.graphity.core.provider.ClientProvider;
 import org.graphity.core.provider.QueryParamProvider;
@@ -66,7 +67,6 @@ public class Application extends org.graphity.server.Application
         
 	classes.add(ResourceBase.class);
 
-        singletons.add(new org.graphity.core.provider.DataManagerProvider());        
         // Server singletons
 	singletons.add(new SkolemizingModelProvider());
 	singletons.add(new ResultSetProvider());
@@ -109,11 +109,23 @@ public class Application extends org.graphity.server.Application
     }
 
     @Override
+    public void initOntDocumentManager(FileManager fileManager)
+    {
+        if (!(OntDocumentManager.getInstance().getFileManager() instanceof DataManager))
+        {
+            FileManager.setGlobalFileManager(fileManager);            
+            super.initOntDocumentManager(fileManager);
+        }
+    }
+
+    @Override
     public FileManager getFileManager()
     {
-        DataManager manager = new DataManager(LocationMapper.get(), new MediaTypesProvider().getMediaTypes(),
+        org.graphity.client.util.DataManager manager = new org.graphity.client.util.DataManager(LocationMapper.get(),
+                new MediaTypesProvider().getMediaTypes(),
                 getBooleanParam(getServletConfig(), G.cacheModelLoads),
-                getBooleanParam(getServletConfig(), G.preemptiveAuth));
+                getBooleanParam(getServletConfig(), G.preemptiveAuth),
+                getBooleanParam(getServletConfig(), GC.resolvingUncached));
         FileManager.setStdLocators(manager);
         return manager;
     }

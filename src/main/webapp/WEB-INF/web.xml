@@ -36,7 +36,7 @@ SELECT *
 ]]></param-value>
     </context-param>
     <servlet>
-        <servlet-name>index</servlet-name>
+        <servlet-name>server</servlet-name>
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
         <init-param>
             <param-name>javax.ws.rs.Application</param-name>
@@ -102,7 +102,11 @@ SELECT *
         </init-param>
     </servlet>
     <servlet-mapping>
-        <servlet-name>index</servlet-name>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/static/*</url-pattern>
+    </servlet-mapping>    
+    <servlet-mapping>
+        <servlet-name>server</servlet-name>
         <url-pattern>/*</url-pattern>
     </servlet-mapping>
 </web-app>

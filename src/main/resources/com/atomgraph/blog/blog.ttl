@@ -36,6 +36,7 @@ ldtc:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:
     ldt:param [ a ldt:Argument ;
         spl:predicate dh:limit ;
         spl:defaultValue 20 ;
+        spl:optional true ;
         ldt:tunnel true
     ] ;
     gc:defaultMode gc:ReadMode ;
@@ -89,6 +90,7 @@ ldtc:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:
     ldt:param [ a ldt:Argument ;
         spl:predicate dh:limit ;
         spl:defaultValue 20 ;
+        spl:optional true ;
         ldt:tunnel true
     ] ;
     gc:defaultMode gc:ReadMode ;
