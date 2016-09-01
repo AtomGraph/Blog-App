@@ -3,8 +3,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <name>Blog app</name>
-    <groupId>org.graphity</groupId>
-    <artifactId>blog-app</artifactId>
+    <groupId>com.atomgraph</groupId>
+    <artifactId>blog</artifactId>
     <version>1.1.4-SNAPSHOT</version>
     <packaging>war</packaging>
 
@@ -36,7 +36,7 @@
                     <failOnMissingWebXml>false</failOnMissingWebXml>
 		    <overlays>
 			<overlay>
-			    <groupId>org.graphity</groupId>
+			    <groupId>com.atomgraph</groupId>
 			    <artifactId>client</artifactId>
 			</overlay>
 		    </overlays>
@@ -54,8 +54,8 @@
 			    <goal>unpack-dependencies</goal>
 			</goals>
 			<configuration>
-			    <includeGroupIds>org.graphity</includeGroupIds>
-			    <includes>**\/*.xsl,**\/*.ttl,**\/*.rdf,**\/*.owl</includes>
+			    <includeGroupIds>com.atomgraph</includeGroupIds>
+			    <includes>**\/*.ttl,**\/*.rdf,**\/*.owl</includes>
 			    <excludes>prefix-mapping.n3</excludes>
 			    <outputDirectory>${project.build.directory}/classes</outputDirectory>
 			</configuration>
@@ -73,12 +73,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>processor</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>client</artifactId>
+            <artifactId>node</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

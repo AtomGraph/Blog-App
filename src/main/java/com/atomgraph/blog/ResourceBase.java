@@ -1,5 +1,5 @@
 /**
- *  Copyright 2014 Martynas Jusevičius <martynas@graphity.org>
+ *  Copyright 2014 Martynas Jusevičius <martynas@atomgraph.com>
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -27,18 +27,18 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response.ResponseBuilder;
 import javax.ws.rs.core.UriInfo;
-import org.graphity.core.MediaTypes;
-import org.graphity.core.model.GraphStore;
-import org.graphity.core.model.SPARQLEndpoint;
-import org.graphity.processor.model.TemplateCall;
+import com.atomgraph.core.MediaTypes;
+import com.atomgraph.core.model.GraphStore;
+import com.atomgraph.core.model.SPARQLEndpoint;
+import com.atomgraph.processor.model.TemplateCall;
 
 /**
  * Base class of all Blog app resources.
  * 
- * @author Martynas Jusevičius <martynas@graphity.org>
+ * @author Martynas Jusevičius <martynas@atomgraph.com>
  */
 @Path("/")
-public class ResourceBase extends org.graphity.server.model.impl.ResourceBase
+public class ResourceBase extends com.atomgraph.server.model.impl.ResourceBase
 {
 
     public ResourceBase(@Context UriInfo uriInfo, @Context Request request, @Context ServletConfig servletConfig,

@@ -1,14 +1,14 @@
-@base           <http://atomgraph.com/blog/ns#>
+@base           <http://atomgraph.com/blog/ns> .
 
 #@prefix :       <#> .
-@prefix gc:     <http://graphity.org/gc#> .
+@prefix gc:     <http://atomgraph.com/client/ns#> .
 @prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
 @prefix owl:    <http://www.w3.org/2002/07/owl#> .
 @prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
 @prefix ldt:    <http://www.w3.org/ns/ldt#> .
-@prefix ldtc:   <http://www.w3.org/ns/ldt/core#> .
+@prefix c:      <http://www.w3.org/ns/ldt/core#> .
 @prefix dh:     <http://www.w3.org/ns/ldt/document-hierarchy#> .
 @prefix sd:     <http://www.w3.org/ns/sparql-service-description#> .
 @prefix sp:     <http://spinrdf.org/sp#> .
@@ -20,17 +20,17 @@
 @prefix foaf:   <http://xmlns.com/foaf/0.1/> .
 
 <#> a owl:Ontology, ldt:Ontology ;
-    owl:imports dh:, sioc: ;
+    owl:imports dh:, sioc:, skos: ;
     rdfs:label "Blog ontology" ;
     dct:created "2014-10-21T01:53:00+01:00"^^xsd:dateTime .
 
-# RESOURCE CLASSES (GRAPHITY TEMPLATES)
+# TEMPLATES
 
-ldtc:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:MapMode .
+c:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:MapMode .
 
 # posts
 
-<#Forum> a owl:Class, ldt:Template ;
+<#Forum> a rdfs:Class, owl:Class, ldt:Template ;
     rdfs:subClassOf dh:Container, sioc:Forum ;
     ldt:path "/posts/" ;
     ldt:param [ a ldt:Argument ;
@@ -38,39 +38,42 @@ ldtc:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:
         spl:defaultValue 20 ;
         spl:optional true ;
         ldt:tunnel true
+    ] , [ a ldt:Argument ;
+        spl:predicate gc:mode ;
+        spl:valueType gc:Mode ;
+        spl:optional true ;
+        spl:defaultValue gc:ListMode
+    ] , [ a ldt:Argument ;
+        spl:predicate gc:forClass ;
+        spl:valueType rdfs:Class ;
+        spl:optional true
     ] ;
     gc:defaultMode gc:ReadMode ;
     gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:ThumbnailMode ;
-    rdfs:label "Post container" ;
+    rdfs:label "Forum" ;
     rdfs:isDefinedBy <#> .
 
 <#Post> a rdfs:Class, owl:Class, ldt:Template ;
-    rdfs:subClassOf dh:Document, sioc:Post ;
+    rdfs:subClassOf c:Document, sioc:Post ;
     ldt:path "/posts/{slug}" ;
     ldt:update ldt:Delete ;
     spin:constructor
-              [ a       sp:Construct ;
-                sp:text """
-                    PREFIX blog:    <http://graphity.org/blog#>
-                    PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
-                    PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
-                    PREFIX foaf:    <http://xmlns.com/foaf/0.1/>
-                    PREFIX sioc:    <http://rdfs.org/sioc/ns#>
-                    PREFIX ldt:     <http://www.w3.org/ns/ldt#>
-                    PREFIX gc:      <http://graphity.org/gc#>
-                    PREFIX dct:     <http://purl.org/dc/terms/>
+        [ a       sp:Construct ;
+          sp:text """
+              PREFIX blog:    <http://atomgraph.com/blog/ns#>
+              PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+              PREFIX sioc:    <http://rdfs.org/sioc/ns#>
+              PREFIX dh:      <http://www.w3.org/ns/ldt/document-hierarchy#>
+              PREFIX dct:     <http://purl.org/dc/terms/>
 
-                    CONSTRUCT {
-                        ?this a foaf:Document, blog:Post, sioc:Post, ldt:Item, sioc:Item ;
-                            dct:title " " ;
-                            sioc:content " " ;
-                            dct:subject _:category ;
-                            ldt:slug " "^^xsd:string .
-                    }
-                    WHERE {}"""
-              ] ;
-    spin:constraint dh:MissingSlug ,
-        [ a ldt:MissingPropertyValue ;
+              CONSTRUCT {
+                  ?this dct:title [ a xsd:string ] ;
+                      sioc:content [ a xsd:string ] ;
+                      dct:subject [ a blog:Category ] .
+              }
+              WHERE {}"""
+        ] ;
+    spin:constraint [ a ldt:MissingPropertyValue ;
 	    sp:arg2 dct:title
 	] ,
         [ a ldt:MissingPropertyValue ;
@@ -79,12 +82,12 @@ ldtc:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:
     ldt:cacheControl "public, max-age=3600" ;
     gc:supportedMode gc:ReadMode, gc:EditMode ;
     gc:defaultMode gc:ReadMode ;
-    rdfs:label "Post document" ;
+    rdfs:label "Post" ;
     rdfs:isDefinedBy <#> .
 
 # categories
 
-<#CategoryContainer> a owl:Class, ldt:Template ;
+<#CategoryContainer> a rdfs:Class, owl:Class, ldt:Template ;
     rdfs:subClassOf dh:Container ;
     ldt:path "/categories/" ;
     ldt:param [ a ldt:Argument ;
@@ -99,51 +102,30 @@ ldtc:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:
     rdfs:isDefinedBy <#> .
 
 <#CategoryDocument> a rdfs:Class, owl:Class, ldt:Template ;
-    rdfs:subClassOf dh:Document ,
+    rdfs:subClassOf c:Document ,
         [ a owl:Restriction ;
             owl:onProperty foaf:primaryTopic ;
             owl:allValuesFrom <#Category>
 	] ;
     ldt:path "/categories/{slug}" ;
-    ldt:query [ a       sp:Describe ;
-                sp:text """
-                    PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
-                    PREFIX foaf:    <http://xmlns.com/foaf/0.1/>
-                    PREFIX dct:     <http://purl.org/dc/terms/>
+    ldt:query
+        [ a       sp:Describe ;
+            sp:text """
+                PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+                PREFIX foaf:    <http://xmlns.com/foaf/0.1/>
+                PREFIX dct:     <http://purl.org/dc/terms/>
 
-                    DESCRIBE ?this ?category ?post {
-                        ?category foaf:isPrimaryTopicOf ?this
-                        OPTIONAL {
-                            SELECT DISTINCT ?post ?category
-                            {
-                                ?post dct:subject ?category
-                            }
+                DESCRIBE ?this ?category ?post {
+                    ?category foaf:isPrimaryTopicOf ?this
+                    OPTIONAL {
+                        SELECT DISTINCT ?post ?category
+                        {
+                            ?post dct:subject ?category
                         }
-                    }"""
-              ] ;
-    ldt:update ldtc:Delete ; # dht:DeleteWithTopic ;
-    spin:constructor
-              [ a       sp:Construct ;
-                sp:text """
-                    PREFIX blog:    <http://graphity.org/blog#>
-                    PREFIX rdfs:    <http://www.w3.org/2000/01/rdf-schema#>
-                    PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
-                    PREFIX foaf:    <http://xmlns.com/foaf/0.1/>
-                    PREFIX sioc:    <http://rdfs.org/sioc/ns#>
-                    PREFIX ldt:      <http://www.w3.org/ns/ldt#>
-                    PREFIX skos:    <http://www.w3.org/2004/02/skos/core#>
-
-                    CONSTRUCT {
-                        ?this a foaf:Document, blog:CategoryItem, ldt:Item, sioc:Item ;
-                            foaf:primaryTopic _:category ;
-                            ldt:slug " "^^xsd:string .
-                        _:category a blog:Category, skos:Concept ;
-                            foaf:isPrimaryTopicOf _:this ;
-                            skos:prefLabel " " .
                     }
-                    WHERE {}"""
-              ] ;
-    spin:constraint dh:MissingSlug ;
+                }"""
+        ] ;
+    ldt:update c:Delete ; # dht:DeleteWithTopic ;
     ldt:cacheControl "public, max-age=3600" ;
     gc:supportedMode gc:ReadMode, gc:EditMode ;
     gc:defaultMode gc:ReadMode ;
@@ -157,6 +139,16 @@ ldtc:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:
             owl:allValuesFrom <#CategoryDocument>
         ] ;
     ldt:skolemTemplate "{isPrimaryTopicOf.slug}" ;
+    spin:constructor
+        [ a       sp:Construct ;
+          sp:text """
+              PREFIX skos:    <http://www.w3.org/2004/02/skos/core#>
+
+              CONSTRUCT {
+                ?this skos:prefLabel [ a xsd:string ] .
+              }
+              WHERE {}"""
+        ] ;
     spin:constraint [ a ldt:MissingPropertyValue ;
 	    sp:arg1 <#Category> ;
 	    sp:arg2 skos:prefLabel

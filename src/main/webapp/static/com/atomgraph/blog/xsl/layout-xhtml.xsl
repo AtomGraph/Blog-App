@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-Copyright 2014 Martynas Jusevičius <martynas@graphity.org>
+Copyright 2014 Martynas Jusevičius <martynas@atomgraph.com>
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,8 +16,8 @@ limitations under the License.
 -->
 <!DOCTYPE xsl:stylesheet [
     <!ENTITY java   "http://xml.apache.org/xalan/java/">
-    <!ENTITY gc     "http://graphity.org/gc#">
-    <!ENTITY g      "http://graphity.org/g#">
+    <!ENTITY g      "http://atomgraph.com/core/ns#">
+    <!ENTITY gc     "http://atomgraph.com/client/ns#">
     <!ENTITY rdf    "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
     <!ENTITY rdfs   "http://www.w3.org/2000/01/rdf-schema#">
     <!ENTITY xsd    "http://www.w3.org/2001/XMLSchema#">
@@ -52,15 +52,15 @@ xmlns:list="&list;"
 xmlns:bs2="http://graphity.org/xsl/bootstrap/2.3.2"
 exclude-result-prefixes="#all">
 
-    <xsl:import href="../../../../org/graphity/client/xsl/bootstrap/2.3.2/layout.xsl"/>
+    <xsl:import href="../../../../com/atomgraph/client/xsl/bootstrap/2.3.2/layout.xsl"/>
 
     <xsl:preserve-space elements="sioc:content skos:prefLabel"/>
 
     <rdf:Description rdf:about="">
 	<dct:created rdf:datatype="&xsd;dateTime">2014-10-09T23:35:00+01:00</dct:created>
     </rdf:Description>
-    
-    <xsl:template match="sioc:content/text()" mode="bs2:EditMode">
+
+    <xsl:template match="sioc:content/text()" mode="bs2:FormControl">
         <textarea name="ol" id="{generate-id(..)}" rows="10" style="font-family: monospace;">
             <xsl:value-of select="normalize-space(.)"/>
         </textarea>
@@ -75,7 +75,7 @@ exclude-result-prefixes="#all">
         </xsl:choose>
     </xsl:template>
 
-    <xsl:template match="dct:subject/@rdf:resource | dct:subject/@rdf:nodeID" mode="bs2:EditMode">
+    <xsl:template match="dct:subject/@rdf:resource | dct:subject/@rdf:nodeID" mode="bs2:FormControl">
         <select name="ou" id="{generate-id(..)}" multiple="multiple" size="8">
             <xsl:apply-templates select="key('resources-by-type', '&skos;Concept', document(resolve-uri('categories?limit=100', $g:baseUri)))" mode="gc:OptionMode">
                 <xsl:sort select="gc:label(.)" order="ascending"/>
