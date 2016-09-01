@@ -60,7 +60,7 @@ exclude-result-prefixes="#all">
 	<dct:created rdf:datatype="&xsd;dateTime">2014-10-09T23:35:00+01:00</dct:created>
     </rdf:Description>
 
-    <xsl:template match="sioc:content/text()" mode="bs2:FormControl">
+    <xsl:template match="sioc:content/text() | sioc:content/@rdf:nodeID[key('resources', .)/rdf:type/@rdf:resource = '&xsd;string']" mode="bs2:FormControl">
         <textarea name="ol" id="{generate-id(..)}" rows="10" style="font-family: monospace;">
             <xsl:value-of select="normalize-space(.)"/>
         </textarea>
