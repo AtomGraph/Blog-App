@@ -8,7 +8,7 @@
 @prefix owl:    <http://www.w3.org/2002/07/owl#> .
 @prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
 @prefix ldt:    <http://www.w3.org/ns/ldt#> .
-@prefix c:      <http://www.w3.org/ns/ldt/core#> .
+@prefix core:   <http://www.w3.org/ns/ldt/core#> .
 @prefix dh:     <http://www.w3.org/ns/ldt/document-hierarchy#> .
 @prefix sd:     <http://www.w3.org/ns/sparql-service-description#> .
 @prefix sp:     <http://spinrdf.org/sp#> .
@@ -26,7 +26,7 @@
 
 # TEMPLATES
 
-c:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:MapMode .
+core:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:MapMode .
 
 # posts
 
@@ -40,7 +40,7 @@ c:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:Map
         ldt:tunnel true
     ] , [ a ldt:Argument ;
         spl:predicate gc:mode ;
-        spl:valueType gc:Mode ;
+        spl:valueType gc:PageMode ;
         spl:optional true ;
         spl:defaultValue gc:ListMode
     ] , [ a ldt:Argument ;
@@ -54,7 +54,7 @@ c:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:Map
     rdfs:isDefinedBy <#> .
 
 <#Post> a rdfs:Class, owl:Class, ldt:Template ;
-    rdfs:subClassOf c:Document, sioc:Post ;
+    rdfs:subClassOf core:Document, sioc:Post ;
     ldt:path "/posts/{slug}" ;
     ldt:update ldt:Delete ;
     spin:constructor
@@ -95,6 +95,16 @@ c:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:Map
         spl:defaultValue 20 ;
         spl:optional true ;
         ldt:tunnel true
+    ] , [ a ldt:Argument ;
+        spl:predicate gc:mode ;
+        spl:valueType gc:PageMode ;
+        spl:defaultValue gc:ReadMode ;
+        spl:optional true ;
+        ldt:tunnel true
+    ] , [ a ldt:Argument ;
+        spl:predicate gc:forClass ;
+        spl:valueType rdfs:Class ;
+        spl:optional true
     ] ;
     gc:defaultMode gc:ReadMode ;
     gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:ThumbnailMode ;
@@ -102,7 +112,7 @@ c:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:Map
     rdfs:isDefinedBy <#> .
 
 <#CategoryDocument> a rdfs:Class, owl:Class, ldt:Template ;
-    rdfs:subClassOf c:Document ,
+    rdfs:subClassOf core:Document ,
         [ a owl:Restriction ;
             owl:onProperty foaf:primaryTopic ;
             owl:allValuesFrom <#Category>
@@ -125,7 +135,7 @@ c:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:Map
                     }
                 }"""
         ] ;
-    ldt:update c:Delete ; # dht:DeleteWithTopic ;
+    ldt:update core:Delete ; # th:DeleteWithTopic ;
     ldt:cacheControl "public, max-age=3600" ;
     gc:supportedMode gc:ReadMode, gc:EditMode ;
     gc:defaultMode gc:ReadMode ;

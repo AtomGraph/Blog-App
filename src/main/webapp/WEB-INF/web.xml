@@ -9,15 +9,14 @@
     <context-param>
         <param-name>http://atomgraph.com/processor/ns#restrictionsQuery</param-name>
         <param-value><![CDATA[
-PREFIX gp:	<http://graphity.org/gp#>
 PREFIX rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-PREFIX owl:	<http://www.w3.org/2002/07/owl#>
 PREFIX rdfs:	<http://www.w3.org/2000/01/rdf-schema#>
+PREFIX owl:	<http://www.w3.org/2002/07/owl#>
 PREFIX sioc:	<http://rdfs.org/sioc/ns#>
 
 SELECT *
 {
-    ?Template a rdfs:Class ; # not necessarily a gp:Template
+    ?Template a rdfs:Class ;
         rdfs:subClassOf ?Restriction .
     ?Restriction a owl:Restriction ;
         owl:onProperty ?onProperty .
@@ -52,7 +51,7 @@ SELECT *
             <param-value>http://graphity.dydra.com/graphity/processor/sparql</param-value>
         </init-param>
         <init-param>
-            <param-name>http://graphity.org/g#graphStore</param-name>
+            <param-name>http://atomgraph.com/core/ns#graphStore</param-name>
             <param-value>http://graphity.dydra.com/graphity/processor/service</param-value>
         </init-param>
         <init-param>
@@ -65,7 +64,7 @@ SELECT *
         </init-param>
         
         <init-param>
-            <param-name>http://graphity.org/g#preemptiveAuth</param-name>
+            <param-name>http://atomgraph.com/core/ns#preemptiveAuth</param-name>
             <param-value>true</param-value>
         </init-param>
         -->
@@ -98,7 +97,7 @@ SELECT *
             <param-value>static/com/atomgraph/blog/xsl/layout-xhtml.xsl</param-value>
         </init-param>        
         <init-param>
-            <param-name>http://graphity.org/g#resultLimit</param-name>
+            <param-name>http://atomgraph.com/core/ns#resultLimit</param-name>
             <param-value>100</param-value>
         </init-param>
     </servlet>
