@@ -1,7 +1,7 @@
 @base           <http://atomgraph.com/blog/ns> .
 
 #@prefix :       <#> .
-@prefix gc:     <http://atomgraph.com/client/ns#> .
+@prefix ac:     <http://atomgraph.com/client/ns#> .
 @prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
@@ -20,13 +20,13 @@
 @prefix foaf:   <http://xmlns.com/foaf/0.1/> .
 
 <#> a owl:Ontology, ldt:Ontology ;
-    owl:imports dh:, sioc:, skos: ;
+    owl:imports dh:, sioc:, skos:, ac:;
     rdfs:label "Blog ontology" ;
     dct:created "2014-10-21T01:53:00+01:00"^^xsd:dateTime .
 
 # TEMPLATES
 
-core:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:MapMode .
+# core:SPARQLEndpoint ac:supportedMode ac:ReadMode, ac:ListMode, ac:TableMode, ac:MapMode .
 
 # posts
 
@@ -39,17 +39,17 @@ core:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:
         spl:optional true ;
         ldt:tunnel true
     ] , [ a ldt:Argument ;
-        spl:predicate gc:mode ;
-        spl:valueType gc:PageMode ;
+        spl:predicate ac:mode ;
+        spl:valueType ac:PageMode ;
         spl:optional true ;
-        spl:defaultValue gc:ListMode
+        spl:defaultValue ac:ListMode
     ] , [ a ldt:Argument ;
-        spl:predicate gc:forClass ;
+        spl:predicate ac:forClass ;
         spl:valueType rdfs:Class ;
         spl:optional true
     ] ;
-    gc:defaultMode gc:ReadMode ;
-    gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:ThumbnailMode ;
+    # ac:defaultMode ac:ReadMode ;
+    # ac:supportedMode ac:ReadMode, ac:ListMode, ac:TableMode, ac:ThumbnailMode ;
     rdfs:label "Forum" ;
     rdfs:isDefinedBy <#> .
 
@@ -80,8 +80,8 @@ core:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:
 	    sp:arg2 sioc:content
 	] ;
     ldt:cacheControl "public, max-age=3600" ;
-    gc:supportedMode gc:ReadMode, gc:EditMode ;
-    gc:defaultMode gc:ReadMode ;
+    # ac:supportedMode ac:ReadMode, ac:EditMode ;
+    # ac:defaultMode ac:ReadMode ;
     rdfs:label "Post" ;
     rdfs:isDefinedBy <#> .
 
@@ -96,18 +96,18 @@ core:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:
         spl:optional true ;
         ldt:tunnel true
     ] , [ a ldt:Argument ;
-        spl:predicate gc:mode ;
-        spl:valueType gc:PageMode ;
-        spl:defaultValue gc:ReadMode ;
+        spl:predicate ac:mode ;
+        spl:valueType ac:PageMode ;
+        spl:defaultValue ac:ReadMode ;
         spl:optional true ;
         ldt:tunnel true
     ] , [ a ldt:Argument ;
-        spl:predicate gc:forClass ;
+        spl:predicate ac:forClass ;
         spl:valueType rdfs:Class ;
         spl:optional true
     ] ;
-    gc:defaultMode gc:ReadMode ;
-    gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:ThumbnailMode ;
+    # ac:defaultMode ac:ReadMode ;
+    # ac:supportedMode ac:ReadMode, ac:ListMode, ac:TableMode, ac:ThumbnailMode ;
     rdfs:label "Category container" ;
     rdfs:isDefinedBy <#> .
 
@@ -137,8 +137,8 @@ core:SPARQLEndpoint gc:supportedMode gc:ReadMode, gc:ListMode, gc:TableMode, gc:
         ] ;
     ldt:update core:Delete ; # th:DeleteWithTopic ;
     ldt:cacheControl "public, max-age=3600" ;
-    gc:supportedMode gc:ReadMode, gc:EditMode ;
-    gc:defaultMode gc:ReadMode ;
+    # ac:supportedMode ac:ReadMode, ac:EditMode ;
+    # ac:defaultMode ac:ReadMode ;
     rdfs:label "Category document" ;
     rdfs:isDefinedBy <#> .
 
