@@ -1,7 +1,7 @@
-@base           <http://atomgraph.com/blog/ns> .
+@base           <http://atomgraph.com/ns/blog> .
 
 #@prefix :       <#> .
-@prefix ac:     <http://atomgraph.com/client/ns#> .
+@prefix ac:     <http://atomgraph.com/ns/client#> .
 @prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
@@ -36,11 +36,10 @@
     ldt:param [ a ldt:Argument ;
         spl:predicate dh:limit ;
         spl:defaultValue 20 ;
-        spl:optional true ;
-        ldt:tunnel true
+        spl:optional true
     ] , [ a ldt:Argument ;
         spl:predicate ac:mode ;
-        spl:valueType ac:PageMode ;
+        spl:valueType ac:ContainerMode ;
         spl:optional true ;
         spl:defaultValue ac:ListMode
     ] , [ a ldt:Argument ;
@@ -93,14 +92,12 @@
     ldt:param [ a ldt:Argument ;
         spl:predicate dh:limit ;
         spl:defaultValue 20 ;
-        spl:optional true ;
-        ldt:tunnel true
+        spl:optional true
     ] , [ a ldt:Argument ;
         spl:predicate ac:mode ;
-        spl:valueType ac:PageMode ;
+        spl:valueType ac:ContainerMode ;
         spl:defaultValue ac:ReadMode ;
-        spl:optional true ;
-        ldt:tunnel true
+        spl:optional true
     ] , [ a ldt:Argument ;
         spl:predicate ac:forClass ;
         spl:valueType rdfs:Class ;

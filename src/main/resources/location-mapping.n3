@@ -2,7 +2,7 @@
 
 [] lm:mapping
 
-   [ lm:name "http://atomgraph.com/blog/ns#" ;                      lm:altName "com/atomgraph/blog/blog.ttl" ] ,   
+   [ lm:name "http://atomgraph.com/ns/blog#" ;                      lm:altName "com/atomgraph/blog/blog.ttl" ] ,   
    [ lm:name "http://www.w3.org/ns/ldt#" ;                          lm:altName "com/atomgraph/processor/ldt.ttl" ] ,
    [ lm:name "http://www.w3.org/ns/ldt/core#" ;                     lm:altName "com/atomgraph/processor/core.ttl" ] ,
    [ lm:name "http://www.w3.org/ns/ldt/document-hierarchy#" ;       lm:altName "com/atomgraph/processor/dh.ttl" ] ,

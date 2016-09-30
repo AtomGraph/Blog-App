@@ -16,15 +16,15 @@ limitations under the License.
 -->
 <!DOCTYPE xsl:stylesheet [
     <!ENTITY java   "http://xml.apache.org/xalan/java/">
-    <!ENTITY g      "http://atomgraph.com/core/ns#">
-    <!ENTITY gc     "http://atomgraph.com/client/ns#">
+    <!ENTITY a      "http://atomgraph.com/ns/core#">
+    <!ENTITY ac     "http://atomgraph.com/ns/client#">
     <!ENTITY rdf    "http://www.w3.org/1999/02/22-rdf-syntax-ns#">
     <!ENTITY rdfs   "http://www.w3.org/2000/01/rdf-schema#">
     <!ENTITY xsd    "http://www.w3.org/2001/XMLSchema#">
     <!ENTITY owl    "http://www.w3.org/2002/07/owl#">
     <!ENTITY skos   "http://www.w3.org/2004/02/skos/core#">
     <!ENTITY sparql "http://www.w3.org/2005/sparql-results#">
-    <!ENTITY ldp    "http://www.w3.org/ns/ldp#">
+    <!ENTITY ldt    "http://www.w3.org/ns/ldt#">
     <!ENTITY dct    "http://purl.org/dc/terms/">
     <!ENTITY foaf   "http://xmlns.com/foaf/0.1/">
     <!ENTITY sioc   "http://rdfs.org/sioc/ns#">
@@ -37,13 +37,14 @@ xmlns="http://www.w3.org/1999/xhtml"
 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 xmlns:xhtml="http://www.w3.org/1999/xhtml"
 xmlns:xs="http://www.w3.org/2001/XMLSchema"
-xmlns:gc="&gc;"
-xmlns:g="&g;"
+xmlns:ac="&ac;"
+xmlns:a="&a;"
 xmlns:rdf="&rdf;"
 xmlns:rdfs="&rdfs;"
 xmlns:owl="&owl;"
-xmlns:sparql="&sparql;"
 xmlns:skos="&skos;"
+xmlns:sparql="&sparql;"
+xmlns:ldt="&ldt;"
 xmlns:dct="&dct;"
 xmlns:foaf="&foaf;"
 xmlns:sioc="&sioc;"
@@ -67,7 +68,7 @@ exclude-result-prefixes="#all">
         
         <xsl:choose>
             <xsl:when test="../@rdf:datatype">
-                <xsl:apply-templates select="../@rdf:datatype" mode="gc:InlineMode"/>
+                <xsl:apply-templates select="../@rdf:datatype" mode="ac:InlineMode"/>
             </xsl:when>
             <xsl:otherwise>
                 <span class="help-inline">Literal</span>
@@ -77,8 +78,8 @@ exclude-result-prefixes="#all">
 
     <xsl:template match="dct:subject/@rdf:resource | dct:subject/@rdf:nodeID" mode="bs2:FormControl">
         <select name="ou" id="{generate-id(..)}" multiple="multiple" size="8">
-            <xsl:apply-templates select="key('resources-by-type', '&skos;Concept', document(resolve-uri('categories?limit=100', $g:baseUri)))" mode="gc:OptionMode">
-                <xsl:sort select="gc:label(.)" order="ascending"/>
+            <xsl:apply-templates select="key('resources-by-type', '&skos;Concept', document(resolve-uri('categories?limit=100', $ldt:baseUri)))" mode="xhtml:Option">
+                <xsl:sort select="ac:label(.)" order="ascending"/>
                 <xsl:with-param name="selected" select="../@rdf:resource"/>
             </xsl:apply-templates>
         </select>
