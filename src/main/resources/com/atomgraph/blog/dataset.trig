@@ -24,6 +24,6 @@
     dct:title "Categories" ;
     dct:description "A container with all categories" .
 
-<sparql> a foaf:Document, ldtc:SPARQLEndpoint ;
+<sparql> a ldtc:SPARQLEndpoint ;
     sioc:has_space <> ;
     dct:title "SPARQL endpoint" .

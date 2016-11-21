@@ -30,7 +30,7 @@ import javax.ws.rs.core.UriInfo;
 import com.atomgraph.core.MediaTypes;
 import com.atomgraph.core.model.GraphStore;
 import com.atomgraph.core.model.SPARQLEndpoint;
-import com.atomgraph.processor.model.TemplateCall;
+import com.atomgraph.processor.util.TemplateCall;
 
 /**
  * Base class of all Blog app resources.
@@ -41,14 +41,13 @@ import com.atomgraph.processor.model.TemplateCall;
 public class ResourceBase extends com.atomgraph.server.model.impl.ResourceBase
 {
 
-    public ResourceBase(@Context UriInfo uriInfo, @Context Request request, @Context ServletConfig servletConfig,
-            @Context MediaTypes mediaTypes, @Context SPARQLEndpoint endpoint, @Context GraphStore graphStore,
+    public ResourceBase(@Context UriInfo uriInfo, @Context Request request, @Context ServletConfig servletConfig, @Context MediaTypes mediaTypes,
+            @Context com.atomgraph.processor.model.Application application, @Context SPARQLEndpoint sparqlEndpoint, @Context GraphStore graphStore,
             @Context Ontology ontology, @Context TemplateCall templateCall,
             @Context HttpHeaders httpHeaders, @Context ResourceContext resourceContext)
     {
-	super(uriInfo, request, servletConfig,
-                mediaTypes, endpoint, graphStore,
-                ontology, templateCall,
+	super(uriInfo, request, servletConfig, mediaTypes,
+                application, sparqlEndpoint,graphStore, ontology, templateCall,
                 httpHeaders, resourceContext);
     }
     

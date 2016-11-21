@@ -20,18 +20,16 @@
 @prefix foaf:   <http://xmlns.com/foaf/0.1/> .
 
 <#> a owl:Ontology, ldt:Ontology ;
-    owl:imports dh:, sioc:, skos:, ac:;
+    owl:imports dh:, sioc:, skos:, foaf:, ac:;
     rdfs:label "Blog ontology" ;
     dct:created "2014-10-21T01:53:00+01:00"^^xsd:dateTime .
 
 # TEMPLATES
 
-# core:SPARQLEndpoint ac:supportedMode ac:ReadMode, ac:ListMode, ac:TableMode, ac:MapMode .
-
 # posts
 
 <#Forum> a rdfs:Class, owl:Class, ldt:Template ;
-    rdfs:subClassOf dh:Container, sioc:Forum ;
+    rdfs:subClassOf dh:Container ;
     ldt:path "/posts/" ;
     ldt:param [ a ldt:Argument ;
         spl:predicate dh:limit ;
@@ -42,18 +40,12 @@
         spl:valueType ac:ContainerMode ;
         spl:optional true ;
         spl:defaultValue ac:ListMode
-    ] , [ a ldt:Argument ;
-        spl:predicate ac:forClass ;
-        spl:valueType rdfs:Class ;
-        spl:optional true
     ] ;
-    # ac:defaultMode ac:ReadMode ;
-    # ac:supportedMode ac:ReadMode, ac:ListMode, ac:TableMode, ac:ThumbnailMode ;
     rdfs:label "Forum" ;
     rdfs:isDefinedBy <#> .
 
 <#Post> a rdfs:Class, owl:Class, ldt:Template ;
-    rdfs:subClassOf core:Document, sioc:Post ;
+    rdfs:subClassOf dh:Item ;
     ldt:path "/posts/{slug}" ;
     ldt:update ldt:Delete ;
     spin:constructor
@@ -79,8 +71,6 @@
 	    sp:arg2 sioc:content
 	] ;
     ldt:cacheControl "public, max-age=3600" ;
-    # ac:supportedMode ac:ReadMode, ac:EditMode ;
-    # ac:defaultMode ac:ReadMode ;
     rdfs:label "Post" ;
     rdfs:isDefinedBy <#> .
 
@@ -98,22 +88,12 @@
         spl:valueType ac:ContainerMode ;
         spl:defaultValue ac:ReadMode ;
         spl:optional true
-    ] , [ a ldt:Argument ;
-        spl:predicate ac:forClass ;
-        spl:valueType rdfs:Class ;
-        spl:optional true
     ] ;
-    # ac:defaultMode ac:ReadMode ;
-    # ac:supportedMode ac:ReadMode, ac:ListMode, ac:TableMode, ac:ThumbnailMode ;
     rdfs:label "Category container" ;
     rdfs:isDefinedBy <#> .
 
 <#CategoryDocument> a rdfs:Class, owl:Class, ldt:Template ;
-    rdfs:subClassOf core:Document ,
-        [ a owl:Restriction ;
-            owl:onProperty foaf:primaryTopic ;
-            owl:allValuesFrom <#Category>
-	] ;
+    rdfs:subClassOf dh:Item ;
     ldt:path "/categories/{slug}" ;
     ldt:query
         [ a       sp:Describe ;
@@ -134,8 +114,6 @@
         ] ;
     ldt:update core:Delete ; # th:DeleteWithTopic ;
     ldt:cacheControl "public, max-age=3600" ;
-    # ac:supportedMode ac:ReadMode, ac:EditMode ;
-    # ac:defaultMode ac:ReadMode ;
     rdfs:label "Category document" ;
     rdfs:isDefinedBy <#> .
 
