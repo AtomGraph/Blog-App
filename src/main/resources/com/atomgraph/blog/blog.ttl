@@ -31,11 +31,11 @@
 <#Forum> a rdfs:Class, owl:Class, ldt:Template ;
     rdfs:subClassOf dh:Container ;
     ldt:path "/posts/" ;
-    ldt:param [ a ldt:Argument ;
+    ldt:param [ a ldt:Parameter ;
         spl:predicate dh:limit ;
         spl:defaultValue 20 ;
         spl:optional true
-    ] , [ a ldt:Argument ;
+    ] , [ a ldt:Parameter ;
         spl:predicate ac:mode ;
         spl:valueType ac:ContainerMode ;
         spl:optional true ;
@@ -79,11 +79,11 @@
 <#CategoryContainer> a rdfs:Class, owl:Class, ldt:Template ;
     rdfs:subClassOf dh:Container ;
     ldt:path "/categories/" ;
-    ldt:param [ a ldt:Argument ;
+    ldt:param [ a ldt:Parameter ;
         spl:predicate dh:limit ;
         spl:defaultValue 20 ;
         spl:optional true
-    ] , [ a ldt:Argument ;
+    ] , [ a ldt:Parameter ;
         spl:predicate ac:mode ;
         spl:valueType ac:ContainerMode ;
         spl:defaultValue ac:ReadMode ;
