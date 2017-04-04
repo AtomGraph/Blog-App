@@ -47,7 +47,7 @@ public class ResourceBase extends com.atomgraph.server.model.impl.ResourceBase
             @Context HttpHeaders httpHeaders, @Context ResourceContext resourceContext)
     {
 	super(uriInfo, request, servletConfig, mediaTypes,
-                application, sparqlEndpoint,graphStore, ontology, templateCall,
+                application, sparqlEndpoint, graphStore, ontology, templateCall,
                 httpHeaders, resourceContext);
     }
     

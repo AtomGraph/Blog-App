@@ -1,0 +1,142 @@
+@base           <http://atomgraph.com/ns/blog> .
+
+#@prefix :       <#> .
+@prefix ac:     <http://atomgraph.com/ns/client#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix ldt:    <http://www.w3.org/ns/ldt#> .
+@prefix core:   <http://www.w3.org/ns/ldt/core#> .
+@prefix dh:     <http://www.w3.org/ns/ldt/document-hierarchy#> .
+@prefix sd:     <http://www.w3.org/ns/sparql-service-description#> .
+@prefix sp:     <http://spinrdf.org/sp#> .
+@prefix spin:   <http://spinrdf.org/spin#> .
+@prefix spl:    <http://spinrdf.org/spl#> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix void:   <http://rdfs.org/ns/void#> .
+@prefix sioc:   <http://rdfs.org/sioc/ns#> .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+
+<#> a owl:Ontology, ldt:Ontology ;
+    owl:imports dh:, sioc:, skos:, foaf:, ac:;
+    rdfs:label "Blog ontology" ;
+    dct:created "2014-10-21T01:53:00+01:00"^^xsd:dateTime .
+
+# TEMPLATES
+
+# posts
+
+<#Forum> a rdfs:Class, owl:Class, ldt:Template ;
+    rdfs:subClassOf dh:Container ;
+    ldt:path "/posts/" ;
+    ldt:param [ a ldt:Parameter ;
+        spl:predicate dh:limit ;
+        spl:defaultValue 20 ;
+        spl:optional true
+    ] , [ a ldt:Parameter ;
+        spl:predicate ac:mode ;
+        spl:valueType ac:ContainerMode ;
+        spl:optional true ;
+        spl:defaultValue ac:ListMode
+    ] ;
+    rdfs:label "Forum" ;
+    rdfs:isDefinedBy <#> .
+
+<#Post> a rdfs:Class, owl:Class, ldt:Template ;
+    rdfs:subClassOf dh:Item ;
+    ldt:path "/posts/{slug}" ;
+    ldt:update ldt:Delete ;
+    spin:constructor
+        [ a       sp:Construct ;
+          sp:text """
+              PREFIX blog:    <http://atomgraph.com/blog/ns#>
+              PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+              PREFIX sioc:    <http://rdfs.org/sioc/ns#>
+              PREFIX dh:      <http://www.w3.org/ns/ldt/document-hierarchy#>
+              PREFIX dct:     <http://purl.org/dc/terms/>
+
+              CONSTRUCT {
+                  ?this dct:title [ a xsd:string ] ;
+                      sioc:content [ a xsd:string ] ;
+                      dct:subject [ a blog:Category ] .
+              }
+              WHERE {}"""
+        ] ;
+    spin:constraint [ a ldt:MissingPropertyValue ;
+	    sp:arg2 dct:title
+	] ,
+        [ a ldt:MissingPropertyValue ;
+	    sp:arg2 sioc:content
+	] ;
+    ldt:cacheControl "public, max-age=3600" ;
+    rdfs:label "Post" ;
+    rdfs:isDefinedBy <#> .
+
+# categories
+
+<#CategoryContainer> a rdfs:Class, owl:Class, ldt:Template ;
+    rdfs:subClassOf dh:Container ;
+    ldt:path "/categories/" ;
+    ldt:param [ a ldt:Parameter ;
+        spl:predicate dh:limit ;
+        spl:defaultValue 20 ;
+        spl:optional true
+    ] , [ a ldt:Parameter ;
+        spl:predicate ac:mode ;
+        spl:valueType ac:ContainerMode ;
+        spl:defaultValue ac:ReadMode ;
+        spl:optional true
+    ] ;
+    rdfs:label "Category container" ;
+    rdfs:isDefinedBy <#> .
+
+<#CategoryDocument> a rdfs:Class, owl:Class, ldt:Template ;
+    rdfs:subClassOf dh:Item ;
+    ldt:path "/categories/{slug}" ;
+    ldt:query
+        [ a       sp:Describe ;
+            sp:text """
+                PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+                PREFIX foaf:    <http://xmlns.com/foaf/0.1/>
+                PREFIX dct:     <http://purl.org/dc/terms/>
+
+                DESCRIBE ?this ?category ?post {
+                    ?category foaf:isPrimaryTopicOf ?this
+                    OPTIONAL {
+                        SELECT DISTINCT ?post ?category
+                        {
+                            ?post dct:subject ?category
+                        }
+                    }
+                }"""
+        ] ;
+    ldt:update core:Delete ; # th:DeleteWithTopic ;
+    ldt:cacheControl "public, max-age=3600" ;
+    rdfs:label "Category document" ;
+    rdfs:isDefinedBy <#> .
+
+<#Category> a rdfs:Class, owl:Class ;
+    rdfs:subClassOf skos:Concept,
+        [ a owl:Restriction ;
+            owl:onProperty foaf:isPrimaryTopicOf ;
+            owl:allValuesFrom <#CategoryDocument>
+        ] ;
+    ldt:skolemTemplate "{isPrimaryTopicOf.slug}" ;
+    spin:constructor
+        [ a       sp:Construct ;
+          sp:text """
+              PREFIX skos:    <http://www.w3.org/2004/02/skos/core#>
+
+              CONSTRUCT {
+                ?this skos:prefLabel [ a xsd:string ] .
+              }
+              WHERE {}"""
+        ] ;
+    spin:constraint [ a ldt:MissingPropertyValue ;
+	    sp:arg1 <#Category> ;
+	    sp:arg2 skos:prefLabel
+	] ;
+    rdfs:label "Category" ;
+    rdfs:isDefinedBy <#> .
