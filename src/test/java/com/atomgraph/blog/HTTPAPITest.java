@@ -17,7 +17,9 @@
 
 package com.atomgraph.blog;
 
+import com.atomgraph.client.MediaTypes;
 import com.atomgraph.server.Application;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.container.grizzly2.GrizzlyServerFactory;
 import com.sun.jersey.api.core.ApplicationAdapter;
 import com.sun.jersey.api.core.ResourceConfig;
@@ -60,7 +62,8 @@ public class HTTPAPITest
         RDFDataMgr.read(mapping, HTTPAPITest.class.getResourceAsStream("location-mapping.n3"), Lang.N3);
         
         Application app = new Application(dataset, null, null, null, null,
-            false, Application.getFileManager(new LocationMapper(mapping)),
+            new MediaTypes(), Application.getClient(new DefaultClientConfig()), null, false, null,
+                Application.getFileManager(new LocationMapper(mapping)),
         "http://atomgraph.com/ns/blog#", RULES, true);
         app.init();
         ResourceConfig rc = new ApplicationAdapter(app);
