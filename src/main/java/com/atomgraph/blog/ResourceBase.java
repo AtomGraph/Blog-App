@@ -20,7 +20,6 @@ package com.atomgraph.blog;
 import org.apache.jena.ontology.Ontology;
 import org.apache.jena.rdf.model.Model;
 import com.sun.jersey.api.core.ResourceContext;
-import javax.servlet.ServletConfig;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
@@ -31,7 +30,6 @@ import com.atomgraph.core.MediaTypes;
 import com.atomgraph.core.model.GraphStore;
 import com.atomgraph.core.model.SPARQLEndpoint;
 import com.atomgraph.processor.util.TemplateCall;
-import javax.ws.rs.core.Application;
 
 /**
  * Base class of all Blog app resources.
@@ -42,15 +40,13 @@ import javax.ws.rs.core.Application;
 public class ResourceBase extends com.atomgraph.server.model.impl.ResourceBase
 {
 
-    public ResourceBase(@Context Application system, @Context com.atomgraph.processor.model.Application application,
-            @Context UriInfo uriInfo, @Context Request request, @Context ServletConfig servletConfig, @Context MediaTypes mediaTypes,
-            @Context SPARQLEndpoint sparqlEndpoint, @Context GraphStore graphStore,
+    public ResourceBase(@Context UriInfo uriInfo, @Context Request request, @Context MediaTypes mediaTypes,
+            @Context com.atomgraph.processor.model.Application application, @Context SPARQLEndpoint sparqlEndpoint, @Context GraphStore graphStore,
             @Context Ontology ontology, @Context TemplateCall templateCall,
             @Context HttpHeaders httpHeaders, @Context ResourceContext resourceContext)
     {
-	super(system, application,
-                uriInfo, request,
-                sparqlEndpoint, graphStore, ontology, templateCall,
+	super(uriInfo, request, mediaTypes,
+                sparqlEndpoint, graphStore, application, ontology, templateCall,
                 httpHeaders, resourceContext);
     }
     
