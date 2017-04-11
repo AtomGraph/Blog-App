@@ -62,7 +62,7 @@ public class HTTPAPITest
         RDFDataMgr.read(mapping, HTTPAPITest.class.getResourceAsStream("location-mapping.n3"), Lang.N3);
         
         Application app = new Application(dataset, null, null, null, null,
-            new MediaTypes(), Application.getClient(new DefaultClientConfig()), null, false, null,
+            new MediaTypes(), Application.getClient(new DefaultClientConfig()), null, false,
                 Application.getFileManager(new LocationMapper(mapping)),
         "http://atomgraph.com/ns/blog#", RULES, true);
         app.init();
