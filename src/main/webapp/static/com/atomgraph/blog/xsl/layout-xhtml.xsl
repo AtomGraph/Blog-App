@@ -78,7 +78,7 @@ exclude-result-prefixes="#all">
 
     <xsl:template match="dct:subject/@rdf:resource | dct:subject/@rdf:nodeID" mode="bs2:FormControl">
         <select name="ou" id="{generate-id(..)}" multiple="multiple" size="8">
-            <xsl:apply-templates select="key('resources-by-type', '&skos;Concept', document(resolve-uri('categories?limit=100', $ldt:baseUri)))" mode="xhtml:Option">
+            <xsl:apply-templates select="key('resources-by-type', '&skos;Concept', document(resolve-uri('categories/?limit=100', $ldt:baseUri)))" mode="xhtml:Option">
                 <xsl:sort select="ac:label(.)" order="ascending"/>
                 <xsl:with-param name="selected" select="../@rdf:resource"/>
             </xsl:apply-templates>

@@ -11,7 +11,7 @@
         <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
         <init-param>
             <param-name>javax.ws.rs.Application</param-name>
-            <param-value>com.atomgraph.node.Application</param-value>
+            <param-value>com.atomgraph.blog.Application</param-value>
         </init-param>
         <init-param>
 	    <param-name>com.sun.jersey.spi.container.ContainerResponseFilters</param-name>
@@ -63,9 +63,17 @@
         </init-param>
         -->
         <init-param>
+            <param-name>http://atomgraph.com/ns/client#prefixMapping</param-name>
+            <param-value>prefix-mapping.n3</param-value>
+        </init-param>        
+        <init-param>
             <param-name>http://atomgraph.com/ns/client#stylesheet</param-name>
             <param-value>static/com/atomgraph/blog/xsl/layout-xhtml.xsl</param-value>
-        </init-param>        
+        </init-param>
+        <init-param>
+            <param-name>http://atomgraph.com/ns/client#resolvingUncached</param-name>
+            <param-value>true</param-value>
+        </init-param>
         <init-param>
             <param-name>http://atomgraph.com/ns/core#resultLimit</param-name>
             <param-value>100</param-value>

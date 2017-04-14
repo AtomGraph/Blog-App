@@ -1,29 +1,45 @@
 @base           <http://localhost:8080/blog/> .
-@prefix dh:     <http://www.w3.org/ns/ldt/document-hierarchy#> .
 @prefix ldtc:   <http://www.w3.org/ns/ldt/core#> .
 @prefix rdf:	<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:	<http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd:	<http://www.w3.org/2001/XMLSchema#> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
 @prefix dct:	<http://purl.org/dc/terms/> .
 @prefix void:	<http://rdfs.org/ns/void#> .
 @prefix sioc:	<http://rdfs.org/sioc/ns#> .
 @prefix foaf:	<http://xmlns.com/foaf/0.1/> .
 
-<> a dh:Container ;
+<> a sioc:Container ;
     dct:title "Blog" ;
     dct:description "Sample web application built on AtomGraph Web-Node" ;
     foaf:maker <http://atomgraph.com/#company> ;
     rdfs:seeAlso <sparql>, <http://atomgraph.com> .
 
-<posts/> a dh:Container ;
+<posts/> a sioc:Container ;
     sioc:has_parent <> ;
     dct:title "Posts" ;
     dct:description "A container with all blog posts" .
 
-<categories/> a dh:Container ;
+<posts/hello-world> a sioc:Item ;
+    sioc:has_container <posts/> ;
+    dct:title "Hello world!" ;
+    dct:description "This is a sample post" ;
+    dct:subject <categories/samples#this> .
+
+<categories/> a sioc:Container ;
     sioc:has_parent <> ;
     dct:title "Categories" ;
     dct:description "A container with all categories" .
+
+<categories/samples> a sioc:Item ;
+    sioc:has_container <categories/> ;
+    foaf:primaryTopic <categories/samples#this> ;
+    dct:title "Samples" .
+
+<categories/samples#this> a skos:Concept ;
+    foaf:isPrimaryTopicOf <categories/samples> ;
+    dct:title "Samples" ;
+    dct:description "This is a category of sample posts" .
 
 <sparql> a ldtc:SPARQLEndpoint ;
     sioc:has_space <> ;
