@@ -64,7 +64,7 @@ public class HTTPAPITest
         Application app = new Application(dataset, null, null, null, null,
             new MediaTypes(), Application.getClient(new DefaultClientConfig()), null, false,
                 Application.getFileManager(new LocationMapper(mapping)),
-        "http://atomgraph.com/ns/blog#", RULES, true);
+        "http://atomgraph.com/blog/ns#", RULES, true);
         app.init();
         ResourceConfig rc = new ApplicationAdapter(app);
         GrizzlyServerFactory.createHttpServer(getBaseURI(), rc);

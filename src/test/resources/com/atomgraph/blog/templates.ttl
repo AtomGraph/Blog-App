@@ -1,0 +1,105 @@
+@base           <http://atomgraph.com/blog/templates> .
+
+@prefix :       <#> .
+@prefix ac:     <http://atomgraph.com/ns/client#> .
+@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix skos:   <http://www.w3.org/2004/02/skos/core#> .
+@prefix ldt:    <http://www.w3.org/ns/ldt#> .
+@prefix ct:     <http://www.w3.org/ns/ldt/core/templates#> .
+@prefix tht:    <http://www.w3.org/ns/ldt/topic-hierarchy/templates#> .
+@prefix dh:     <http://www.w3.org/ns/ldt/document-hierarchy/domain#> .
+@prefix sd:     <http://www.w3.org/ns/sparql-service-description#> .
+@prefix sp:     <http://spinrdf.org/sp#> .
+@prefix spin:   <http://spinrdf.org/spin#> .
+@prefix spl:    <http://spinrdf.org/spl#> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+@prefix void:   <http://rdfs.org/ns/void#> .
+@prefix sioc:   <http://rdfs.org/sioc/ns#> .
+@prefix foaf:   <http://xmlns.com/foaf/0.1/> .
+
+: a ldt:Ontology ;
+    owl:imports tht: ;
+    rdfs:label "Blog templates" ;
+    dct:created "2014-10-21T01:53:00+01:00"^^xsd:dateTime .
+
+<#SPARQLEndpoint> a rdfs:Class, ldt:Template ;
+    rdfs:subClassOf ct:SPARQLEndpoint ;
+    ldt:loadClass <java:com.atomgraph.core.model.impl.dataset.SPARQLEndpointBase> ;
+    rdfs:label "SPARQL endpoint" ;
+    rdfs:isDefinedBy : .
+
+<#GraphStore> a rdfs:Class, ldt:Template ;
+    rdfs:subClassOf ct:GraphStore ;
+    ldt:loadClass <java:com.atomgraph.core.model.impl.dataset.GraphStoreBase> ;
+    rdfs:label "Graph Store" ;
+    rdfs:isDefinedBy : .
+
+# posts
+
+<#PostContainer> a rdfs:Class, ldt:Template ;
+    rdfs:subClassOf tht:Container ;
+    ldt:path "/posts/" ;
+    ldt:param [ a ldt:Parameter ;
+        spl:predicate dh:limit ;
+        spl:defaultValue 20 ;
+        spl:optional true
+    ] , [ a ldt:Parameter ;
+        spl:predicate ac:mode ;
+        spl:valueType ac:ContainerMode ;
+        spl:optional true ;
+        spl:defaultValue ac:ListMode
+    ] ;
+    rdfs:label "Post container template" ;
+    rdfs:isDefinedBy : .
+
+<#PostItem> a rdfs:Class, ldt:Template ;
+    rdfs:subClassOf ct:Document ;
+    ldt:path "/posts/{slug}" ;
+    ldt:cacheControl "public, max-age=3600" ;
+    rdfs:label "Post item template" ;
+    rdfs:isDefinedBy : .
+
+# categories
+
+<#CategoryContainer> a rdfs:Class, ldt:Template ;
+    rdfs:subClassOf tht:Container ;
+    ldt:path "/categories/" ;
+    ldt:param [ a ldt:Parameter ;
+        spl:predicate dh:limit ;
+        spl:defaultValue 20 ;
+        spl:optional true
+    ] , [ a ldt:Parameter ;
+        spl:predicate ac:mode ;
+        spl:valueType ac:ContainerMode ;
+        spl:defaultValue ac:ReadMode ;
+        spl:optional true
+    ] ;
+    rdfs:label "Category container template" ;
+    rdfs:isDefinedBy : .
+
+<#CategoryItem> a rdfs:Class, ldt:Template ;
+    rdfs:subClassOf tht:Item ;
+    ldt:path "/categories/{slug}" ;
+    ldt:query
+        [ a       sp:Describe ;
+            sp:text """
+                PREFIX xsd:     <http://www.w3.org/2001/XMLSchema#>
+                PREFIX foaf:    <http://xmlns.com/foaf/0.1/>
+                PREFIX dct:     <http://purl.org/dc/terms/>
+
+                DESCRIBE ?this ?category ?post {
+                    ?category foaf:isPrimaryTopicOf ?this
+                    OPTIONAL {
+                        SELECT DISTINCT ?post ?category
+                        {
+                            ?post dct:subject ?category
+                        }
+                    }
+                }"""
+        ] ;
+    ldt:cacheControl "public, max-age=3600" ;
+    rdfs:label "Category item template" ;
+    rdfs:isDefinedBy : .

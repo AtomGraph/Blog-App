@@ -46,8 +46,8 @@
         </init-param>
         <init-param>
             <param-name>http://www.w3.org/ns/ldt#ontology</param-name>
-            <!-- <param-value>http://www.w3.org/ns/ldt/core#</param-value> -->
-            <param-value>http://atomgraph.com/ns/blog#</param-value>
+            <!-- <param-value>http://www.w3.org/ns/ldt/core/domain#</param-value> -->
+            <param-value>http://atomgraph.com/blog/ns#</param-value>
         </init-param>
         <init-param>
             <param-name>http://atomgraph.com/ns/processor#sitemapRules</param-name>

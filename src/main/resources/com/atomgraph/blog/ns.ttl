@@ -1,0 +1,13 @@
+@base           <http://atomgraph.com/blog/ns> .
+
+@prefix :       <#> .
+@prefix rdfs:   <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:    <http://www.w3.org/2001/XMLSchema#> .
+@prefix owl:    <http://www.w3.org/2002/07/owl#> .
+@prefix ldt:    <http://www.w3.org/ns/ldt#> .
+@prefix dct:    <http://purl.org/dc/terms/> .
+
+: a owl:Ontology, ldt:Ontology ;
+    owl:imports <http://atomgraph.com/blog/templates#>, <http://atomgraph.com/blog/domain#> ;
+    rdfs:label "Blog namespace" ;
+    dct:created "2017-04-29T01:53:00+01:00"^^xsd:dateTime .
