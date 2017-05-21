@@ -59,7 +59,7 @@ public class HTTPAPITest
         RDFDataMgr.read(dataset, HTTPAPITest.class.getResourceAsStream("dataset.trig"), Lang.TRIG);
             
         Model mapping = ModelFactory.createDefaultModel();
-        RDFDataMgr.read(mapping, HTTPAPITest.class.getResourceAsStream("location-mapping.n3"), Lang.N3);
+        RDFDataMgr.read(mapping, HTTPAPITest.class.getResourceAsStream("/location-mapping.n3"), Lang.N3);
         
         Application app = new Application(dataset, null, null, null, null,
             new MediaTypes(), Application.getClient(new DefaultClientConfig()), null, false,
