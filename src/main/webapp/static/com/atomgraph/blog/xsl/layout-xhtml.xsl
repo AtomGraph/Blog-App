@@ -58,7 +58,7 @@ exclude-result-prefixes="#all">
     <xsl:preserve-space elements="sioc:content skos:prefLabel"/>
 
     <rdf:Description rdf:about="">
-	<dct:created rdf:datatype="&xsd;dateTime">2014-10-09T23:35:00+01:00</dct:created>
+        <dct:created rdf:datatype="&xsd;dateTime">2014-10-09T23:35:00+01:00</dct:created>
     </rdf:Description>
 
     <xsl:template match="sioc:content/text() | sioc:content/@rdf:nodeID[key('resources', .)/rdf:type/@rdf:resource = '&xsd;string']" mode="bs2:FormControl">
@@ -80,7 +80,7 @@ exclude-result-prefixes="#all">
         <select name="ou" id="{generate-id(..)}" multiple="multiple" size="8">
             <xsl:apply-templates select="key('resources-by-type', '&skos;Concept', document(resolve-uri('categories/?limit=100', $ldt:baseUri)))" mode="xhtml:Option">
                 <xsl:sort select="ac:label(.)" order="ascending"/>
-                <xsl:with-param name="selected" select="../@rdf:resource"/>
+                <xsl:with-param name="selected" select="boolean(../@rdf:resource)"/>
             </xsl:apply-templates>
         </select>
 

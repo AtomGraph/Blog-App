@@ -42,22 +42,15 @@
 :PostContainer a rdfs:Class, ldt:Template ;
     rdfs:subClassOf tht:Container ;
     ldt:path "/posts/" ;
-    ldt:param [ a ldt:Parameter ;
-        spl:predicate dh:limit ;
-        spl:defaultValue 20 ;
-        spl:optional true
-    ] , [ a ldt:Parameter ;
-        spl:predicate ac:mode ;
-        spl:valueType ac:ContainerMode ;
-        spl:optional true ;
-        spl:defaultValue ac:ListMode
-    ] ;
+    ldt:param :Limit, :ListMode, :Accept ;
+    ldt:cacheControl "public, max-age=3600" ;
     rdfs:label "Post container template" ;
     rdfs:isDefinedBy : .
 
 :PostItem a rdfs:Class, ldt:Template ;
     rdfs:subClassOf ct:Document ;
     ldt:path "/posts/{slug}" ;
+    ldt:param :ReadMode, :Accept ;
     ldt:cacheControl "public, max-age=3600" ;
     rdfs:label "Post item template" ;
     rdfs:isDefinedBy : .
@@ -67,16 +60,8 @@
 :CategoryContainer a rdfs:Class, ldt:Template ;
     rdfs:subClassOf tht:Container ;
     ldt:path "/categories/" ;
-    ldt:param [ a ldt:Parameter ;
-        spl:predicate dh:limit ;
-        spl:defaultValue 20 ;
-        spl:optional true
-    ] , [ a ldt:Parameter ;
-        spl:predicate ac:mode ;
-        spl:valueType ac:ContainerMode ;
-        spl:defaultValue ac:ReadMode ;
-        spl:optional true
-    ] ;
+    ldt:param :Limit, :ListMode, :Accept ;
+    ldt:cacheControl "public, max-age=3600" ;
     rdfs:label "Category container template" ;
     rdfs:isDefinedBy : .
 
@@ -100,6 +85,40 @@
                     }
                 }"""
         ] ;
+    ldt:param :ReadMode,  :Accept ;
     ldt:cacheControl "public, max-age=3600" ;
     rdfs:label "Category item template" ;
+    rdfs:isDefinedBy : .
+
+# parameters
+
+:ListMode a ldt:Parameter ;
+    rdfs:label "List mode" ;
+    spl:predicate ac:mode ;
+    spl:valueType ac:ContainerMode ;
+    spl:optional true ;
+    spl:defaultValue ac:ListMode ;
+    rdfs:isDefinedBy : .
+
+:ReadMode a ldt:Parameter ;
+    rdfs:label "Read mode" ;
+    spl:predicate ac:mode ;
+    spl:valueType ac:DocumentMode ;
+    spl:optional true ;
+    spl:defaultValue ac:ReadMode ;
+    rdfs:isDefinedBy : .
+
+:Limit a ldt:Parameter ;
+    rdfs:label "Limit" ;
+    spl:predicate dh:limit ;
+    spl:valueType xsd:long ;
+    spl:defaultValue 20 ;
+    spl:optional true ;
+    rdfs:isDefinedBy : .
+
+:Accept a ldt:Parameter ;
+    rdfs:label "Media type" ;
+    spl:predicate ac:accept ;
+    spl:valueType xsd:string ;
+    spl:optional true ;
     rdfs:isDefinedBy : .
