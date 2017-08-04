@@ -24,7 +24,7 @@ limitations under the License.
     <!ENTITY owl    "http://www.w3.org/2002/07/owl#">
     <!ENTITY skos   "http://www.w3.org/2004/02/skos/core#">
     <!ENTITY sparql "http://www.w3.org/2005/sparql-results#">
-    <!ENTITY ldt    "http://www.w3.org/ns/ldt#">
+    <!ENTITY ldt    "https://www.w3.org/ns/ldt#">
     <!ENTITY dct    "http://purl.org/dc/terms/">
     <!ENTITY foaf   "http://xmlns.com/foaf/0.1/">
     <!ENTITY sioc   "http://rdfs.org/sioc/ns#">
